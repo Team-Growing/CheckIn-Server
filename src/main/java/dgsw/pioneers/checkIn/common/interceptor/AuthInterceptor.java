@@ -1,8 +1,7 @@
 package dgsw.pioneers.checkIn.common.interceptor;
 
 import dgsw.pioneers.checkIn.common.annotation.AuthCheck;
-import dgsw.pioneers.checkIn.common.error.CustomError;
-import dgsw.pioneers.checkIn.common.error.ErrorCode;
+import dgsw.pioneers.checkIn.common.exception.ExceptionCode;
 import dgsw.pioneers.checkIn.common.lib.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -58,7 +57,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if (!haveAllowedRole) {
-            throw CustomError.of(ErrorCode.INVALID_PERMISSION);
+            throw CustomError.of(ExceptionCode.INVALID_PERMISSION);
         }
     }
 

@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.common.error;
+package dgsw.pioneers.checkIn.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorCode {
+public enum ExceptionCode {
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 유저"),
     INVALID_PERMISSION(HttpStatus.BAD_REQUEST, "유효하지 않은 권한"),

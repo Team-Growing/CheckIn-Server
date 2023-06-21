@@ -1,7 +1,6 @@
 package dgsw.pioneers.checkIn.common.lib.jwt;
 
-import dgsw.pioneers.checkIn.common.error.CustomError;
-import dgsw.pioneers.checkIn.common.error.ErrorCode;
+import dgsw.pioneers.checkIn.common.exception.ExceptionCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -45,11 +44,11 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            throw CustomError.of(ErrorCode.TOKEN_EXPIRED);
+            throw CustomError.of(ExceptionCode.TOKEN_EXPIRED);
         } catch (IllegalArgumentException e) {
-            throw CustomError.of(ErrorCode.TOKEN_NOT_PROVIDED);
+            throw CustomError.of(ExceptionCode.TOKEN_NOT_PROVIDED);
         } catch (UnsupportedJwtException | MalformedJwtException e) {
-            throw CustomError.of(ErrorCode.INVALID_TOKEN);
+            throw CustomError.of(ExceptionCode.INVALID_TOKEN);
         } catch (EventException e) {
             throw e;
         }

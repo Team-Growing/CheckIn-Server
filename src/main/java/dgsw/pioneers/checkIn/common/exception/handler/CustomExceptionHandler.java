@@ -1,8 +1,7 @@
-package dgsw.pioneers.checkIn.common.error.handler;
+package dgsw.pioneers.checkIn.common.exception.handler;
 
-import dgsw.pioneers.checkIn.common.error.CustomError;
-import dgsw.pioneers.checkIn.common.error.ErrorCode;
-import dgsw.pioneers.checkIn.common.error.ErrorResponseEntity;
+import dgsw.pioneers.checkIn.common.exception.ExceptionCode;
+import dgsw.pioneers.checkIn.common.exception.ErrorResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +13,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomError.class)
     protected ResponseEntity handleCustomException(CustomError e){
-        return ErrorResponseEntity.responseEntity(e.getErrorCode());
+        return ErrorResponseEntity.responseEntity(e.getExceptionCode());
     }
 
     @ExceptionHandler(Exception.class)
@@ -23,8 +22,8 @@ public class CustomExceptionHandler {
         return ResponseEntity
                 .status(500)
                 .body(ErrorResponseEntity.builder()
-                        .status(ErrorCode.INTERNAL_SERVER.getStatus().value())
-                        .code(ErrorCode.INTERNAL_SERVER.name())
+                        .status(ExceptionCode.INTERNAL_SERVER.getStatus().value())
+                        .code(ExceptionCode.INTERNAL_SERVER.name())
                         .message(e.getMessage())
                         .build());
     }

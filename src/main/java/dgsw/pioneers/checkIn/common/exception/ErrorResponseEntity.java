@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.common.error;
+package dgsw.pioneers.checkIn.common.exception;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +11,7 @@ public class ErrorResponseEntity {
     private String code;
     private String message;
 
-    public static ResponseEntity<ErrorResponseEntity> responseEntity(ErrorCode e){
+    public static ResponseEntity<ErrorResponseEntity> responseEntity(ExceptionCode e){
         return ResponseEntity
                 .status(e.getStatus())
                 .body(ErrorResponseEntity.builder()
