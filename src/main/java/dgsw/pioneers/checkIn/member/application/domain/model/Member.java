@@ -1,23 +1,20 @@
 package dgsw.pioneers.checkIn.member.application.domain.model;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 
+@Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
 
     private final MemberId memberId;
 
-    @Getter
     private final String name;
 
-    @Getter
     private String pw;
 
-    @Getter
     private final String email;
 
     private final MemberRole memberRole;

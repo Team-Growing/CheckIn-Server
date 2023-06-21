@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberMapper {
 
-    protected Member mapToDomainEntity(MemberJpaEntity member) {
+     public Member mapToDomainEntity(MemberJpaEntity member) {
         return Member.withId(
                 new Member.MemberId(member.getId()),
                 member.getName(),
@@ -15,5 +15,15 @@ public class MemberMapper {
                 member.getEmail(),
                 member.getMemberRole()
         );
+    }
+
+    public MemberJpaEntity mapToJpaEntity(Member member) {
+        return MemberJpaEntity.builder()
+                .id(member.getMemberId().getValue())
+                .name(member.getName())
+                .pw(member.getPw())
+                .email(member.getEmail())
+                .memberRole(member.getMemberRole())
+                .build();
     }
 }
