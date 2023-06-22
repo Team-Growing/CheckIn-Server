@@ -4,7 +4,7 @@ import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
 import lombok.Getter;
 
 @Getter
-public class SignUpRequest {
+public class SignUpTeacherReq {
 
     private String id;
     private String email;

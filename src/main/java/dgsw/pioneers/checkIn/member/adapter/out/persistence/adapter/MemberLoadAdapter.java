@@ -4,7 +4,7 @@ import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberMapper;
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberRepository;
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.entity.MemberJpaEntity;
+import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.MemberJpaEntity;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
 import dgsw.pioneers.checkIn.member.application.port.out.ExistMemberPort;

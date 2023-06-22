@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class SignUpCommand extends SelfValidating<SignUpCommand> {
+public class SignUpTeacherCommand extends SelfValidating<SignUpTeacherCommand> {
 
     @NotNull MemberId memberId;
     @NotBlank String name;
@@ -21,7 +21,7 @@ public class SignUpCommand extends SelfValidating<SignUpCommand> {
     @Email String email;
     @NotNull MemberRole memberRole;
 
-    public SignUpCommand(
+    public SignUpTeacherCommand(
             String memberId,
             String name,
             String pw,
@@ -42,7 +42,8 @@ public class SignUpCommand extends SelfValidating<SignUpCommand> {
                 this.name,
                 this.pw,
                 this.email,
-                this.memberRole
+                this.memberRole,
+                null
         );
     }
 }

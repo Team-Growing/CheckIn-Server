@@ -18,6 +18,7 @@ public class Member {
     private final String email;
 
     private final MemberRole memberRole;
+    private StudentInfo studentInfo;
 
     @Value
     public static class MemberId {
@@ -29,7 +30,29 @@ public class Member {
             String name,
             String pw,
             String email,
-            MemberRole memberRole) {
-        return new Member(memberId, name, pw, email, memberRole);
+            MemberRole memberRole,
+            StudentInfo studentInfo) {
+        return new Member(memberId, name, pw, email, memberRole, studentInfo);
+    }
+
+    public void encodePw(String encodedPw) {
+        this.pw = encodedPw;
+    }
+
+    public void setInfoYear(int year) {
+        this.studentInfo = StudentInfo.builder()
+                .year(year)
+                .grade(this.studentInfo.getGrade())
+                .room(this.studentInfo.getRoom())
+                .number(this.studentInfo.getNumber())
+                .build();
+    }
+
+    public boolean checkStudentRole() {
+        return this.memberRole.equals(MemberRole.STUDENT);
+    }
+
+    public boolean checkTeacherRole() {
+        return this.memberRole.equals(MemberRole.TEACHER);
     }
 }
