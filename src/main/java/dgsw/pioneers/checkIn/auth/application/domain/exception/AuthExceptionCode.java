@@ -1,13 +1,13 @@
-package dgsw.pioneers.checkIn.member.application.domain.exception;
+package dgsw.pioneers.checkIn.auth.application.domain.exception;
 
 import dgsw.pioneers.checkIn.member.global.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
-public enum MemberExceptionCode implements ExceptionCode {
+public enum AuthExceptionCode implements ExceptionCode {
 
-    MEMBER_DUPLICATION(HttpStatus.FORBIDDEN, "이미 존재하는 멤버");
+    PASSWORD_NOT_MATCH(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않음");
 
     private final HttpStatus status;
     private final String message;

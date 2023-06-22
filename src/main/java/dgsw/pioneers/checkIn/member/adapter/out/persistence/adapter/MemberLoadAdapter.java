@@ -1,7 +1,7 @@
 package dgsw.pioneers.checkIn.member.adapter.out.persistence.adapter;
 
-import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
-import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
+import dgsw.pioneers.checkIn.member.global.annotation.PersistenceAdapter;
+import dgsw.pioneers.checkIn.member.global.exception.custom.ResourceNotFoundException;
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberMapper;
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberRepository;
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.MemberJpaEntity;

@@ -1,9 +1,9 @@
 package dgsw.pioneers.checkIn.member.adapter.in.web;
 
-import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
-import dgsw.pioneers.checkIn.global.response.Response;
-import dgsw.pioneers.checkIn.member.adapter.in.web.request.SignUpStudentReq;
-import dgsw.pioneers.checkIn.member.adapter.in.web.request.SignUpTeacherReq;
+import dgsw.pioneers.checkIn.member.global.annotation.WebAdapter;
+import dgsw.pioneers.checkIn.member.global.response.Response;
+import dgsw.pioneers.checkIn.member.adapter.in.web.req.SignUpStudentReq;
+import dgsw.pioneers.checkIn.member.adapter.in.web.req.SignUpTeacherReq;
 import dgsw.pioneers.checkIn.member.application.port.in.SignUpStudentCommand;
 import dgsw.pioneers.checkIn.member.application.port.in.SignUpTeacherCommand;
 import dgsw.pioneers.checkIn.member.application.port.in.SignUpUseCase;

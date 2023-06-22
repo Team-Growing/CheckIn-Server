@@ -6,6 +6,8 @@ import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.StudentInfo;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class MemberMapper {
 
@@ -32,12 +34,21 @@ public class MemberMapper {
                 .pw(member.getPw())
                 .email(member.getEmail())
                 .memberRole(member.getMemberRole())
-                .studentInfo(StudentInfoJpaVO.builder()
-                        .year(member.getStudentInfo().getYear())
-                        .grade(member.getStudentInfo().getGrade())
-                        .room(member.getStudentInfo().getRoom())
-                        .number(member.getStudentInfo().getNumber())
-                        .build())
+                .studentInfo(getStudentInfo(member.getStudentInfo()))
                 .build();
+    }
+
+    private StudentInfoJpaVO getStudentInfo(StudentInfo studentInfo) {
+
+         if (Optional.ofNullable(studentInfo).isEmpty()) {
+             return null;
+         } else {
+             return StudentInfoJpaVO.builder()
+                     .year(studentInfo.getYear())
+                     .grade(studentInfo.getGrade())
+                     .room(studentInfo.getRoom())
+                     .number(studentInfo.getNumber())
+                     .build();
+         }
     }
 }

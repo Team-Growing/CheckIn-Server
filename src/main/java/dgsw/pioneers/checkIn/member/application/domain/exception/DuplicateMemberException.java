@@ -1,6 +1,6 @@
 package dgsw.pioneers.checkIn.member.application.domain.exception;
 
-import dgsw.pioneers.checkIn.global.exception.custom.CustomException;
+import dgsw.pioneers.checkIn.member.global.exception.custom.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
