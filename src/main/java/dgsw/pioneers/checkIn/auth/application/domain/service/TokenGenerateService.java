@@ -1,8 +1,8 @@
 package dgsw.pioneers.checkIn.auth.application.domain.service;
 
 import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
-import dgsw.pioneers.checkIn.member.global.lib.jwt.JwtType;
-import dgsw.pioneers.checkIn.member.global.lib.jwt.JwtUtil;
+import dgsw.pioneers.checkIn.global.lib.jwt.JwtType;
+import dgsw.pioneers.checkIn.global.lib.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

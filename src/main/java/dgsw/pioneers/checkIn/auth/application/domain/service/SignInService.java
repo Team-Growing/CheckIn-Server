@@ -7,7 +7,7 @@ import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
 import dgsw.pioneers.checkIn.member.application.port.out.LoadMemberPort;
-import dgsw.pioneers.checkIn.member.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;

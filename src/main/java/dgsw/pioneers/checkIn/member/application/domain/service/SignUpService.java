@@ -1,7 +1,7 @@
 package dgsw.pioneers.checkIn.member.application.domain.service;
 
-import dgsw.pioneers.checkIn.member.global.annotation.UseCase;
-import dgsw.pioneers.checkIn.member.global.exception.custom.ParameterNotFoundException;
+import dgsw.pioneers.checkIn.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.exception.custom.ParameterNotFoundException;
 import dgsw.pioneers.checkIn.member.application.domain.exception.DuplicateMemberException;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;

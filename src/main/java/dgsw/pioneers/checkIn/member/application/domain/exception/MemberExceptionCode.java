@@ -1,6 +1,6 @@
 package dgsw.pioneers.checkIn.member.application.domain.exception;
 
-import dgsw.pioneers.checkIn.member.global.exception.ExceptionCode;
+import dgsw.pioneers.checkIn.global.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 

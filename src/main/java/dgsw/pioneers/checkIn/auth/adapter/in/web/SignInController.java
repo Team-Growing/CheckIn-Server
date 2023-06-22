@@ -1,11 +1,11 @@
 package dgsw.pioneers.checkIn.auth.adapter.in.web;
 
-import dgsw.pioneers.checkIn.auth.adapter.in.web.req.SignInReq;
+import dgsw.pioneers.checkIn.auth.adapter.in.web.dto.req.SignInReq;
 import dgsw.pioneers.checkIn.auth.application.domain.model.Token;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInCommand;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
-import dgsw.pioneers.checkIn.member.global.annotation.WebAdapter;
-import dgsw.pioneers.checkIn.member.global.response.ResponseData;
+import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
+import dgsw.pioneers.checkIn.global.response.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

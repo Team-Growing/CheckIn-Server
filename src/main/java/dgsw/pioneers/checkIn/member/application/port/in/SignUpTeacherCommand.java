@@ -1,6 +1,6 @@
 package dgsw.pioneers.checkIn.member.application.port.in;
 
-import dgsw.pioneers.checkIn.member.global.lib.valid.SelfValidating;
+import dgsw.pioneers.checkIn.global.lib.valid.SelfValidating;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
 import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
