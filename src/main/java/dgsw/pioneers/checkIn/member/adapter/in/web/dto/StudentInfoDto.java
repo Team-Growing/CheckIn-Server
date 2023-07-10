@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class StudentInfo {
+public class StudentInfoDto {
 
     int grade;
     int room;

@@ -39,7 +39,7 @@ public class Member {
         this.pw = encodedPw;
     }
 
-    public void setInfoYear(int year) {
+    public void modifyInfo(int year) {
         this.studentInfo = StudentInfo.builder()
                 .year(year)
                 .grade(this.studentInfo.getGrade())

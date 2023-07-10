@@ -49,7 +49,7 @@ public class SignUpService implements SignUpUseCase {
         member.encodePw(passwordEncoder.encode(member.getPw()));
 
         LocalDate now = LocalDate.now();
-        member.setInfoYear(now.getYear());
+        member.modifyInfo(now.getYear());
 
         createMemberPort.createMember(member);
     }
