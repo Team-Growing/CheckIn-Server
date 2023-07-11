@@ -6,6 +6,5 @@ public interface ExceptionCode {
 
     HttpStatus getHttpStatus();
     String getExceptionName();
-
     String getMessage();
 }

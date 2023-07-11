@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @WebAdapter
 @RestController
-@RequestMapping(value = "/signUp")
+@RequestMapping(value = "/sign-up")
 @RequiredArgsConstructor
 @Tag(name = "signUp", description = "signUp Api")
 public class SignUpController {
@@ -33,8 +33,7 @@ public class SignUpController {
                 request.getId(),
                 request.getName(),
                 request.getPw(),
-                request.getEmail(),
-                request.getMemberRole()
+                request.getEmail()
         );
 
         signUpUseCase.signUpTeacher(signUpCommand);
@@ -50,7 +49,6 @@ public class SignUpController {
                 request.getName(),
                 request.getPw(),
                 request.getEmail(),
-                request.getMemberRole(),
                 request.getStudentInfo()
         );
 

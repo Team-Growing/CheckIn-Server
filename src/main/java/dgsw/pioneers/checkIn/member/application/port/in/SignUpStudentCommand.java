@@ -1,11 +1,10 @@
 package dgsw.pioneers.checkIn.member.application.port.in;
 
 import dgsw.pioneers.checkIn.global.lib.valid.SelfValidating;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.StudentInfo;
 import dgsw.pioneers.checkIn.member.adapter.in.web.dto.StudentInfoDto;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
-import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
+import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.member.application.domain.model.StudentInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -22,7 +21,6 @@ public class SignUpStudentCommand extends SelfValidating<SignUpStudentCommand> {
     @NotBlank String name;
     @NotBlank String pw;
     @Email String email;
-    @NotNull MemberRole memberRole;
     @NotNull StudentInfo studentInfo;
 
     public SignUpStudentCommand(
@@ -30,13 +28,11 @@ public class SignUpStudentCommand extends SelfValidating<SignUpStudentCommand> {
             String name,
             String pw,
             String email,
-            MemberRole memberRole,
             StudentInfoDto studentInfo) {
         this.memberId = new MemberId(memberId);
         this.name = name;
         this.pw = pw;
         this.email = email;
-        this.memberRole = memberRole;
         this.studentInfo = StudentInfo.builder()
                 .grade(studentInfo.getGrade())
                 .room(studentInfo.getRoom())
@@ -45,12 +41,11 @@ public class SignUpStudentCommand extends SelfValidating<SignUpStudentCommand> {
     }
 
     public Member mapToDomainEntity() {
-        return Member.withId(
+        return Member.studentWithId(
                 this.memberId,
                 this.name,
                 this.pw,
                 this.email,
-                this.memberRole,
                 this.studentInfo
         );
     }

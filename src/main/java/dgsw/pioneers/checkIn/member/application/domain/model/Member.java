@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.member.application.domain.model;
 
+import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,24 @@ public class Member {
             MemberRole memberRole,
             StudentInfo studentInfo) {
         return new Member(memberId, name, pw, email, memberRole, studentInfo);
+    }
+
+    public static Member studentWithId(
+            MemberId memberId,
+            String name,
+            String pw,
+            String email,
+            StudentInfo studentInfo) {
+        return new Member(memberId, name, pw, email, MemberRole.STUDENT, studentInfo);
+    }
+
+    public static Member teacherWithId(
+            MemberId memberId,
+            String name,
+            String pw,
+            String email,
+            StudentInfo studentInfo) {
+        return new Member(memberId, name, pw, email, MemberRole.TEACHER, studentInfo);
     }
 
     public void encodePw(String encodedPw) {

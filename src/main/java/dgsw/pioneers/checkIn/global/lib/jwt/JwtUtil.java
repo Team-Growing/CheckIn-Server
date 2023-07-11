@@ -5,7 +5,7 @@ import dgsw.pioneers.checkIn.global.exception.custom.CustomException;
 import dgsw.pioneers.checkIn.global.properties.JwtProperties;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
-import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
+import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.member.application.port.out.LoadMemberPort;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

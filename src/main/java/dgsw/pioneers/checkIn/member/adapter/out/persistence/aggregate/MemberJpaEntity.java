@@ -1,7 +1,7 @@
 package dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
-import dgsw.pioneers.checkIn.member.application.domain.model.StudentInfo;
+import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.vo.StudentInfoJpaVO;
+import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import lombok.*;
 
 import javax.persistence.*;

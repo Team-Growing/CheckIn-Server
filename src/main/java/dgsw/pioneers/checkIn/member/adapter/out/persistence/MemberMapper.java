@@ -1,7 +1,7 @@
 package dgsw.pioneers.checkIn.member.adapter.out.persistence;
 
 import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.MemberJpaEntity;
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.StudentInfoJpaVO;
+import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.vo.StudentInfoJpaVO;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.StudentInfo;
 import org.springframework.stereotype.Component;
@@ -18,12 +18,7 @@ public class MemberMapper {
                 member.getPw(),
                 member.getEmail(),
                 member.getMemberRole(),
-                StudentInfo.builder()
-                        .year(member.getStudentInfo().getYear())
-                        .grade(member.getStudentInfo().getGrade())
-                        .room(member.getStudentInfo().getRoom())
-                        .number(member.getStudentInfo().getNumber())
-                        .build()
+                getStudentInfo(member.getStudentInfo())
         );
     }
 
@@ -34,11 +29,11 @@ public class MemberMapper {
                 .pw(member.getPw())
                 .email(member.getEmail())
                 .memberRole(member.getMemberRole())
-                .studentInfo(getStudentInfo(member.getStudentInfo()))
+                .studentInfo(getStudentJPAInfo(member.getStudentInfo()))
                 .build();
     }
 
-    private StudentInfoJpaVO getStudentInfo(StudentInfo studentInfo) {
+    private StudentInfoJpaVO getStudentJPAInfo(StudentInfo studentInfo) {
 
          if (Optional.ofNullable(studentInfo).isEmpty()) {
              return null;
@@ -50,5 +45,19 @@ public class MemberMapper {
                      .number(studentInfo.getNumber())
                      .build();
          }
+    }
+
+    private StudentInfo getStudentInfo(StudentInfoJpaVO studentInfoJpaVO) {
+
+        if (Optional.ofNullable(studentInfoJpaVO).isEmpty()) {
+            return null;
+        } else {
+            return StudentInfo.builder()
+                    .year(studentInfoJpaVO.getYear())
+                    .grade(studentInfoJpaVO.getGrade())
+                    .room(studentInfoJpaVO.getRoom())
+                    .number(studentInfoJpaVO.getNumber())
+                    .build();
+        }
     }
 }

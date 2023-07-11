@@ -1,6 +1,5 @@
 package dgsw.pioneers.checkIn.member.adapter.in.web.dto.req;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
 import lombok.Getter;
 
 @Getter
@@ -10,5 +9,4 @@ public class SignUpTeacherReq {
     private String email;
     private String pw;
     private String name;
-    private MemberRole memberRole;
 }

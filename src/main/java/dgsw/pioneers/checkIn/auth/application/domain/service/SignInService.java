@@ -5,7 +5,7 @@ import dgsw.pioneers.checkIn.auth.application.domain.model.Token;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInCommand;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.MemberRole;
+import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
