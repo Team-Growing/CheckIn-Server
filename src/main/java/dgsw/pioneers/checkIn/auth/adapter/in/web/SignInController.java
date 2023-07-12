@@ -2,7 +2,6 @@ package dgsw.pioneers.checkIn.auth.adapter.in.web;
 
 import dgsw.pioneers.checkIn.auth.adapter.in.web.dto.req.SignInReq;
 import dgsw.pioneers.checkIn.auth.application.domain.model.Token;
-import dgsw.pioneers.checkIn.auth.application.port.in.SignInCommand;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.ResponseData;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @WebAdapter
 @RestController
 @RequestMapping(value = "/sign-in")
@@ -26,14 +27,9 @@ public class SignInController {
 
     @PostMapping
     @Operation(summary = "sign in", description = "로그인")
-    public ResponseData<Token> signUpTeacher(@RequestBody SignInReq request) {
+    public ResponseData<Token> signUpTeacher(@RequestBody @Valid SignInReq signInReq) {
 
-        SignInCommand signInCommand = new SignInCommand(
-                request.getId(),
-                request.getPw()
-        );
-
-        Token token = signInUseCase.signIn(signInCommand);
+        Token token = signInUseCase.signIn(signInReq);
         return ResponseData.of(HttpStatus.OK, "로그인 성공", token);
     }
 }

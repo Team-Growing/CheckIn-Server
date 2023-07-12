@@ -2,11 +2,11 @@ package dgsw.pioneers.checkIn.member.application.domain.service;
 
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.ParameterNotFoundException;
+import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpStudentReq;
+import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpTeacherReq;
 import dgsw.pioneers.checkIn.member.application.domain.exception.DuplicateMemberException;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpStudentCommand;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpTeacherCommand;
 import dgsw.pioneers.checkIn.member.application.port.in.SignUpUseCase;
 import dgsw.pioneers.checkIn.member.application.port.out.CreateMemberPort;
 import dgsw.pioneers.checkIn.member.application.port.out.ExistMemberPort;
@@ -26,11 +26,11 @@ public class SignUpService implements SignUpUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUpTeacher(SignUpTeacherCommand signUpCommand) {
+    public void signUpTeacher(SignUpTeacherReq signUpTeacherReq) {
 
-        checkExistMember(signUpCommand.getMemberId());
+        Member member = signUpTeacherReq.mapToDomainEntity();
 
-        Member member = signUpCommand.mapToDomainEntity();
+        checkExistMember(member.getMemberId());
 
         if (!member.checkTeacherRole()) throw new ParameterNotFoundException();
         member.encodePw(passwordEncoder.encode(member.getPw()));
@@ -39,11 +39,11 @@ public class SignUpService implements SignUpUseCase {
     }
 
     @Override
-    public void signUpStudent(SignUpStudentCommand signUpCommand) {
+    public void signUpStudent(SignUpStudentReq signUpStudentReq) {
 
-        checkExistMember(signUpCommand.getMemberId());
+        Member member = signUpStudentReq.mapToDomainEntity();
 
-        Member member = signUpCommand.mapToDomainEntity();
+        checkExistMember(member.getMemberId());
 
         if (!member.checkStudentRole()) throw new ParameterNotFoundException();
         member.encodePw(passwordEncoder.encode(member.getPw()));

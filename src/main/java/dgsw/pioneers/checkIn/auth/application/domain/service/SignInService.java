@@ -1,8 +1,8 @@
 package dgsw.pioneers.checkIn.auth.application.domain.service;
 
+import dgsw.pioneers.checkIn.auth.adapter.in.web.dto.req.SignInReq;
 import dgsw.pioneers.checkIn.auth.application.domain.exception.PasswordMatchException;
 import dgsw.pioneers.checkIn.auth.application.domain.model.Token;
-import dgsw.pioneers.checkIn.auth.application.port.in.SignInCommand;
 import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
@@ -24,14 +24,16 @@ public class SignInService implements SignInUseCase {
     private final TokenGenerateService tokenGenerateService;
 
     @Override
-    public Token signIn(SignInCommand signInCommand) {
+    public Token signIn(SignInReq signInReq) {
 
-        Member member = loadMemberPort.loadMember(signInCommand.getMemberId());
+        Member.MemberId memberId = new Member.MemberId(signInReq.getId());
 
-        if (!checkPw(signInCommand.getPw(), member.getPw())) {
+        Member member = loadMemberPort.loadMember(memberId);
+
+        if (!checkPw(signInReq.getPw(), member.getPw())) {
             throw new PasswordMatchException();
         } else {
-            return createToken(signInCommand.getMemberId().getValue(), member.getMemberRole());
+            return createToken(memberId.getValue(), member.getMemberRole());
         }
     }
 

@@ -1,10 +1,13 @@
 package dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req;
 
+import dgsw.pioneers.checkIn.lecture.application.domain.model.WeekPlan;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class WeekPlanUpdateReq {
 
-    int week;
-    String introduction;
+    Long lectureId;
+    List<WeekPlan> weekPlans;
 }

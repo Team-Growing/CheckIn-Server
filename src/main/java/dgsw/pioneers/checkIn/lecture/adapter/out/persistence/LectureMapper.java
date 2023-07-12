@@ -31,7 +31,7 @@ public class LectureMapper {
                         .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
-
+                null
         );
     }
 

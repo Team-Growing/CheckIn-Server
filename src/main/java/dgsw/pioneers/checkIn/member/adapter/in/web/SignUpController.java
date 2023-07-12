@@ -4,8 +4,6 @@ import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
 import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpStudentReq;
 import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpTeacherReq;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpStudentCommand;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpTeacherCommand;
 import dgsw.pioneers.checkIn.member.application.port.in.SignUpUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,32 +25,17 @@ public class SignUpController {
 
     @PostMapping("/teacher")
     @Operation(summary = "sign up to teacher", description = "선생님 회원가입")
-    public Response signUpTeacher(@RequestBody SignUpTeacherReq request) {
+    public Response signUpTeacher(@RequestBody SignUpTeacherReq signUpTeacherReq) {
 
-        SignUpTeacherCommand signUpCommand = new SignUpTeacherCommand(
-                request.getId(),
-                request.getName(),
-                request.getPw(),
-                request.getEmail()
-        );
-
-        signUpUseCase.signUpTeacher(signUpCommand);
+        signUpUseCase.signUpTeacher(signUpTeacherReq);
         return Response.of(HttpStatus.OK, "선생님 회원가입 성공");
     }
 
     @PostMapping("/student")
     @Operation(summary = "sign up to student", description = "학생 회원가입")
-    public Response signUpStudent(@RequestBody SignUpStudentReq request) {
+    public Response signUpStudent(@RequestBody SignUpStudentReq signUpStudentReq) {
 
-        SignUpStudentCommand signUpCommand = new SignUpStudentCommand(
-                request.getId(),
-                request.getName(),
-                request.getPw(),
-                request.getEmail(),
-                request.getStudentInfo()
-        );
-
-        signUpUseCase.signUpStudent(signUpCommand);
+        signUpUseCase.signUpStudent(signUpStudentReq);
         return Response.of(HttpStatus.OK, "학생 회원가입 성공");
     }
 }
