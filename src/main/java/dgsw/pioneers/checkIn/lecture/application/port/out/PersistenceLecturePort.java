@@ -2,7 +2,7 @@ package dgsw.pioneers.checkIn.lecture.application.port.out;
 
 import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
 
-public interface CreateLecturePort {
+public interface PersistenceLecturePort {
 
-    void createLecture(Lecture lecture);
+    void persistenceLecture(Lecture lecture);
 }

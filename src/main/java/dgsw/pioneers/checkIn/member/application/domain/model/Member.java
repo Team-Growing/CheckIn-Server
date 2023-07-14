@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
@@ -24,6 +26,19 @@ public class Member {
     @Value
     public static class MemberId {
         String value;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            MemberId memberId = (MemberId) o;
+            return Objects.equals(value, memberId.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(value);
+        }
     }
 
     public static Member withId(

@@ -17,7 +17,7 @@ public class lectureLoadAdapter implements LoadLecturePort {
     private final LectureMapper lectureMapper;
 
     @Override
-    public Lecture loadMember(Long lectureId) {
+    public Lecture loadLecture(Long lectureId) {
 
         LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId)
                 .orElseThrow(ResourceNotFoundException::new);

@@ -1,7 +1,6 @@
 package dgsw.pioneers.checkIn.global.interceptor;
 
-import dgsw.pioneers.checkIn.global.exception.GlobalExceptionCode;
-import dgsw.pioneers.checkIn.global.exception.custom.CustomException;
+import dgsw.pioneers.checkIn.global.exception.custom.PermissionInvalidException;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
@@ -60,7 +59,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if (!haveAllowedRole) {
-            throw new CustomException(GlobalExceptionCode.INVALID_PERMISSION);
+            throw new PermissionInvalidException();
         }
     }
 

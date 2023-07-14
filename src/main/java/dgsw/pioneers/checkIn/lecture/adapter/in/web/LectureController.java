@@ -45,15 +45,7 @@ public class LectureController {
             @RequestAttribute Member member,
             @RequestBody @Valid WeekPlanUpdateReq weekPlanUpdateReq
     ) {
-
-//        LectureGenerateCommand lectureGenerateCommand = new LectureGenerateCommand(
-//                request.getExplanation(),
-//                request.getPlaceType(),
-//                request.getAcceptableStudent(),
-//                request.getLectureSchedule()
-//        );
-
-        weekPlanUpdateUseCase.updateWeekPlan();
+        weekPlanUpdateUseCase.updateWeekPlan(member.getMemberId(), weekPlanUpdateReq);
         return Response.of(HttpStatus.OK, "주차 게획 수정 성공");
     }
 }

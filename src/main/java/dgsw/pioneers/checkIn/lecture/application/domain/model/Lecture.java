@@ -54,4 +54,8 @@ public class Lecture {
             LectureSchedule lectureSchedule) {
         return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, null);
     }
+
+    public void updateWeekPlans(List<WeekPlan> weekPlans) {
+        this.weekPlans = weekPlans;
+    }
 }

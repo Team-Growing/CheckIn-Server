@@ -4,5 +4,5 @@ import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
 
 public interface LoadLecturePort {
 
-    Lecture loadMember(Long lectureId);
+    Lecture loadLecture(Long lectureId);
 }
