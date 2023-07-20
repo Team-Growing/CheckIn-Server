@@ -42,8 +42,7 @@ public class LectureJpaEntity {
     @Embedded
     private LectureScheduleJpaVO lectureSchedule;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "lecture_id")
+    @OneToMany(mappedBy = "lectureJpaEntity", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<WeekPlanJpaEntity> weekPlans;
 
     @Builder
@@ -54,5 +53,9 @@ public class LectureJpaEntity {
         this.teacherId = teacherId;
         this.acceptableStudent = acceptableStudent;
         this.lectureSchedule = lectureSchedule;
+    }
+
+    public void updateWeekPlans(List<WeekPlanJpaEntity> weekPlans) {
+        this.weekPlans = weekPlans;
     }
 }

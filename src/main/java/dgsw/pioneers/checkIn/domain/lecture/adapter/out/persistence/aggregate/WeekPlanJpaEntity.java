@@ -17,4 +17,7 @@ public class WeekPlanJpaEntity {
     private Long id;
     private int week;
     private String introduction;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id")
+    private LectureJpaEntity lectureJpaEntity;
 }

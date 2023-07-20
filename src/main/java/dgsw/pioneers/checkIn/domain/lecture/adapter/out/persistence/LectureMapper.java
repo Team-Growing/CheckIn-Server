@@ -1,20 +1,21 @@
 package dgsw.pioneers.checkIn.lecture.adapter.out.persistence;
 
+import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.WeekPlanJpaEntity;
 import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
 import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.AcceptableStudent;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.LectureSchedule;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.LectureTeacher;
+import dgsw.pioneers.checkIn.lecture.application.domain.model.*;
 import dgsw.pioneers.checkIn.member.application.domain.model.Member;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class LectureMapper {
 
      public Lecture mapToDomainEntity(LectureJpaEntity lectureJpa) {
-        return Lecture.withId(
+         return Lecture.withId(
                 new Lecture.LectureId(lectureJpa.getId()),
                 lectureJpa.getExplanation(),
                 lectureJpa.getLectureStatus(),
@@ -36,7 +37,7 @@ public class LectureMapper {
     }
 
     public LectureJpaEntity mapToJpaEntity(Lecture lecture) {
-        return LectureJpaEntity.builder()
+        LectureJpaEntity lectureJpaEntity = LectureJpaEntity.builder()
                 .explanation(lecture.getExplanation())
                 .lectureStatus(lecture.getLectureStatus())
                 .placeType(lecture.getPlaceType())
@@ -54,5 +55,17 @@ public class LectureMapper {
                         lecture.getLectureSchedule().getEndTime()
                 ))
                 .build();
+        List<WeekPlanJpaEntity> weekPlanJpaEntities = lecture.getWeekPlans().stream().map(
+                weekPlan -> weekPlanMapToJpa(lectureJpaEntity, weekPlan)).collect(Collectors.toList());
+        lectureJpaEntity.updateWeekPlans(weekPlanJpaEntities);
+        return lectureJpaEntity;
+    }
+
+    private WeekPlanJpaEntity weekPlanMapToJpa(LectureJpaEntity lectureJpaEntity, WeekPlan weekPlan) {
+         return WeekPlanJpaEntity.builder()
+                 .week(weekPlan.getWeek())
+                 .introduction(weekPlan.getIntroduction())
+                 .lectureJpaEntity(lectureJpaEntity)
+                 .build();
     }
 }
