@@ -1,12 +1,12 @@
-package dgsw.pioneers.checkIn.auth.application.domain.service;
+package dgsw.pioneers.checkIn.domain.auth.application.domain.service;
 
-import dgsw.pioneers.checkIn.auth.adapter.in.web.dto.req.SignInReq;
-import dgsw.pioneers.checkIn.auth.application.domain.exception.PasswordMatchException;
-import dgsw.pioneers.checkIn.auth.application.domain.model.Token;
-import dgsw.pioneers.checkIn.auth.application.port.in.SignInUseCase;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
-import dgsw.pioneers.checkIn.member.application.port.out.LoadMemberPort;
+import dgsw.pioneers.checkIn.domain.auth.adapter.in.web.dto.req.SignInReq;
+import dgsw.pioneers.checkIn.domain.auth.application.domain.exception.PasswordMatchException;
+import dgsw.pioneers.checkIn.domain.auth.application.domain.model.Token;
+import dgsw.pioneers.checkIn.domain.auth.application.port.in.SignInUseCase;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

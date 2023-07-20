@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req;
 
-import dgsw.pioneers.checkIn.lecture.application.domain.model.WeekPlan;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.WeekPlan;
 import lombok.Getter;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.member.application.domain.model.enums;
+package dgsw.pioneers.checkIn.domain.member.application.domain.model.enums;
 
 public enum MemberRole {
 

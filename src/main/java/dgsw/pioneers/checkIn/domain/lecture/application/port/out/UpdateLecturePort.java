@@ -2,7 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.application.port.out;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 
-public interface LoadLecturePort {
+public interface UpdateLecturePort {
 
-    Lecture loadLecture(Long lectureId);
+    void updateLecture(Lecture lecture);
 }

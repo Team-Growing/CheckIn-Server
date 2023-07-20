@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.lecture.adapter.out.persistence;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence;
 
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

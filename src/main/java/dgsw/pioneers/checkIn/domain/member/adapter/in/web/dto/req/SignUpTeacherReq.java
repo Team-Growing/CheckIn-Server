@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.member.adapter.in.web.dto.req;
+package dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;

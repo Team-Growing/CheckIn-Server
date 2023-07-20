@@ -1,10 +1,10 @@
-package dgsw.pioneers.checkIn.member.adapter.in.web;
+package dgsw.pioneers.checkIn.domain.member.adapter.in.web;
 
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpStudentReq;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpTeacherReq;
+import dgsw.pioneers.checkIn.domain.member.application.port.in.SignUpUseCase;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpStudentReq;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpTeacherReq;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,10 @@
-package dgsw.pioneers.checkIn.member.adapter.out.persistence.adapter;
+package dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.adapter;
 
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberMapper;
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.MemberRepository;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.port.out.CreateMemberPort;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.MemberMapper;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.MemberRepository;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.CreateMemberPort;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter

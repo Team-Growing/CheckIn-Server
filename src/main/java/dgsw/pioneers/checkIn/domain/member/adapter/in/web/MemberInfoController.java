@@ -1,7 +1,7 @@
-package dgsw.pioneers.checkIn.member.adapter.in.web;
+package dgsw.pioneers.checkIn.domain.member.adapter.in.web;
 
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.res.MemberInfoRes;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res.MemberInfoRes;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.ResponseData;

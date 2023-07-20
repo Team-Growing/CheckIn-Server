@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.lecture.application.domain.model;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member.MemberId;
 import lombok.*;
 
 @Value

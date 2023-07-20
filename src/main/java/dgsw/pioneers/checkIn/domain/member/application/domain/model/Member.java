@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.member.application.domain.model;
+package dgsw.pioneers.checkIn.domain.member.application.domain.model;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,8 @@
-package dgsw.pioneers.checkIn.member.application.port.out;
+package dgsw.pioneers.checkIn.domain.member.application.port.out;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 
 public interface LoadMemberPort {
 
-    Member loadMember(MemberId memberId);
+    Member loadMember(Member.MemberId memberId);
 }

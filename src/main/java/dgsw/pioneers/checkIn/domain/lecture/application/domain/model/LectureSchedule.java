@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.lecture.application.domain.model;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;

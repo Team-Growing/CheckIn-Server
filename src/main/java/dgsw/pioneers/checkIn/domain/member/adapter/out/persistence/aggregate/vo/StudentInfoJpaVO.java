@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.vo;
+package dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.vo;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.auth.application.domain.model;
+package dgsw.pioneers.checkIn.domain.auth.application.domain.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

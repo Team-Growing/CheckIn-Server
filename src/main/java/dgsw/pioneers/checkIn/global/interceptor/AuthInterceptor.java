@@ -1,8 +1,8 @@
 package dgsw.pioneers.checkIn.global.interceptor;
 
 import dgsw.pioneers.checkIn.global.exception.custom.PermissionInvalidException;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.lib.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;

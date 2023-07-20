@@ -1,14 +1,17 @@
-package dgsw.pioneers.checkIn.lecture.adapter.in.web;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureGenerateUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.response.Response;
-import dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req.LectureGenerateReq;
-import dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
-import dgsw.pioneers.checkIn.lecture.application.port.in.LectureGenerateUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
-import dgsw.pioneers.checkIn.lecture.application.port.in.WeekPlanUpdateUseCase;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.global.response.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class LectureController {
 
     private final LectureGenerateUseCase lectureGenerateUseCase;
     private final WeekPlanUpdateUseCase weekPlanUpdateUseCase;
+    private final LectureLoadUseCase lectureLoadUseCase;
 
     @PostMapping
     @AuthCheck(roles = {MemberRole.ADMIN, MemberRole.TEACHER})
@@ -45,7 +49,14 @@ public class LectureController {
             @RequestAttribute Member member,
             @RequestBody @Valid WeekPlanUpdateReq weekPlanUpdateReq
     ) {
-        weekPlanUpdateUseCase.updateWeekPlan(member.getMemberId(), weekPlanUpdateReq);
+        weekPlanUpdateUseCase.updateWeekPlan(member.getMemberId(), weekPlanUpdateReq, member.getMemberRole());
         return Response.of(HttpStatus.OK, "주차 게획 수정 성공");
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "load lecture", description = "강좌 불러오기")
+    public ResponseData<Lecture> loadLecture(@PathVariable long id) {
+        Lecture lecture = lectureLoadUseCase.loadLecture(new Lecture.LectureId(id));
+        return ResponseData.of(HttpStatus.OK, "강좌 불러오기 성공", lecture);
     }
 }

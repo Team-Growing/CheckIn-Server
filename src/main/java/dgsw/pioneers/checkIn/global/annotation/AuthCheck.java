@@ -1,6 +1,6 @@
 package dgsw.pioneers.checkIn.global.annotation;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 
 import java.lang.annotation.*;
 

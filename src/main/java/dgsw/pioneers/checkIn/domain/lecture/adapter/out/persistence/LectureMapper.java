@@ -1,11 +1,11 @@
-package dgsw.pioneers.checkIn.lecture.adapter.out.persistence;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence;
 
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.WeekPlanJpaEntity;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.*;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.*;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.WeekPlanJpaEntity;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,12 +32,12 @@ public class LectureMapper {
                         .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
-                null
-        );
+                lectureJpa.getEnrollStudent(),
+                getWeekPlans(lectureJpa));
     }
 
     public LectureJpaEntity mapToJpaEntity(Lecture lecture) {
-        LectureJpaEntity lectureJpaEntity = LectureJpaEntity.builder()
+        return LectureJpaEntity.builder()
                 .explanation(lecture.getExplanation())
                 .lectureStatus(lecture.getLectureStatus())
                 .placeType(lecture.getPlaceType())
@@ -54,18 +54,29 @@ public class LectureMapper {
                         lecture.getLectureSchedule().getStartTime(),
                         lecture.getLectureSchedule().getEndTime()
                 ))
+                .enrollStudent(lecture.getEnrollStudent())
                 .build();
-        List<WeekPlanJpaEntity> weekPlanJpaEntities = lecture.getWeekPlans().stream().map(
-                weekPlan -> weekPlanMapToJpa(lectureJpaEntity, weekPlan)).collect(Collectors.toList());
-        lectureJpaEntity.updateWeekPlans(weekPlanJpaEntities);
-        return lectureJpaEntity;
     }
 
-    private WeekPlanJpaEntity weekPlanMapToJpa(LectureJpaEntity lectureJpaEntity, WeekPlan weekPlan) {
-         return WeekPlanJpaEntity.builder()
-                 .week(weekPlan.getWeek())
-                 .introduction(weekPlan.getIntroduction())
-                 .lectureJpaEntity(lectureJpaEntity)
-                 .build();
+    private List<WeekPlan> getWeekPlans(LectureJpaEntity lectureJpa) {
+         if (lectureJpa.getWeekPlans() == null) return null;
+         else return lectureJpa.getWeekPlans().stream().map(this::weekPlanMapToDomain).collect(Collectors.toList());
+    }
+
+    public List<WeekPlanJpaEntity> weekPlanMapToJpa(LectureJpaEntity lectureJpaEntity, List<WeekPlan> weekPlans) {
+        return weekPlans.stream().map(weekPlan ->
+                WeekPlanJpaEntity.builder()
+                        .week(weekPlan.getWeek())
+                        .introduction(weekPlan.getIntroduction())
+                        .lectureJpaEntity(lectureJpaEntity)
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    private WeekPlan weekPlanMapToDomain(WeekPlanJpaEntity weekPlanJpaEntity) {
+        return WeekPlan.builder()
+                .week(weekPlanJpaEntity.getWeek())
+                .introduction(weekPlanJpaEntity.getIntroduction())
+                .build();
     }
 }

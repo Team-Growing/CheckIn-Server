@@ -1,9 +1,9 @@
-package dgsw.pioneers.checkIn.member.adapter.out.persistence;
+package dgsw.pioneers.checkIn.domain.member.adapter.out.persistence;
 
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.MemberJpaEntity;
-import dgsw.pioneers.checkIn.member.adapter.out.persistence.aggregate.vo.StudentInfoJpaVO;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.StudentInfo;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.vo.StudentInfoJpaVO;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.StudentInfo;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.MemberJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

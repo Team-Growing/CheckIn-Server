@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.member.application.domain.exception;
+package dgsw.pioneers.checkIn.domain.member.application.domain.exception;
 
 import dgsw.pioneers.checkIn.global.exception.ExceptionCode;
 import lombok.AllArgsConstructor;

@@ -1,15 +1,15 @@
-package dgsw.pioneers.checkIn.member.application.domain.service;
+package dgsw.pioneers.checkIn.domain.member.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpStudentReq;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.ParameterNotFoundException;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpStudentReq;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpTeacherReq;
-import dgsw.pioneers.checkIn.member.application.domain.exception.DuplicateMemberException;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member.MemberId;
-import dgsw.pioneers.checkIn.member.application.port.in.SignUpUseCase;
-import dgsw.pioneers.checkIn.member.application.port.out.CreateMemberPort;
-import dgsw.pioneers.checkIn.member.application.port.out.ExistMemberPort;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpTeacherReq;
+import dgsw.pioneers.checkIn.domain.member.application.domain.exception.DuplicateMemberException;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member.MemberId;
+import dgsw.pioneers.checkIn.domain.member.application.port.in.SignUpUseCase;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.CreateMemberPort;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.ExistMemberPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

@@ -1,12 +1,12 @@
-package dgsw.pioneers.checkIn.lecture.adapter.out.persistence.adapter;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter;
 
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.LectureMapper;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.LectureRepository;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
-import dgsw.pioneers.checkIn.lecture.application.port.out.LoadLecturePort;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.LectureMapper;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.LectureRepository;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter

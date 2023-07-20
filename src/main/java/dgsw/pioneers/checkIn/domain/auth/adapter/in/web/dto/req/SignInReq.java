@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.auth.adapter.in.web.dto.req;
+package dgsw.pioneers.checkIn.domain.auth.adapter.in.web.dto.req;
 
 import lombok.Getter;
 

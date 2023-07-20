@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate;
 
 import lombok.*;
 

@@ -1,11 +1,8 @@
-package dgsw.pioneers.checkIn.lecture.application.domain.model;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
-import dgsw.pioneers.checkIn.lecture.application.domain.model.enums.LectureStatus;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.enums.PlaceType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Value;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
+import lombok.*;
 
 import java.util.List;
 
@@ -27,9 +24,12 @@ public class Lecture {
 
     private final LectureSchedule lectureSchedule;
 
+    private final int enrollStudent;
+
     private List<WeekPlan> weekPlans;
 
     @Value
+    @AllArgsConstructor
     public static class LectureId {
         Long value;
     }
@@ -42,8 +42,9 @@ public class Lecture {
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule,
+            int enrollStudent,
             List<WeekPlan> weekPlans) {
-        return new Lecture(lectureId, explanation, lectureStatus, placeType, acceptableStudent, lectureTeacher, lectureSchedule, weekPlans);
+        return new Lecture(lectureId, explanation, lectureStatus, placeType, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans);
     }
 
     public static Lecture teacherWithId(
@@ -52,7 +53,7 @@ public class Lecture {
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule) {
-        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, null);
+        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, 0,null);
     }
 
     public void updateWeekPlans(List<WeekPlan> weekPlans) {

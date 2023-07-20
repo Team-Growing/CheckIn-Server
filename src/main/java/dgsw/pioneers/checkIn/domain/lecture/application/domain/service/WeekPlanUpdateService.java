@@ -1,13 +1,14 @@
-package dgsw.pioneers.checkIn.lecture.application.domain.service;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLecturePort;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.PermissionInvalidException;
-import dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
-import dgsw.pioneers.checkIn.lecture.application.port.in.WeekPlanUpdateUseCase;
-import dgsw.pioneers.checkIn.lecture.application.port.out.LoadLecturePort;
-import dgsw.pioneers.checkIn.lecture.application.port.out.PersistenceLecturePort;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class WeekPlanUpdateService implements WeekPlanUpdateUseCase {
 
     private final LoadLecturePort loadLecturePort;
-    private final PersistenceLecturePort persistenceLecturePort;
+    private final UpdateLecturePort updateLecturePort;
 
     @Override
     @Transactional
-    public void updateWeekPlan(Member.MemberId memberId, WeekPlanUpdateReq weekPlanUpdateReq) {
+    public void updateWeekPlan(Member.MemberId memberId, WeekPlanUpdateReq weekPlanUpdateReq, MemberRole memberRole) {
 
         Lecture lecture = loadLecturePort.loadLecture(weekPlanUpdateReq.getLectureId());
-        if (lecture.getLectureTeacher().getMemberId().equals(memberId)) throw new PermissionInvalidException();
+
+        if (memberRole.equals(MemberRole.TEACHER)) {
+            if (!lecture.getLectureTeacher().getMemberId().equals(memberId)) throw new PermissionInvalidException();
+        }
 
         lecture.updateWeekPlans(weekPlanUpdateReq.getWeekPlans());
-        persistenceLecturePort.persistenceLecture(lecture);
+        updateLecturePort.updateLecture(lecture);
     }
 }

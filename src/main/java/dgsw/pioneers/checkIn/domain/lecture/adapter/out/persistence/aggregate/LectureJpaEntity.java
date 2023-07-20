@@ -1,9 +1,9 @@
-package dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate;
 
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
-import dgsw.pioneers.checkIn.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.enums.LectureStatus;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.enums.PlaceType;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,20 +42,24 @@ public class LectureJpaEntity {
     @Embedded
     private LectureScheduleJpaVO lectureSchedule;
 
-    @OneToMany(mappedBy = "lectureJpaEntity", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @NotNull
+    private int enrollStudent;
+
+    @OneToMany(mappedBy = "lectureJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeekPlanJpaEntity> weekPlans;
 
     @Builder
-    public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule) {
+    public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
         this.explanation = explanation;
         this.lectureStatus = lectureStatus;
         this.placeType = placeType;
         this.teacherId = teacherId;
         this.acceptableStudent = acceptableStudent;
         this.lectureSchedule = lectureSchedule;
+        this.enrollStudent = enrollStudent;
     }
 
-    public void updateWeekPlans(List<WeekPlanJpaEntity> weekPlans) {
-        this.weekPlans = weekPlans;
+    public void addWeekPlans(WeekPlanJpaEntity weekPlan) {
+        this.weekPlans.add(weekPlan);
     }
 }

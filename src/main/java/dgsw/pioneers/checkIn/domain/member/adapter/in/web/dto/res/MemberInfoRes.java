@@ -1,8 +1,8 @@
-package dgsw.pioneers.checkIn.member.adapter.in.web.dto.res;
+package dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res;
 
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.StudentInfoDto;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.StudentInfoDto;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

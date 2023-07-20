@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.auth.application.domain.exception;
+package dgsw.pioneers.checkIn.domain.auth.application.domain.exception;
 
 import dgsw.pioneers.checkIn.global.exception.custom.CustomException;
 import org.springframework.http.HttpStatus;

@@ -1,11 +1,11 @@
-package dgsw.pioneers.checkIn.lecture.adapter.in.web.dto.req;
+package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req;
 
-import dgsw.pioneers.checkIn.lecture.application.domain.model.AcceptableStudent;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.Lecture;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.LectureSchedule;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.LectureTeacher;
-import dgsw.pioneers.checkIn.lecture.application.domain.model.enums.PlaceType;
-import dgsw.pioneers.checkIn.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.LectureSchedule;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.AcceptableStudent;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.LectureTeacher;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;

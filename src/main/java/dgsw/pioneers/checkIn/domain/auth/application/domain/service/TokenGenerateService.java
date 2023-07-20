@@ -1,6 +1,6 @@
-package dgsw.pioneers.checkIn.auth.application.domain.service;
+package dgsw.pioneers.checkIn.domain.auth.application.domain.service;
 
-import dgsw.pioneers.checkIn.member.application.domain.model.enums.MemberRole;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.lib.jwt.JwtType;
 import dgsw.pioneers.checkIn.global.lib.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.lecture.application.domain.model.enums;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums;
 
 public enum PlaceType {
 

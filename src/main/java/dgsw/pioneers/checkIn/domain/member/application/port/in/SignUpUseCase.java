@@ -1,7 +1,7 @@
-package dgsw.pioneers.checkIn.member.application.port.in;
+package dgsw.pioneers.checkIn.domain.member.application.port.in;
 
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpStudentReq;
-import dgsw.pioneers.checkIn.member.adapter.in.web.dto.req.SignUpTeacherReq;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpStudentReq;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpTeacherReq;
 
 public interface SignUpUseCase {
 
