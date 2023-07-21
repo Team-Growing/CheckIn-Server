@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_ADDRESS}:${DB_PORT}/checkin?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USER}
+    password: ${DB_PW}
+  jpa:
+#    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+app:
+  jwt:
+    key: ${JWT_KEY}
+  admin:
+    pw: ${SWAGGER_PW}
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure: ERROR
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
