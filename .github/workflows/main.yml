@@ -22,16 +22,22 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Set yml file 
-      uses: microsoft/variable-substitution@v1
+      uses: microsoft/variable-substitution@v2
       with:
         files: ./src/main/resources/application.yml
       env:
         spring.datasource.url: ${{ secrets.RDS_HOST }} 
-        spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
-        spring.datasource.password: ${{ secrets.RDS_PASSWORD }} 
+        spring.datasource.username: ${{ secrets.DB_USER }} 
+        spring.datasource.password: ${{ secrets.DB_PW }} 
         app.jwt.key: ${{ secrets.JWT_KEY }}
         app.admin.pw: ${{ secrets.SWAGGER_PW }}
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'checkin' 
+        mysql user: 'user'
+        mysql password: ${{ secrets.DB_PW }}
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
-        arguments: build
+        arguments: ./gradlew -stacktrace --info bootJar
