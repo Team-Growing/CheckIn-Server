@@ -25,18 +25,6 @@ import org.springframework.context.annotation.Configuration;
 //                .to(failStep1())
 //                .on("*")
 //                .end()
-////                // testStep1 후에
-////                .from(testStep1())
-////                // testStep1 수행 결과에 상관 없이
-////                .on("*")
-////                // tesetStep2로 다음 Step 수행
-////                .to(testStep2())
-////                // testStep2 수행 결과에 상관 없이
-////                // 다음 수행으로 testStep3 지정
-////                .on("*")
-////                // stepFlow 종료(FlowBuilder 반환)
-////                .end()
-////                // 해당 Job 종료(FlowBuilder 종료)
 //                .end()
 //                .build();
 //    }
@@ -68,18 +56,4 @@ import org.springframework.context.annotation.Configuration;
 //                })
 //                .build();
 //    }
-//
-////    @Bean
-////    public Step testStep2() {
-////        return stepBuilderFactory.get("testStep2")
-////                .tasklet((contribution, chunkContext) ->{
-////
-////                    // Batch 로직 구현
-////                    ...
-////
-////                    // 정상 종료 시 상태 Return
-////                    return RepeatStatus.FINISHED;
-////                })
-////                .build();
-////    }
 //}

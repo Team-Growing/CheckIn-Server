@@ -2,9 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.r
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.MemberJpaEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "lecture_to_member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LectureToMemberEntity {
 
     @Id
@@ -22,10 +21,16 @@ public class LectureToMemberEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
-    private LectureJpaEntity lecture;
+    private LectureJpaEntity lectureJpaEntity;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private MemberJpaEntity member;
+    private MemberJpaEntity memberJpaEntity;
+
+    @Builder
+    public LectureToMemberEntity(LectureJpaEntity lectureJpaEntity, MemberJpaEntity memberJpaEntity) {
+        this.lectureJpaEntity = lectureJpaEntity;
+        this.memberJpaEntity = memberJpaEntity;
+    }
 }

@@ -33,7 +33,8 @@ public class LectureMapper {
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
                 lectureJpa.getEnrollStudent(),
-                getWeekPlans(lectureJpa));
+                getWeekPlans(lectureJpa),
+                 null);
     }
 
     public LectureJpaEntity mapToJpaEntity(Lecture lecture) {

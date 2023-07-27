@@ -2,7 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
-import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLecturePort;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLectureWeekPlansPort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.PermissionInvalidException;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class WeekPlanUpdateService implements WeekPlanUpdateUseCase {
 
     private final LoadLecturePort loadLecturePort;
-    private final UpdateLecturePort updateLecturePort;
+    private final UpdateLectureWeekPlansPort updateLectureWeekPlansPort;
 
     @Override
     @Transactional
@@ -31,6 +31,6 @@ public class WeekPlanUpdateService implements WeekPlanUpdateUseCase {
         }
 
         lecture.updateWeekPlans(weekPlanUpdateReq.getWeekPlans());
-        updateLecturePort.updateLecture(lecture);
+        updateLectureWeekPlansPort.updateLectureWeekPlans(lecture);
     }
 }

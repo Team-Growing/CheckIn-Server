@@ -1,9 +1,12 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LecturePeriodNotMatchException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,6 +31,8 @@ public class Lecture {
 
     private List<WeekPlan> weekPlans;
 
+    private List<Participant> participants;
+
     @Value
     @AllArgsConstructor
     public static class LectureId {
@@ -43,8 +48,9 @@ public class Lecture {
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule,
             int enrollStudent,
-            List<WeekPlan> weekPlans) {
-        return new Lecture(lectureId, explanation, lectureStatus, placeType, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans);
+            List<WeekPlan> weekPlans,
+            List<Participant> participants) {
+        return new Lecture(lectureId, explanation, lectureStatus, placeType, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans, participants);
     }
 
     public static Lecture teacherWithId(
@@ -53,10 +59,26 @@ public class Lecture {
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule) {
-        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, 0,null);
+        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
     }
 
     public void updateWeekPlans(List<WeekPlan> weekPlans) {
         this.weekPlans = weekPlans;
+    }
+
+    public Participant registerParticipant(Member.MemberId studentId) {
+
+        if (!this.lectureStatus.equals(LectureStatus.ENROLMENT)) {
+            throw new LecturePeriodNotMatchException();
+        }
+
+        Participant participant = Participant.builder()
+                .applyDateTime(LocalDateTime.now())
+                .memberId(studentId)
+                .build();
+
+        this.participants.add(participant);
+
+        return participant;
     }
 }

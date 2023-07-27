@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate;
 
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.relation.LectureToMemberEntity;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
@@ -47,6 +48,9 @@ public class LectureJpaEntity {
 
     @OneToMany(mappedBy = "lectureJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeekPlanJpaEntity> weekPlans;
+
+    @OneToMany(mappedBy = "lectureJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LectureToMemberEntity> participants;
 
     @Builder
     public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
