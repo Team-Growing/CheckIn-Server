@@ -24,14 +24,38 @@ jobs:
     - name: Set yml file 
       uses: microsoft/variable-substitution@v1
       with:
-        files: ${{ env.RESOURCE_PATH }} 
+        files: ./src/main/resources/application.yml
       env:
         spring.datasource.url: ${{ secrets.RDS_HOST }} 
-        spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
-        spring.datasource.password: ${{ secrets.RDS_PASSWORD }} 
+        spring.datasource.username: ${{ secrets.DB_USER }} 
+        spring.datasource.password: ${{ secrets.DB_PW }} 
         app.jwt.key: ${{ secrets.JWT_KEY }}
         app.admin.pw: ${{ secrets.SWAGGER_PW }}
+    - name: Gradle Wrap
+      run: gradle wrap
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      run: ./gradlew bootJar
+    - name: Build Docker Image For Spring
+      run: |
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Docker Run
+      uses: appleboy/ssh-action@v0.1.8
       with:
-        arguments: build
+        host: ${{ secrets.LINUX_HOST }}
+        username: ${{ secrets.LINUX_USERNAME }}
+        password: ${{ secrets.LINUX_PASSWORD }}
+        port: ${{ secrets.LINUX_SSH_PORT }}
+        script: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker stop checkin
+          docker rm checkin
+          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
+          docker run -d -p 33333:8080 --name checkin ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
