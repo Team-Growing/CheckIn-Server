@@ -8,5 +8,5 @@ public interface LectureLoadUseCase {
 
     Lecture loadLecture(Lecture.LectureId lectureId);
 
-    List<Lecture> loadAllLecture();
+    List<Lecture> loadAllCoursePeriodLecture();
 }

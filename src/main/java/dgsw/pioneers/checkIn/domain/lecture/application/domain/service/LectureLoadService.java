@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
@@ -22,7 +23,7 @@ public class LectureLoadService implements LectureLoadUseCase {
     }
 
     @Override
-    public List<Lecture> loadAllLecture() {
-        return null;
+    public List<Lecture> loadAllCoursePeriodLecture() {
+        return loadLecturePort.loadAllLectureByStatus(LectureStatus.COURSE_PERIOD);
     }
 }

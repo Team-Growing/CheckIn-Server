@@ -84,11 +84,9 @@ public class Lecture {
 
         this.enrollStudent++;
 
-        Participant participant = Participant.builder()
+        return Participant.builder()
                 .applyDateTime(LocalDateTime.now())
                 .memberId(student.getMemberId())
                 .build();
-
-        return participant;
     }
 }

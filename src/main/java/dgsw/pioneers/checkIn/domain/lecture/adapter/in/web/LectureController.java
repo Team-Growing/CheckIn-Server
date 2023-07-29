@@ -38,7 +38,7 @@ public class LectureController {
             @RequestAttribute Member member,
             @RequestBody @Valid LectureGenerateReq lectureGenerateReq
     ) {
-        lectureGenerateUseCase.generateLecture(member.getMemberId(), lectureGenerateReq);
+        lectureGenerateUseCase.generateLecture(lectureGenerateReq.mapToDomainEntity(member.getMemberId()));
         return Response.of(HttpStatus.OK, "강좌 생성 성공");
     }
 

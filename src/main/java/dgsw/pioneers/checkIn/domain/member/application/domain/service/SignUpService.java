@@ -1,9 +1,7 @@
 package dgsw.pioneers.checkIn.domain.member.application.domain.service;
 
-import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpStudentReq;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.ParameterNotFoundException;
-import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.SignUpTeacherReq;
 import dgsw.pioneers.checkIn.domain.member.application.domain.exception.DuplicateMemberException;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member.MemberId;
@@ -26,9 +24,7 @@ public class SignUpService implements SignUpUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUpTeacher(SignUpTeacherReq signUpTeacherReq) {
-
-        Member member = signUpTeacherReq.mapToDomainEntity();
+    public void signUpTeacher(Member member) {
 
         checkExistMember(member.getMemberId());
 
@@ -39,9 +35,7 @@ public class SignUpService implements SignUpUseCase {
     }
 
     @Override
-    public void signUpStudent(SignUpStudentReq signUpStudentReq) {
-
-        Member member = signUpStudentReq.mapToDomainEntity();
+    public void signUpStudent(Member member) {
 
         checkExistMember(member.getMemberId());
 

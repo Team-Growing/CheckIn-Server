@@ -1,8 +1,7 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.port.in;
 
-import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
-import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 
 public interface LectureGenerateUseCase {
-    void generateLecture(Member.MemberId teacherId, LectureGenerateReq lectureGenerateReq);
+    void generateLecture(Lecture lecture);
 }

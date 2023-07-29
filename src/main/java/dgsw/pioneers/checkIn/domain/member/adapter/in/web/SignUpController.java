@@ -27,7 +27,7 @@ public class SignUpController {
     @Operation(summary = "sign up to teacher", description = "선생님 회원가입")
     public Response signUpTeacher(@RequestBody SignUpTeacherReq signUpTeacherReq) {
 
-        signUpUseCase.signUpTeacher(signUpTeacherReq);
+        signUpUseCase.signUpTeacher(signUpTeacherReq.mapToDomainEntity());
         return Response.of(HttpStatus.OK, "선생님 회원가입 성공");
     }
 
@@ -35,7 +35,7 @@ public class SignUpController {
     @Operation(summary = "sign up to student", description = "학생 회원가입")
     public Response signUpStudent(@RequestBody SignUpStudentReq signUpStudentReq) {
 
-        signUpUseCase.signUpStudent(signUpStudentReq);
+        signUpUseCase.signUpStudent(signUpStudentReq.mapToDomainEntity());
         return Response.of(HttpStatus.OK, "학생 회원가입 성공");
     }
 }
