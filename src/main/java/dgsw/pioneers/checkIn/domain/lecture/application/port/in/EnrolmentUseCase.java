@@ -5,5 +5,5 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 
 public interface EnrolmentUseCase {
 
-    void lectureEnrolment(Lecture.LectureId lectureId, Member.MemberId studentId);
+    void lectureEnrolment(Lecture.LectureId lectureId, Member student);
 }

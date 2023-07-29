@@ -1,6 +1,8 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureGradeNotMatchException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LecturePeriodNotMatchException;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureStudentExcessException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
@@ -27,7 +29,7 @@ public class Lecture {
 
     private final LectureSchedule lectureSchedule;
 
-    private final int enrollStudent;
+    private int enrollStudent;
 
     private List<WeekPlan> weekPlans;
 
@@ -66,18 +68,26 @@ public class Lecture {
         this.weekPlans = weekPlans;
     }
 
-    public Participant registerParticipant(Member.MemberId studentId) {
+    public Participant registerParticipant(Member student) {
 
         if (!this.lectureStatus.equals(LectureStatus.ENROLMENT)) {
             throw new LecturePeriodNotMatchException();
         }
 
+        if (this.acceptableStudent.getTargetGrade() != student.getStudentInfo().getGrade()) {
+            throw new LectureGradeNotMatchException();
+        }
+
+        if (this.enrollStudent >= this.acceptableStudent.getMaxStudent()) {
+            throw new LectureStudentExcessException();
+        }
+
+        this.enrollStudent++;
+
         Participant participant = Participant.builder()
                 .applyDateTime(LocalDateTime.now())
-                .memberId(studentId)
+                .memberId(student.getMemberId())
                 .build();
-
-        this.participants.add(participant);
 
         return participant;
     }

@@ -29,7 +29,7 @@ public class EnrolController {
             @RequestAttribute Member member,
             @PathVariable long id
     ) {
-        enrolmentUseCase.lectureEnrolment(new Lecture.LectureId(id), member.getMemberId());
+        enrolmentUseCase.lectureEnrolment(new Lecture.LectureId(id), member);
         return Response.of(HttpStatus.OK, "강좌 수강 신청 성공");
     }
 }

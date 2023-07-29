@@ -66,4 +66,8 @@ public class LectureJpaEntity {
     public void addWeekPlans(WeekPlanJpaEntity weekPlan) {
         this.weekPlans.add(weekPlan);
     }
+
+    public void updateEnrollStudent(int enrollStudent) {
+        this.enrollStudent = enrollStudent;
+    }
 }

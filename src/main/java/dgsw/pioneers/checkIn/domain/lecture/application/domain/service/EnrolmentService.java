@@ -20,11 +20,11 @@ public class EnrolmentService implements EnrolmentUseCase {
 
     @Override
     @Transactional
-    public void lectureEnrolment(Lecture.LectureId lectureId, Member.MemberId studentId) {
+    public void lectureEnrolment(Lecture.LectureId lectureId, Member student) {
 
         Lecture lecture = loadLecturePort.loadLecture(lectureId.getValue());
-        Participant participant = lecture.registerParticipant(studentId);
+        Participant participant = lecture.registerParticipant(student);
 
-        createParticipantPort.createParticipant(lectureId, participant);
+        createParticipantPort.createParticipant(lecture, participant);
     }
 }

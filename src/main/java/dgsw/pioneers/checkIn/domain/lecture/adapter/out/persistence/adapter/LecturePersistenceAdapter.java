@@ -46,11 +46,15 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
     }
 
     @Override
-    public void createParticipant(Lecture.LectureId lectureId, Participant participant) {
+    public void createParticipant(Lecture lecture, Participant participant) {
 
         lectureToMemberRepository.save(LectureToMemberEntity.builder()
-                        .lectureJpaEntity(lectureRepository.findById(lectureId.getValue()).get())
+                        .lectureJpaEntity(lectureRepository.findById(lecture.getLectureId().getValue()).get())
                         .memberJpaEntity(memberMapper.mapToJpaEntity(loadMemberPort.loadMember(participant.getMemberId())))
                 .build());
+
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
+        lectureJpaEntity.updateEnrollStudent(lecture.getEnrollStudent());
+        lectureRepository.save(lectureJpaEntity);
     }
 }

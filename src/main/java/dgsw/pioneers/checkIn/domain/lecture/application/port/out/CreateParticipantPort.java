@@ -5,5 +5,5 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Participant
 
 public interface CreateParticipantPort {
 
-    void createParticipant(Lecture.LectureId lectureId, Participant participant);
+    void createParticipant(Lecture lecture, Participant participant);
 }
