@@ -4,6 +4,7 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.re
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureTag;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import lombok.*;
 
@@ -34,6 +35,10 @@ public class LectureJpaEntity {
     private PlaceType placeType;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private LectureTag lectureTag;
+
+    @NotNull
     @Column(name = "fk_teacher_id")
     private String teacherId;
 
@@ -53,7 +58,7 @@ public class LectureJpaEntity {
     private List<LectureToMemberEntity> participants;
 
     @Builder
-    public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
+    public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, LectureTag lectureTag, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
         this.explanation = explanation;
         this.lectureStatus = lectureStatus;
         this.placeType = placeType;
@@ -61,6 +66,7 @@ public class LectureJpaEntity {
         this.acceptableStudent = acceptableStudent;
         this.lectureSchedule = lectureSchedule;
         this.enrollStudent = enrollStudent;
+        this.lectureTag = lectureTag;
     }
 
     public void addWeekPlans(WeekPlanJpaEntity weekPlan) {

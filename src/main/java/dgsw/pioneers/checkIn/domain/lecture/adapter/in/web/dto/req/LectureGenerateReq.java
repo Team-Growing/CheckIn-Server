@@ -4,6 +4,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.LectureSche
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.AcceptableStudent;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.LectureTeacher;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureTag;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.Getter;
@@ -18,6 +19,8 @@ public class LectureGenerateReq {
     @NotNull
     private PlaceType placeType;
     @NotNull
+    private LectureTag lectureTag;
+    @NotNull
     private AcceptableStudent acceptableStudent;
     @NotNull
     private LectureSchedule lectureSchedule;
@@ -26,6 +29,7 @@ public class LectureGenerateReq {
         return Lecture.teacherWithId(
                 this.explanation,
                 this.placeType,
+                this.lectureTag,
                 this.acceptableStudent,
                 LectureTeacher.builder()
                         .memberId(teacherId).build(),

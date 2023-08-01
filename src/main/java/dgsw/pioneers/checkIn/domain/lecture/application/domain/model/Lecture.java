@@ -4,6 +4,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.Lecture
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LecturePeriodNotMatchException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureStudentExcessException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureTag;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.*;
@@ -22,6 +23,8 @@ public class Lecture {
     private final LectureStatus lectureStatus;
 
     private final PlaceType placeType;
+
+    private final LectureTag lectureTag;
 
     private final AcceptableStudent acceptableStudent;
 
@@ -46,22 +49,24 @@ public class Lecture {
             String explanation,
             LectureStatus lectureStatus,
             PlaceType placeType,
+            LectureTag lectureTag,
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule,
             int enrollStudent,
             List<WeekPlan> weekPlans,
             List<Participant> participants) {
-        return new Lecture(lectureId, explanation, lectureStatus, placeType, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans, participants);
+        return new Lecture(lectureId, explanation, lectureStatus, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans, participants);
     }
 
     public static Lecture teacherWithId(
             String explanation,
             PlaceType placeType,
+            LectureTag lectureTag,
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule) {
-        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
+        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
     }
 
     public void updateWeekPlans(List<WeekPlan> weekPlans) {

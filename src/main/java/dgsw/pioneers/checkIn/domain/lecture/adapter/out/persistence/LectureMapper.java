@@ -20,6 +20,7 @@ public class LectureMapper {
                 lectureJpa.getExplanation(),
                 lectureJpa.getLectureStatus(),
                 lectureJpa.getPlaceType(),
+                lectureJpa.getLectureTag(),
                 AcceptableStudent.builder()
                         .maxStudent(lectureJpa.getAcceptableStudent().getMaxStudent())
                         .minStudent(lectureJpa.getAcceptableStudent().getMinStudent())
@@ -42,6 +43,7 @@ public class LectureMapper {
                 .explanation(lecture.getExplanation())
                 .lectureStatus(lecture.getLectureStatus())
                 .placeType(lecture.getPlaceType())
+                .lectureTag(lecture.getLectureTag())
                 .teacherId(lecture.getLectureTeacher().getMemberId().getValue())
                 .acceptableStudent(new AcceptableStudentJpaVO(
                         lecture.getAcceptableStudent().getMaxStudent(),
