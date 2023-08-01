@@ -30,15 +30,19 @@ public class AttendanceJpaEntity {
     private int attendStudent;
 
     @NotNull
+    private String code;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
     private LectureJpaEntity lecture;
 
     @Builder
-    public AttendanceJpaEntity(AttendanceStatus attendanceStatus, LocalDate lectureDate, int attendStudent, LectureJpaEntity lecture) {
+    public AttendanceJpaEntity(AttendanceStatus attendanceStatus, LocalDate lectureDate, int attendStudent, String code, LectureJpaEntity lecture) {
         this.attendanceStatus = attendanceStatus;
         this.lectureDate = lectureDate;
         this.attendStudent = attendStudent;
         this.lecture = lecture;
+        this.code = code;
     }
 }

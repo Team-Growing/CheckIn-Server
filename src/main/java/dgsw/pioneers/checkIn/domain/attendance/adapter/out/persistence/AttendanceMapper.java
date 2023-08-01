@@ -14,6 +14,7 @@ public class AttendanceMapper {
                 .lectureDate(attendance.getLectureDate())
                 .attendStudent(attendance.getAttendStudent())
                 .lecture(lecture)
+                .code(attendance.getCode())
                 .build();
     }
 }

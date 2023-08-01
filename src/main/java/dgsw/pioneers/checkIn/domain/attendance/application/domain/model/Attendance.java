@@ -19,6 +19,9 @@ public class Attendance {
 
     private int attendStudent;
 
+    @Setter
+    private String code;
+
     private final LectureId lectureId;
 
     private List<Attendant> attendants;
@@ -34,9 +37,10 @@ public class Attendance {
             AttendanceStatus attendanceStatus,
             LocalDate lectureDate,
             int attendStudent,
+            String code,
             LectureId lectureId,
             List<Attendant> attendants) {
-        return new Attendance(attendanceId, attendanceStatus, lectureDate, attendStudent, lectureId, attendants);
+        return new Attendance(attendanceId, attendanceStatus, lectureDate, attendStudent, code, lectureId, attendants);
     }
 
     @Builder
