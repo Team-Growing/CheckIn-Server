@@ -8,6 +8,7 @@ import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class EnrolController {
 
     @PostMapping("/{id}")
     @AuthCheck(roles = {MemberRole.STUDENT})
-    @Operation(summary = "Enrolment Lecture", description = "강좌 수강 신청")
+    @Operation(summary = "Enrolment Lecture", description = "강좌 수강 신청", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestAttribute Member member,
             @PathVariable long id

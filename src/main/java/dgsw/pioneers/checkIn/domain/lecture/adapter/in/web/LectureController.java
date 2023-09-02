@@ -13,6 +13,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.response.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class LectureController {
 
     @PostMapping
     @AuthCheck(roles = {MemberRole.ADMIN, MemberRole.TEACHER})
-    @Operation(summary = "generate Lecture", description = "강좌 생성")
+    @Operation(summary = "generate Lecture", description = "강좌 생성", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestAttribute Member member,
             @RequestBody @Valid LectureGenerateReq lectureGenerateReq
@@ -44,7 +45,7 @@ public class LectureController {
 
     @PatchMapping("/week-plan")
     @AuthCheck(roles = {MemberRole.ADMIN, MemberRole.TEACHER})
-    @Operation(summary = "update week plan", description = "주차 게획 수정")
+    @Operation(summary = "update week plan", description = "주차 게획 수정", security = @SecurityRequirement(name = "Authorization"))
     public Response updateWeekPlan(
             @RequestAttribute Member member,
             @RequestBody @Valid WeekPlanUpdateReq weekPlanUpdateReq

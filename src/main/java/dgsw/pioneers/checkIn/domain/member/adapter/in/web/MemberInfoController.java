@@ -5,6 +5,8 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.ResponseData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberInfoController {
 
     @AuthCheck
+    @Operation(summary = "load memberInfo", description = "내 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my")
     public ResponseData<MemberInfoRes> getUser(@RequestAttribute Member member) {
         MemberInfoRes memberInfoRes = MemberInfoRes.convertToDTO(member);
