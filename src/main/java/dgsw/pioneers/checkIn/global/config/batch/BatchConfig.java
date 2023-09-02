@@ -16,11 +16,9 @@ import javax.sql.DataSource;
 public class BatchConfig {
 
     private final ObjectMapper objectMapper;
-    private final DataSource dataSource;
-    private final PlatformTransactionManager transactionManager;
 
     @Bean
-    public JobRepository createJobRepository() throws Exception {
+    public JobRepository createJobRepository(DataSource dataSource, PlatformTransactionManager transactionManager) throws Exception {
 
         JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
 
