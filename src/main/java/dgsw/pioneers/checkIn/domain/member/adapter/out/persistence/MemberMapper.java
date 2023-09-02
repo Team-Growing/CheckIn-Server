@@ -4,11 +4,11 @@ import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.vo.
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.StudentInfo;
 import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.MemberJpaEntity;
-import org.springframework.stereotype.Component;
+import dgsw.pioneers.checkIn.global.annotation.Mapper;
 
 import java.util.Optional;
 
-@Component
+@Mapper
 public class MemberMapper {
 
      public Member mapToDomainEntity(MemberJpaEntity member) {

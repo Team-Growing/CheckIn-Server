@@ -6,12 +6,12 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
-import org.springframework.stereotype.Component;
+import dgsw.pioneers.checkIn.global.annotation.Mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Mapper
 public class LectureMapper {
 
      public Lecture mapToDomainEntity(LectureJpaEntity lectureJpa) {
