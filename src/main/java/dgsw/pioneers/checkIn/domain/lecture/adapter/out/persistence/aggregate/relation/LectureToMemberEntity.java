@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -28,9 +29,13 @@ public class LectureToMemberEntity {
     @JoinColumn(name = "member_id")
     private MemberJpaEntity memberJpaEntity;
 
+    @NotNull
+    private LocalDateTime applyDateTime;
+
     @Builder
-    public LectureToMemberEntity(LectureJpaEntity lectureJpaEntity, MemberJpaEntity memberJpaEntity) {
+    public LectureToMemberEntity(LectureJpaEntity lectureJpaEntity, MemberJpaEntity memberJpaEntity, LocalDateTime applyDateTime) {
         this.lectureJpaEntity = lectureJpaEntity;
         this.memberJpaEntity = memberJpaEntity;
+        this.applyDateTime = applyDateTime;
     }
 }

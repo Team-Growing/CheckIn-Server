@@ -11,8 +11,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Participant
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.CreateLecturePort;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.CreateParticipantPort;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLectureWeekPlansPort;
-import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.MemberMapper;
-import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.adapter.MemberLoadAdapter;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,9 +23,8 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
     private final LectureRepository lectureRepository;
     private final LectureToMemberRepository lectureToMemberRepository;
-    private final LoadMemberPort loadMemberPort;
+    private final MemberLoadAdapter memberLoadAdapter;
     private final LectureMapper lectureMapper;
-    private final MemberMapper memberMapper;
 
     @Override
     public void createLecture(Lecture lecture) {
@@ -50,7 +48,8 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         lectureToMemberRepository.save(LectureToMemberEntity.builder()
                         .lectureJpaEntity(lectureRepository.findById(lecture.getLectureId().getValue()).get())
-                        .memberJpaEntity(memberMapper.mapToJpaEntity(loadMemberPort.loadMember(participant.getMemberId())))
+                        .memberJpaEntity(memberLoadAdapter.loadMemberJpaEntity(participant.getMemberId().getValue()))
+                        .applyDateTime(participant.getApplyDateTime())
                 .build());
 
         LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();

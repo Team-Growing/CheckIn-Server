@@ -9,7 +9,8 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Place
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -90,7 +91,7 @@ public class Lecture {
         this.enrollStudent++;
 
         return Participant.builder()
-                .applyDateTime(LocalDateTime.now())
+                .applyDateTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime())
                 .memberId(student.getMemberId())
                 .build();
     }

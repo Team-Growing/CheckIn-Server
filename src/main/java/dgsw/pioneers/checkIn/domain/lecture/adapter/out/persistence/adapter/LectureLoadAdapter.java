@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class lectureLoadAdapter implements LoadLecturePort {
+public class LectureLoadAdapter implements LoadLecturePort {
 
     private final LectureRepository lectureRepository;
     private final LectureMapper lectureMapper;

@@ -5,7 +5,7 @@ import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.Attendanc
 import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendanceJpaEntity;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.out.CreateAttendancePort;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter.lectureLoadAdapter;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter.LectureLoadAdapter;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class AttendancePersistenceAdapter implements CreateAttendancePort {
 
     private final AttendanceRepository attendanceRepository;
-    private final lectureLoadAdapter lectureLoadAdapter;
+    private final LectureLoadAdapter lectureLoadAdapter;
     private final AttendanceMapper attendanceMapper;
 
     @Override
