@@ -2,6 +2,8 @@ package dgsw.pioneers.checkIn.global.batch.step.processor;
 
 import dgsw.pioneers.checkIn.global.annotation.batch.Processor;
 import dgsw.pioneers.checkIn.global.batch.step.dto.AttendanceJobDto;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepContribution;
@@ -12,13 +14,14 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
 @Processor
+@RequiredArgsConstructor
 public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
 
+    private final ZoneDateTimeUtil zoneDateTimeUtil;
     private List<AttendanceJobDto> attendances;
 
     @Override
@@ -36,7 +39,7 @@ public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
         this.attendances.forEach(attendanceJobDto -> {
-            attendanceJobDto.setLectureDate(LocalDate.now().plusDays(attendanceJobDto.getDayOfWeek().getValue()));
+            attendanceJobDto.setLectureDate(zoneDateTimeUtil.nowToLocalDate().plusDays(attendanceJobDto.getDayOfWeek().getValue()));
         });
 
         return RepeatStatus.FINISHED;
