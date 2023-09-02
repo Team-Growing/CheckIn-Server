@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.global.config.security.jackson;
+package dgsw.pioneers.checkIn.global.config.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
