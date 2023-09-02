@@ -28,7 +28,7 @@ public class Lecture {
 
     private final AcceptableStudent acceptableStudent;
 
-    private final LectureTeacher lectureTeacher;
+    private LectureTeacher lectureTeacher;
 
     private final LectureSchedule lectureSchedule;
 
@@ -92,6 +92,13 @@ public class Lecture {
         return Participant.builder()
                 .applyDateTime(LocalDateTime.now())
                 .memberId(student.getMemberId())
+                .build();
+    }
+
+    public void updateTeacherInfo(String teacherName) {
+        this.lectureTeacher = LectureTeacher.builder()
+                .memberId(this.lectureTeacher.getMemberId())
+                .name(teacherName)
                 .build();
     }
 }

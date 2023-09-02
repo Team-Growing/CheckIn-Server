@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +17,6 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
     Optional<LectureJpaEntity> findById(Long lectureId);
 
     List<LectureJpaEntity> findAllByLectureStatus(LectureStatus lectureStatus);
+
+    List<LectureJpaEntity> findAllByLectureStatusAndLectureScheduleDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

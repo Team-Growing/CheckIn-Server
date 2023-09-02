@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @WebAdapter
 @RestController
@@ -59,5 +60,12 @@ public class LectureController {
     public ResponseData<Lecture> loadLecture(@PathVariable long id) {
         Lecture lecture = lectureLoadUseCase.loadLecture(new Lecture.LectureId(id));
         return ResponseData.of(HttpStatus.OK, "강좌 불러오기 성공", lecture);
+    }
+
+    @GetMapping("/today")
+    @Operation(summary = "load today lecture", description = "오늘 강좌 불러오기")
+    public ResponseData<List<Lecture>> loadTodayLecture() {
+        List<Lecture> lectures = lectureLoadUseCase.loadTodayLecture();
+        return ResponseData.of(HttpStatus.OK, "오늘 강좌 불러오기 성공", lectures);
     }
 }

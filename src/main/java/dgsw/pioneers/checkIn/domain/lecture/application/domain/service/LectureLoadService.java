@@ -4,10 +4,14 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLoadUseCase;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @UseCase
@@ -16,14 +20,37 @@ import java.util.List;
 public class LectureLoadService implements LectureLoadUseCase {
 
     private final LoadLecturePort loadLecturePort;
+    private final MemberLoadUseCase memberLoadUseCase;
+    private final ZoneDateTimeUtil zoneDateTimeUtil;
 
     @Override
     public Lecture loadLecture(Lecture.LectureId lectureId) {
-        return loadLecturePort.loadLecture(lectureId.getValue());
+
+        Lecture lecture = loadLecturePort.loadLecture(lectureId.getValue());
+        updateTeacherInfo(lecture);
+
+        return lecture;
     }
 
     @Override
     public List<Lecture> loadAllCoursePeriodLecture() {
         return loadLecturePort.loadAllLectureByStatus(LectureStatus.COURSE_PERIOD);
+    }
+
+    @Override
+    public List<Lecture> loadTodayLecture() {
+
+        DayOfWeek dayOfWeek = zoneDateTimeUtil.nowToLocalDate().getDayOfWeek();
+
+        List<Lecture> lectures = loadLecturePort.loadAllLectureByDayOfWeek(LectureStatus.COURSE_PERIOD, dayOfWeek);
+        lectures.forEach(this::updateTeacherInfo);
+
+        return lectures;
+    }
+
+    private void updateTeacherInfo(Lecture lecture) {
+
+        Member teacher = memberLoadUseCase.loadMember(lecture.getLectureTeacher().getMemberId());
+        lecture.updateTeacherInfo(teacher.getName());
     }
 }

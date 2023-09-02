@@ -10,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.Le
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import lombok.RequiredArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,13 @@ public class lectureLoadAdapter implements LoadLecturePort {
     public List<Lecture> loadAllLectureByStatus(LectureStatus lectureStatus) {
 
         return lectureRepository.findAllByLectureStatus(lectureStatus).stream()
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+
+        return lectureRepository.findAllByLectureStatusAndLectureScheduleDayOfWeek(lectureStatus, dayOfWeek).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 

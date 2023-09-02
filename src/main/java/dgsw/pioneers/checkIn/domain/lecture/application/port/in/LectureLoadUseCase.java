@@ -9,4 +9,6 @@ public interface LectureLoadUseCase {
     Lecture loadLecture(Lecture.LectureId lectureId);
 
     List<Lecture> loadAllCoursePeriodLecture();
+
+    List<Lecture> loadTodayLecture();
 }
