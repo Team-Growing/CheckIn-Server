@@ -34,4 +34,10 @@ public class lectureLoadAdapter implements LoadLecturePort {
         return lectureRepository.findAllByLectureStatus(lectureStatus).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
+
+    public LectureJpaEntity loadLectureJpaEntity(Long lectureId) {
+
+        return lectureRepository.findById(lectureId)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
 }

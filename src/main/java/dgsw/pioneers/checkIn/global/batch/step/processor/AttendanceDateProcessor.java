@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.global.batch.step.processor;
 
+import dgsw.pioneers.checkIn.global.annotation.batch.Processor;
 import dgsw.pioneers.checkIn.global.batch.step.dto.AttendanceJobDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
+@Processor
 public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
 
     private List<AttendanceJobDto> attendances;

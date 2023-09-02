@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.global.batch.step.writer;
 
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceGenerateUseCase;
+import dgsw.pioneers.checkIn.global.annotation.batch.Writer;
 import dgsw.pioneers.checkIn.global.batch.step.dto.AttendanceJobDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import java.util.List;
 
 @Slf4j
+@Writer
 @RequiredArgsConstructor
 public class AttendanceWriter implements Tasklet, StepExecutionListener {
 

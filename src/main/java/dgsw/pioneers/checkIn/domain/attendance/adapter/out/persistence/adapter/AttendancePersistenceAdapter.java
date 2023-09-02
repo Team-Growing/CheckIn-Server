@@ -5,8 +5,7 @@ import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.Attendanc
 import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendanceJpaEntity;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.out.CreateAttendancePort;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.LectureMapper;
-import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter.lectureLoadAdapter;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,16 +14,15 @@ import lombok.RequiredArgsConstructor;
 public class AttendancePersistenceAdapter implements CreateAttendancePort {
 
     private final AttendanceRepository attendanceRepository;
-    private final LoadLecturePort loadLecturePort;
+    private final lectureLoadAdapter lectureLoadAdapter;
     private final AttendanceMapper attendanceMapper;
-    private final LectureMapper lectureMapper;
-
 
     @Override
     public void createAttendance(Attendance attendance) {
 
-        AttendanceJpaEntity attendanceJpaEntity = attendanceMapper.mapToJpaEntity(attendance,
-                lectureMapper.mapToJpaEntity(loadLecturePort.loadLecture(attendance.getLectureId().getValue())));
+        AttendanceJpaEntity attendanceJpaEntity = attendanceMapper.mapToJpaEntity(
+                attendance,
+                lectureLoadAdapter.loadLectureJpaEntity(attendance.getLectureId().getValue()));
 
         attendanceRepository.save(attendanceJpaEntity);
     }

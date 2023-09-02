@@ -19,15 +19,17 @@ public class Scheduler {
     private final JobLauncher jobLauncher;
     private final Job produceAttendanceJob;
 
+    //매주 일요일 오후 11시에 작업 실행
     @Scheduled(cron = "0 0 23 ? * SUN", zone = "Asia/Seoul")
     public void setAttendanceJob() {
         try {
+            log.info("<<<<<<<<<< AttendanceJob Start {} >>>>>>>>>>", LocalDateTime.now());
+
             final JobParameters jobParameters = new JobParametersBuilder()
                     .addLong("time", System.currentTimeMillis())
                     .toJobParameters();
 
             jobLauncher.run(produceAttendanceJob, jobParameters);
-            log.info("<<<<<<<<<< AttendanceJob Start {} >>>>>>>>>>", LocalDateTime.now());
         } catch (Exception e) {
             log.error("fail to process file", e);
         }

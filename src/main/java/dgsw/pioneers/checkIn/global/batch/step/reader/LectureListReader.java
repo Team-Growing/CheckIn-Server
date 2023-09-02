@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.global.batch.step.reader;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
+import dgsw.pioneers.checkIn.global.annotation.batch.Reader;
 import dgsw.pioneers.checkIn.global.batch.step.dto.AttendanceJobDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,9 @@ import org.springframework.batch.repeat.RepeatStatus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
+@Reader
 @RequiredArgsConstructor
 public class LectureListReader implements Tasklet, StepExecutionListener {
 
@@ -33,8 +34,8 @@ public class LectureListReader implements Tasklet, StepExecutionListener {
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-        attendances = lectureLoadUseCase.loadAllCoursePeriodLecture().stream()
-                .map(AttendanceJobDto::new).collect(Collectors.toList());
+        this.attendances = lectureLoadUseCase.loadAllCoursePeriodLecture().stream()
+                .map(AttendanceJobDto::new).toList();
 
         return RepeatStatus.FINISHED;
     }

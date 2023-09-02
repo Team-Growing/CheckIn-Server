@@ -1,5 +1,9 @@
 package dgsw.pioneers.checkIn.global.batch.step.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
@@ -19,10 +23,13 @@ public class AttendanceJobDto implements Serializable {
     private AttendanceStatus attendanceStatus;
     private DayOfWeek dayOfWeek;
     private LectureId lectureId;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate lectureDate;
 
     public AttendanceJobDto(Lecture lecture) {
-        new AttendanceJobDto(AttendanceStatus.PERIOD_EXPIRED, lecture.getLectureSchedule().getDayOfWeek(), lecture.getLectureId(), null);
+       this(AttendanceStatus.PERIOD_EXPIRED, lecture.getLectureSchedule().getDayOfWeek(), lecture.getLectureId(), null);
     }
 
     public void setLectureDate(LocalDate lectureDate) {
