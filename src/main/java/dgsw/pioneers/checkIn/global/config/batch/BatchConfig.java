@@ -11,25 +11,25 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-@Configuration
-@RequiredArgsConstructor
-public class BatchConfig {
-
-    private final ObjectMapper objectMapper;
-
-    @Bean
-    public JobRepository createJobRepository(DataSource dataSource, PlatformTransactionManager transactionManager) throws Exception {
-
-        JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
-
-        Jackson2ExecutionContextStringSerializer defaultSerializer = new Jackson2ExecutionContextStringSerializer();
-        defaultSerializer.setObjectMapper(objectMapper);
-
-        jobRepositoryFactoryBean.setDataSource(dataSource);
-        jobRepositoryFactoryBean.setTransactionManager(transactionManager);
-        jobRepositoryFactoryBean.afterPropertiesSet();
-        jobRepositoryFactoryBean.setSerializer(defaultSerializer);
-
-        return jobRepositoryFactoryBean.getObject();
-    }
-}
+//@Configuration
+//@RequiredArgsConstructor
+//public class BatchConfig {
+//
+//    private final ObjectMapper objectMapper;
+//
+//    @Bean
+//    public JobRepository createJobRepository(DataSource dataSource, PlatformTransactionManager transactionManager) throws Exception {
+//
+//        JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
+//
+//        Jackson2ExecutionContextStringSerializer defaultSerializer = new Jackson2ExecutionContextStringSerializer();
+//        defaultSerializer.setObjectMapper(objectMapper);
+//
+//        jobRepositoryFactoryBean.setDataSource(dataSource);
+//        jobRepositoryFactoryBean.setTransactionManager(transactionManager);
+//        jobRepositoryFactoryBean.afterPropertiesSet();
+//        jobRepositoryFactoryBean.setSerializer(defaultSerializer);
+//
+//        return jobRepositoryFactoryBean.getObject();
+//    }
+//}
