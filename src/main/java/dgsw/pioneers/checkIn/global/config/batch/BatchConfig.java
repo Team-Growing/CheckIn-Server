@@ -23,29 +23,12 @@ public class BatchConfig {
 
     private final ObjectMapper objectMapper;
 
-//    @Bean
-//    public JobRepository createJobRepository(DataSource dataSource, PlatformTransactionManager transactionManager) throws Exception {
-//
-//        JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
-//
-//        Jackson2ExecutionContextStringSerializer defaultSerializer = new Jackson2ExecutionContextStringSerializer();
-//        defaultSerializer.setObjectMapper(objectMapper);
-//
-//        jobRepositoryFactoryBean.setDataSource(dataSource);
-//        jobRepositoryFactoryBean.setTransactionManager(transactionManager);
-//        jobRepositoryFactoryBean.afterPropertiesSet();
-//        jobRepositoryFactoryBean.setSerializer(defaultSerializer);
-//
-//        return jobRepositoryFactoryBean.getObject();
-//    }
-
     @Bean
     public ExecutionContextSerializer customSerializer() {
+
         Jackson2ExecutionContextStringSerializer defaultSerializer = new Jackson2ExecutionContextStringSerializer(AttendanceJobDto.class.getName());
         defaultSerializer.setObjectMapper(objectMapper);
-
         return defaultSerializer;
-//        Jackson2ExecutionContextStringSerializer(AttendanceJobDto.class.getName())
     }
 
     @Bean
@@ -55,6 +38,7 @@ public class BatchConfig {
         return new DefaultBatchConfigurer(dataSource) {
             @Override
             protected JobExplorer createJobExplorer() throws Exception {
+
                 JobExplorerFactoryBean jobExplorerFactoryBean = new JobExplorerFactoryBean();
                 jobExplorerFactoryBean.setDataSource(dataSource);
                 jobExplorerFactoryBean
@@ -65,6 +49,7 @@ public class BatchConfig {
 
             @Override
             protected JobRepository createJobRepository() throws Exception {
+
                 JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
                 jobRepositoryFactoryBean.setDataSource(dataSource);
                 jobRepositoryFactoryBean

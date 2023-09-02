@@ -16,8 +16,6 @@ public class JacksonConfig {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         objectMapper.registerModule(new JavaTimeModule()); // Java 8 날짜/시간 모듈 등록
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // 날짜를 문자열로 직렬화
-//        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-
         return objectMapper;
     }
 }
