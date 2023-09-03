@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/sign-up")
 @RequiredArgsConstructor
-@Tag(name = "signUp", description = "signUp Api")
+@Tag(name = "SignUp", description = "SignUp Api")
 public class SignUpController {
 
     private final SignUpUseCase signUpUseCase;
