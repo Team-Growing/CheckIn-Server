@@ -2,7 +2,6 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
-import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.LectureMapper;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 public class LectureLoadAdapter implements LoadLecturePort {
 
     private final LectureRepository lectureRepository;
-    private final ParticipantLoadAdapter participantLoadAdapter;
     private final LectureMapper lectureMapper;
 
     @Override
@@ -36,14 +34,6 @@ public class LectureLoadAdapter implements LoadLecturePort {
 
         return lectureRepository.findAllByLectureStatus(lectureStatus).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Lecture> loadAllLectureByMemberAndStatus(Member.MemberId memberId, LectureStatus lectureStatus) {
-
-        return participantLoadAdapter.loadAllLectureByMemberAndLectureStatus(memberId, lectureStatus)
-                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntity(lectureToMember.getLectureJpaEntity()))
-                .collect(Collectors.toList());
     }
 
     @Override

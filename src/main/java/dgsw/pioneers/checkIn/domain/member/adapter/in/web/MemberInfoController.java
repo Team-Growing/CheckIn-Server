@@ -43,4 +43,12 @@ public class MemberInfoController {
         List<Lecture> lectures = memberLectureLoadUseCase.loadLecture(member.getMemberId());
         return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectures);
     }
+
+//    @AuthCheck
+//    @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
+//    @GetMapping("/lectures/my/today")
+//    public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
+//        List<Lecture> lectures = memberLectureLoadUseCase.loadLecture(member.getMemberId());
+//        return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
+//    }
 }
