@@ -5,10 +5,13 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Lectu
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLectureByParticipantPort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLectureLoadUseCase;
+import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLoadUseCase;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @UseCase
@@ -17,9 +20,32 @@ import java.util.List;
 public class MemberLectureLoadService implements MemberLectureLoadUseCase {
 
     private final LoadLectureByParticipantPort loadLectureByParticipantPort;
+    private final MemberLoadUseCase memberLoadUseCase;
+    private final ZoneDateTimeUtil zoneDateTimeUtil;
 
     @Override
-    public List<Lecture> loadLecture(Member.MemberId memberId) {
-        return loadLectureByParticipantPort.loadAllLectureByMemberAndStatus(memberId, LectureStatus.COURSE_PERIOD);
+    public List<Lecture> loadLectureByMember(Member.MemberId memberId) {
+
+        List<Lecture> lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatus(memberId, LectureStatus.COURSE_PERIOD);
+        lectures.forEach(this::updateTeacherInfo);
+
+        return lectures;
+    }
+
+    @Override
+    public List<Lecture> loadTodayLectureByMember(Member.MemberId memberId) {
+
+        DayOfWeek dayOfWeek = zoneDateTimeUtil.nowToLocalDate().getDayOfWeek();
+
+        List<Lecture> lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatusAndDayOfWeek(memberId, LectureStatus.COURSE_PERIOD, dayOfWeek);
+        lectures.forEach(this::updateTeacherInfo);
+
+        return lectures;
+    }
+
+    private void updateTeacherInfo(Lecture lecture) {
+
+        Member teacher = memberLoadUseCase.loadMember(lecture.getLectureTeacher().getMemberId());
+        lecture.updateTeacherInfo(teacher.getName());
     }
 }

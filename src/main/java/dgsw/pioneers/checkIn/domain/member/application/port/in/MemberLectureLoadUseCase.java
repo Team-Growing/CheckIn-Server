@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface MemberLectureLoadUseCase {
 
-    List<Lecture> loadLecture(Member.MemberId memberId);
+    List<Lecture> loadLectureByMember(Member.MemberId memberId);
+
+    List<Lecture> loadTodayLectureByMember(Member.MemberId memberId);
 }

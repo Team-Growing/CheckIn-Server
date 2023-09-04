@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Repository
@@ -16,5 +17,10 @@ public interface LectureToMemberRepository extends JpaRepository<LectureToMember
     boolean existsByLectureJpaEntityAndMemberJpaEntity(LectureJpaEntity lectureJpa, MemberJpaEntity memberJpaEntity);
 
     @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
-    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus);
+    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(
+            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus);
+
+    @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
+    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
+            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

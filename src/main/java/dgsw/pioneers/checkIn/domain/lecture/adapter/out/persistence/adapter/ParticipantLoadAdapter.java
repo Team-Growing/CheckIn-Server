@@ -10,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @PersistenceAdapter
@@ -31,5 +32,12 @@ public class ParticipantLoadAdapter implements LoadParticipantPort {
         return lectureToMemberRepository.findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(
                 memberLoadAdapter.loadMemberJpaEntity(memberId.getValue()),
                 lectureStatus);
+    }
+
+    public List<LectureToMemberEntity> loadAllTodayLectureByMemberAndLectureStatus(Member.MemberId memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+        return lectureToMemberRepository.findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
+                memberLoadAdapter.loadMemberJpaEntity(memberId.getValue()),
+                lectureStatus,
+                dayOfWeek);
     }
 }

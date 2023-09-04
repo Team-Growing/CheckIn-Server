@@ -21,10 +21,10 @@ import java.util.List;
 
 @WebAdapter
 @RestController
-@RequestMapping(value = "/memberInfo")
+@RequestMapping(value = "/member")
 @RequiredArgsConstructor
-@Tag(name = "MemberInfo", description = "MemberInfo Api")
-public class MemberInfoController {
+@Tag(name = "Member", description = "Member Api")
+public class MemberController {
 
     private final MemberLectureLoadUseCase memberLectureLoadUseCase;
 
@@ -40,15 +40,15 @@ public class MemberInfoController {
     @Operation(summary = "load member lectures", description = "내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/lectures/my")
     public ResponseData<List<Lecture>> getMemberLecture(@RequestAttribute Member member) {
-        List<Lecture> lectures = memberLectureLoadUseCase.loadLecture(member.getMemberId());
+        List<Lecture> lectures = memberLectureLoadUseCase.loadLectureByMember(member.getMemberId());
         return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectures);
     }
 
-//    @AuthCheck
-//    @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
-//    @GetMapping("/lectures/my/today")
-//    public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
-//        List<Lecture> lectures = memberLectureLoadUseCase.loadLecture(member.getMemberId());
-//        return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
-//    }
+    @AuthCheck
+    @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    @GetMapping("/lectures/my/today")
+    public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
+        List<Lecture> lectures = memberLectureLoadUseCase.loadTodayLectureByMember(member.getMemberId());
+        return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
+    }
 }

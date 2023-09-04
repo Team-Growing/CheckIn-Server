@@ -8,6 +8,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,14 @@ public class LectureByParticipantAdapter implements LoadLectureByParticipantPort
     public List<Lecture> loadAllLectureByMemberAndStatus(Member.MemberId memberId, LectureStatus lectureStatus) {
 
         return participantLoadAdapter.loadAllLectureByMemberAndLectureStatus(memberId, lectureStatus)
+                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntity(lectureToMember.getLectureJpaEntity()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Lecture> loadAllLectureByMemberAndStatusAndDayOfWeek(Member.MemberId memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+
+        return participantLoadAdapter.loadAllTodayLectureByMemberAndLectureStatus(memberId, lectureStatus, dayOfWeek)
                 .stream().map(lectureToMember -> lectureMapper.mapToDomainEntity(lectureToMember.getLectureJpaEntity()))
                 .collect(Collectors.toList());
     }
