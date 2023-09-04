@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
 
-    private final ZoneDateTimeUtil zoneDateTimeUtil;
     private List<AttendanceJobDto> attendances;
 
     @Override
@@ -39,7 +38,7 @@ public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
         this.attendances.forEach(attendanceJobDto -> {
-            attendanceJobDto.setLectureDate(zoneDateTimeUtil.nowToLocalDate().plusDays(attendanceJobDto.getDayOfWeek().getValue()));
+            attendanceJobDto.setLectureDate(ZoneDateTimeUtil.nowToLocalDate().plusDays(attendanceJobDto.getDayOfWeek().getValue()));
         });
 
         return RepeatStatus.FINISHED;

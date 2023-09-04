@@ -21,7 +21,6 @@ public class MemberLectureLoadService implements MemberLectureLoadUseCase {
 
     private final LoadLectureByParticipantPort loadLectureByParticipantPort;
     private final MemberLoadUseCase memberLoadUseCase;
-    private final ZoneDateTimeUtil zoneDateTimeUtil;
 
     @Override
     public List<Lecture> loadLectureByMember(Member.MemberId memberId) {
@@ -35,7 +34,7 @@ public class MemberLectureLoadService implements MemberLectureLoadUseCase {
     @Override
     public List<Lecture> loadTodayLectureByMember(Member.MemberId memberId) {
 
-        DayOfWeek dayOfWeek = zoneDateTimeUtil.nowToLocalDate().getDayOfWeek();
+        DayOfWeek dayOfWeek = ZoneDateTimeUtil.nowToLocalDate().getDayOfWeek();
 
         List<Lecture> lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatusAndDayOfWeek(memberId, LectureStatus.COURSE_PERIOD, dayOfWeek);
         lectures.forEach(this::updateTeacherInfo);

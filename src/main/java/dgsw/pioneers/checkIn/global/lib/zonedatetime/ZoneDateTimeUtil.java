@@ -1,19 +1,18 @@
 package dgsw.pioneers.checkIn.global.lib.zonedatetime;
 
-import org.springframework.stereotype.Component;
+import java.time.*;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-@Component
 public class ZoneDateTimeUtil {
 
-    public LocalDate nowToLocalDate() {
-        return now().toLocalDate();
+    public static LocalDateTime nowToLocalDateTime() {
+        return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();
     }
 
-    private ZonedDateTime now() {
-        return ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+    public static LocalDate nowToLocalDate() {
+        return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate();
+    }
+
+    public static LocalTime nowToLocalTime() {
+        return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalTime();
     }
 }
