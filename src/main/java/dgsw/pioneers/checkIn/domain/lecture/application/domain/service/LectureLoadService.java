@@ -5,7 +5,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Lectu
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLoadUseCase;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 public class LectureLoadService implements LectureLoadUseCase {
 
     private final LoadLecturePort loadLecturePort;
-    private final MemberLoadUseCase memberLoadUseCase;
+    private final LoadMemberPort loadMemberPort;
 
     @Override
     public Lecture loadLecture(Lecture.LectureId lectureId) {
@@ -49,7 +49,7 @@ public class LectureLoadService implements LectureLoadUseCase {
 
     private void updateTeacherInfo(Lecture lecture) {
 
-        Member teacher = memberLoadUseCase.loadMember(lecture.getLectureTeacher().getMemberId());
+        Member teacher = loadMemberPort.loadMember(lecture.getLectureTeacher().getMemberId());
         lecture.updateTeacherInfo(teacher.getName());
     }
 }
