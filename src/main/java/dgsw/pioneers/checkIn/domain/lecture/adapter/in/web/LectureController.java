@@ -37,10 +37,9 @@ public class LectureController {
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "generate Lecture", description = "강좌 생성", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
-            @RequestAttribute Member member,
             @RequestBody @Valid LectureGenerateReq lectureGenerateReq
     ) {
-        lectureGenerateUseCase.generateLecture(lectureGenerateReq.mapToDomainEntity(member.getMemberId()));
+        lectureGenerateUseCase.generateLecture(lectureGenerateReq.mapToDomainEntity());
         return Response.of(HttpStatus.OK, "강좌 생성 성공");
     }
 

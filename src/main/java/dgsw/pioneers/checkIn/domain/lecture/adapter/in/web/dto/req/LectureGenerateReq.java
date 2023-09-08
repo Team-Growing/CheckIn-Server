@@ -23,12 +23,14 @@ public class LectureGenerateReq {
     private PlaceType placeType;
     @NotNull
     private LectureTag lectureTag;
+    @NotBlank
+    private String teacherId;
     @NotNull
     private AcceptableStudent acceptableStudent;
     @NotNull
     private LectureSchedule lectureSchedule;
 
-    public Lecture mapToDomainEntity(Member.MemberId teacherId) {
+    public Lecture mapToDomainEntity() {
         return Lecture.teacherWithId(
                 this.lectureName,
                 this.explanation,
@@ -36,7 +38,7 @@ public class LectureGenerateReq {
                 this.lectureTag,
                 this.acceptableStudent,
                 LectureTeacher.builder()
-                        .memberId(teacherId).build(),
+                        .memberId(new Member.MemberId(teacherId)).build(),
                 this.lectureSchedule
         );
     }

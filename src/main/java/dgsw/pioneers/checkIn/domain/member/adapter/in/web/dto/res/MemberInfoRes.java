@@ -16,6 +16,7 @@ public class MemberInfoRes {
     private String id;
     private String email;
     private String name;
+    private String subject;
     private MemberRole memberRole;
     private StudentInfoDto studentInfo;
 
@@ -24,6 +25,7 @@ public class MemberInfoRes {
                 .id(member.getMemberId().getValue())
                 .email(member.getEmail())
                 .name(member.getName())
+                .subject(member.getSubject())
                 .memberRole(member.getMemberRole())
                 .studentInfo(StudentInfoDto.builder()
                         .grade(member.getStudentInfo().getGrade())
