@@ -22,6 +22,7 @@ public class Member {
 
     private final MemberRole memberRole;
     private StudentInfo studentInfo;
+    private String subject; //선생님이면 자기 담당 역할 ex) '나르샤', 학생이면 '학생'이라 저장
 
     @Value
     public static class MemberId {
@@ -47,8 +48,9 @@ public class Member {
             String pw,
             String email,
             MemberRole memberRole,
-            StudentInfo studentInfo) {
-        return new Member(memberId, name, pw, email, memberRole, studentInfo);
+            StudentInfo studentInfo,
+            String subject) {
+        return new Member(memberId, name, pw, email, memberRole, studentInfo, subject);
     }
 
     public static Member studentWithId(
@@ -57,7 +59,7 @@ public class Member {
             String pw,
             String email,
             StudentInfo studentInfo) {
-        return new Member(memberId, name, pw, email, MemberRole.STUDENT, studentInfo);
+        return new Member(memberId, name, pw, email, MemberRole.STUDENT, studentInfo, "학생");
     }
 
     public static Member teacherWithId(
@@ -65,8 +67,9 @@ public class Member {
             String name,
             String pw,
             String email,
-            StudentInfo studentInfo) {
-        return new Member(memberId, name, pw, email, MemberRole.TEACHER, studentInfo);
+            StudentInfo studentInfo,
+            String subject) {
+        return new Member(memberId, name, pw, email, MemberRole.TEACHER, studentInfo, subject);
     }
 
     public void encodePw(String encodedPw) {

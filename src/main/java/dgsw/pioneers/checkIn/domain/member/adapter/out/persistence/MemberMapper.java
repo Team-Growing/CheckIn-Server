@@ -18,7 +18,8 @@ public class MemberMapper {
                 member.getPw(),
                 member.getEmail(),
                 member.getMemberRole(),
-                getStudentInfo(member.getStudentInfo())
+                getStudentInfo(member.getStudentInfo()),
+                member.getSubject()
         );
     }
 
@@ -30,6 +31,7 @@ public class MemberMapper {
                 .email(member.getEmail())
                 .memberRole(member.getMemberRole())
                 .studentInfo(getStudentJPAInfo(member.getStudentInfo()))
+                .subject(member.getSubject())
                 .build();
     }
 

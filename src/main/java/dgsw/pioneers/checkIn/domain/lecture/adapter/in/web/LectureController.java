@@ -34,7 +34,7 @@ public class LectureController {
     private final LectureLoadUseCase lectureLoadUseCase;
 
     @PostMapping
-    @AuthCheck(roles = {MemberRole.ADMIN, MemberRole.TEACHER})
+    @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "generate Lecture", description = "강좌 생성", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestAttribute Member member,

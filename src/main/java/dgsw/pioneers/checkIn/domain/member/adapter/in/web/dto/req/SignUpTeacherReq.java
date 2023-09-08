@@ -17,6 +17,8 @@ public class SignUpTeacherReq {
     private String pw;
     @NotBlank
     private String name;
+    @NotBlank
+    private String subject;
 
     public Member mapToDomainEntity() {
         return Member.teacherWithId(
@@ -24,7 +26,8 @@ public class SignUpTeacherReq {
                 this.name,
                 this.pw,
                 this.email,
-                null
+                null,
+                this.subject
         );
     }
 }

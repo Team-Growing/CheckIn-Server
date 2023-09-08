@@ -32,6 +32,9 @@ public class MemberJpaEntity {
     private String email;
 
     @NotNull
+    private String subject;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
