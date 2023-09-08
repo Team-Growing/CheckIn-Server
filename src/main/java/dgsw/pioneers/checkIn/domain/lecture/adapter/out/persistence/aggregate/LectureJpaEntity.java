@@ -24,6 +24,9 @@ public class LectureJpaEntity {
     private Long id;
 
     @NotNull
+    private String lectureName;
+
+    @NotNull
     private String explanation;
 
     @NotNull
@@ -58,7 +61,8 @@ public class LectureJpaEntity {
     private List<LectureToMemberEntity> participants;
 
     @Builder
-    public LectureJpaEntity(String explanation, LectureStatus lectureStatus, PlaceType placeType, LectureTag lectureTag, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
+    public LectureJpaEntity(String lectureName, String explanation, LectureStatus lectureStatus, PlaceType placeType, LectureTag lectureTag, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
+        this.lectureName = lectureName;
         this.explanation = explanation;
         this.lectureStatus = lectureStatus;
         this.placeType = placeType;

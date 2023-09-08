@@ -9,11 +9,14 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Place
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
 public class LectureGenerateReq {
 
+    @NotBlank
+    private String lectureName;
     @NotNull
     private String explanation;
     @NotNull
@@ -27,6 +30,7 @@ public class LectureGenerateReq {
 
     public Lecture mapToDomainEntity(Member.MemberId teacherId) {
         return Lecture.teacherWithId(
+                this.lectureName,
                 this.explanation,
                 this.placeType,
                 this.lectureTag,

@@ -18,6 +18,7 @@ import java.util.List;
 public class Lecture {
 
     private final LectureId lectureId;
+    private final String lectureName;
 
     private String explanation;
 
@@ -47,6 +48,7 @@ public class Lecture {
 
     public static Lecture withId(
             LectureId lectureId,
+            String lectureName,
             String explanation,
             LectureStatus lectureStatus,
             PlaceType placeType,
@@ -57,17 +59,18 @@ public class Lecture {
             int enrollStudent,
             List<WeekPlan> weekPlans,
             List<Participant> participants) {
-        return new Lecture(lectureId, explanation, lectureStatus, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans, participants);
+        return new Lecture(lectureId, lectureName, explanation, lectureStatus, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, enrollStudent, weekPlans, participants);
     }
 
     public static Lecture teacherWithId(
+            String lectureName,
             String explanation,
             PlaceType placeType,
             LectureTag lectureTag,
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule) {
-        return new Lecture(null, explanation, LectureStatus.WAITING_PERIOD, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
+        return new Lecture(null, lectureName, explanation, LectureStatus.WAITING_PERIOD, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
     }
 
     public void updateWeekPlans(List<WeekPlan> weekPlans) {

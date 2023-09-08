@@ -17,6 +17,7 @@ public class LectureMapper {
      public Lecture mapToDomainEntity(LectureJpaEntity lectureJpa) {
          return Lecture.withId(
                 new Lecture.LectureId(lectureJpa.getId()),
+                lectureJpa.getLectureName(),
                 lectureJpa.getExplanation(),
                 lectureJpa.getLectureStatus(),
                 lectureJpa.getPlaceType(),
@@ -40,6 +41,7 @@ public class LectureMapper {
 
     public LectureJpaEntity mapToJpaEntity(Lecture lecture) {
         return LectureJpaEntity.builder()
+                .lectureName(lecture.getLectureName())
                 .explanation(lecture.getExplanation())
                 .lectureStatus(lecture.getLectureStatus())
                 .placeType(lecture.getPlaceType())
