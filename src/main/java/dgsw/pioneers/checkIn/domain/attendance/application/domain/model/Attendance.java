@@ -19,7 +19,6 @@ public class Attendance {
 
     private int attendStudent;
 
-    @Setter
     private String code;
 
     private final LectureId lectureId;
@@ -53,5 +52,9 @@ public class Attendance {
         this.lectureDate = lectureDate;
         this.attendStudent = 0;
         this.lectureId = lectureId;
+    }
+
+    public void updateCode(String code) {
+        this.code = code;
     }
 }

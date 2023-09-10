@@ -45,4 +45,8 @@ public class AttendanceJpaEntity {
         this.lecture = lecture;
         this.code = code;
     }
+
+    public void updateCode(String code) {
+        this.code = code;
+    }
 }

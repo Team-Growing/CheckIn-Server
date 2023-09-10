@@ -54,9 +54,9 @@ public class LectureController {
         return Response.of(HttpStatus.OK, "주차 게획 수정 성공");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{lectureId}")
     @Operation(summary = "load lecture", description = "강좌 불러오기")
-    public ResponseData<Lecture> loadLecture(@PathVariable long id) {
+    public ResponseData<Lecture> loadLecture(@PathVariable("lectureId") long id) {
         Lecture lecture = lectureLoadUseCase.loadLecture(new Lecture.LectureId(id));
         return ResponseData.of(HttpStatus.OK, "강좌 불러오기 성공", lecture);
     }
