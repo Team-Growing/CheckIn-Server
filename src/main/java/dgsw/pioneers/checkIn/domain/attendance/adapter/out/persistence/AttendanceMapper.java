@@ -1,10 +1,16 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence;
 
 import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendanceJpaEntity;
+import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendantJpaEntity;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendant;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.Mapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 public class AttendanceMapper {
@@ -27,7 +33,19 @@ public class AttendanceMapper {
                 attendanceJpa.getAttendStudent(),
                 attendanceJpa.getCode(),
                 new Lecture.LectureId(lectureId),
-                null
+                getAttendants(attendanceJpa)
         );
+    }
+
+    private List<Attendant> getAttendants(AttendanceJpaEntity attendanceJpa) {
+        if (attendanceJpa.getAttendants() == null) return null;
+        else return attendanceJpa.getAttendants().stream().map(this::attendantMapToDomain).collect(Collectors.toList());
+    }
+
+    private Attendant attendantMapToDomain(AttendantJpaEntity attendantJpaEntity) {
+        return Attendant.builder()
+                .attendantId(new Member.MemberId(attendantJpaEntity.getMemberId().getId()))
+                .applyDateTime(attendantJpaEntity.getApplyDateTime())
+                .build();
     }
 }

@@ -6,8 +6,6 @@ import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.out.LoadAttendancePort;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter.LectureLoadAdapter;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,16 +15,23 @@ import lombok.RequiredArgsConstructor;
 public class AttendanceLoadAdapter implements LoadAttendancePort {
 
     private final AttendanceRepository attendanceRepository;
-    private final LectureLoadAdapter lectureLoadAdapter;
     private final AttendanceMapper attendanceMapper;
 
     @Override
     public Attendance loadAttendanceByLectureAndAttendanceStatus(Long lectureId, AttendanceStatus attendanceStatus) {
 
-        LectureJpaEntity lectureJpaEntity = lectureLoadAdapter.loadLectureJpaEntity(lectureId);
+        AttendanceJpaEntity attendanceJpaEntity = attendanceRepository.selectAttendanceByLectureAndAndAttendanceStatus(
+                lectureId, attendanceStatus
+        ).orElseThrow(ResourceNotFoundException::new);
 
-        AttendanceJpaEntity attendanceJpaEntity = attendanceRepository.findByLectureAndAndAttendanceStatus(
-                lectureJpaEntity, attendanceStatus
+        return attendanceMapper.mapToDomainEntity(attendanceJpaEntity, lectureId);
+    }
+
+    @Override
+    public Attendance loadAttendanceByLectureAndAttendanceStatusWithAttendants(Long lectureId, AttendanceStatus attendanceStatus) {
+
+        AttendanceJpaEntity attendanceJpaEntity = attendanceRepository.selectAttendanceByLectureAndAndAttendanceStatusWithAttendants(
+                lectureId, attendanceStatus
         ).orElseThrow(ResourceNotFoundException::new);
 
         return attendanceMapper.mapToDomainEntity(attendanceJpaEntity, lectureId);

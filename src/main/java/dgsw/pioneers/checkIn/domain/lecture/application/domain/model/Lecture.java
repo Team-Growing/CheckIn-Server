@@ -7,10 +7,9 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Lectu
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureTag;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.*;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -94,7 +93,7 @@ public class Lecture {
         this.enrollStudent++;
 
         return Participant.builder()
-                .applyDateTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime())
+                .applyDateTime(ZoneDateTimeUtil.nowToLocalDateTime())
                 .memberId(student.getMemberId())
                 .build();
     }

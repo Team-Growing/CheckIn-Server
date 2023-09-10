@@ -6,4 +6,5 @@ import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.At
 public interface LoadAttendancePort {
 
     Attendance loadAttendanceByLectureAndAttendanceStatus(Long lectureId, AttendanceStatus attendanceStatus);
+    Attendance loadAttendanceByLectureAndAttendanceStatusWithAttendants(Long lectureId, AttendanceStatus attendanceStatus);
 }

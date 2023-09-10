@@ -54,6 +54,5 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
         lectureJpaEntity.updateEnrollStudent(lecture.getEnrollStudent());
-        lectureRepository.save(lectureJpaEntity);
     }
 }

@@ -7,6 +7,7 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureTag;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.PlaceType;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.util.List;
 @Table(name = "lecture")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class LectureJpaEntity {
 
     @Id
