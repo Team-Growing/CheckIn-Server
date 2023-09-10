@@ -32,6 +32,7 @@ public class AttendancePersistenceAdapter implements CreateAttendancePort, Updat
     public void updateAttendanceCode(Attendance attendance) {
 
         AttendanceJpaEntity attendanceJpa = attendanceRepository.findById(attendance.getAttendanceId().getValue()).get();
+        //위의 코드에서 select query가 나가지 않은 이유는 같은 트렌젝션이기 때문에 JPA 1차 캐시에서 조회하였기 때문
         attendanceJpa.updateCode(attendance.getCode());
     }
 }

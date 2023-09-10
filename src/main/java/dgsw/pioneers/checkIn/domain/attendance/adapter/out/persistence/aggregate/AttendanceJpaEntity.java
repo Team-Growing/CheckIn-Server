@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregat
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Table(name = "attendance")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class AttendanceJpaEntity {
 
     @Id
