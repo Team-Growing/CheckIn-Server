@@ -1,7 +1,8 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.in.web;
 
-import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceReq;
+import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceCodeDto;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceCodeReissueUseCase;
+import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceLoadUseCase;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
@@ -9,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.Member
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
+import dgsw.pioneers.checkIn.global.response.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,11 +26,12 @@ import org.springframework.web.bind.annotation.*;
 public class AttendanceController {
 
     private final AttendanceCodeReissueUseCase attendanceCodeReissueUseCase;
+    private final AttendanceLoadUseCase attendanceLoadUseCase;
     private final AttendanceUseCase attendanceUseCase;
 
     @PatchMapping("/code/{lectureId}")
     @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
-    @Operation(summary = "Reissue Attendance Code", description = "출석 코드 재발급", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "reissue attendance code", description = "출석 코드 재발급", security = @SecurityRequirement(name = "Authorization"))
     public Response reissueCode(
             @PathVariable("lectureId") long id
     ) {
@@ -36,15 +39,25 @@ public class AttendanceController {
         return Response.of(HttpStatus.OK, "출석 코드 재발급 성공");
     }
 
+    @GetMapping("/code/{lectureId}")
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @Operation(summary = "load attendance code", description = "출석 코드 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<AttendanceCodeDto> getCode(
+            @PathVariable("lectureId") long id
+    ) {
+        AttendanceCodeDto attendanceCodeDto = new AttendanceCodeDto(attendanceLoadUseCase.getAttendanceCode(new Lecture.LectureId(id)));
+        return ResponseData.of(HttpStatus.OK, "출석 코드 불러오기 성공", attendanceCodeDto);
+    }
+
     @PostMapping("/{lectureId}")
     @AuthCheck(roles = MemberRole.STUDENT)
-    @Operation(summary = "Attendance", description = "출석", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "attendance", description = "출석", security = @SecurityRequirement(name = "Authorization"))
     public Response attendance(
             @RequestAttribute Member member,
             @PathVariable("lectureId") long id,
-            @RequestBody AttendanceReq attendanceReq
+            @RequestBody AttendanceCodeDto attendanceCodeDto
     ) {
-        attendanceUseCase.attendance(new Lecture.LectureId(id), member.getMemberId(), attendanceReq.getCode());
+        attendanceUseCase.attendance(new Lecture.LectureId(id), member.getMemberId(), attendanceCodeDto.getCode());
         return Response.of(HttpStatus.OK, "출석 성공");
     }
 }

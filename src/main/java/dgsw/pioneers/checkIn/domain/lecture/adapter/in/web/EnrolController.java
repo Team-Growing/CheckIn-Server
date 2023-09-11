@@ -25,7 +25,7 @@ public class EnrolController {
 
     @PostMapping("/{lectureId}")
     @AuthCheck(roles = {MemberRole.STUDENT})
-    @Operation(summary = "Enrolment Lecture", description = "강좌 수강 신청", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "enrolment lecture", description = "강좌 수강 신청", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestAttribute Member member,
             @PathVariable("lectureId") long id

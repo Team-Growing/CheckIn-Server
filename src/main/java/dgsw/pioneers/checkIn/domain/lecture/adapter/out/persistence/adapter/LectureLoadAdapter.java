@@ -22,9 +22,9 @@ public class LectureLoadAdapter implements LoadLecturePort {
     private final LectureMapper lectureMapper;
 
     @Override
-    public Lecture loadLecture(Long lectureId) {
+    public Lecture loadLecture(Lecture.LectureId lectureId) {
 
-        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId)
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
         return lectureMapper.mapToDomainEntity(lectureJpaEntity);
     }

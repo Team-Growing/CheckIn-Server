@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AttendanceService implements AttendanceUseCase {
 
@@ -20,10 +20,11 @@ public class AttendanceService implements AttendanceUseCase {
     private final CreateAttendantPort createAttendantPort;
 
     @Override
+    @Transactional
     public void attendance(Lecture.LectureId lectureId, Member.MemberId memberId, String code) {
 
         Attendance attendance = loadAttendancePort.loadAttendanceByLectureAndAttendanceStatusWithAttendants(
-                lectureId.getValue(),
+                lectureId,
                 AttendanceStatus.PERIOD_VALID
         );
 

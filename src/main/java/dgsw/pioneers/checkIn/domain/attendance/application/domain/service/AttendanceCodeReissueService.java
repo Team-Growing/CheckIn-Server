@@ -24,7 +24,7 @@ public class AttendanceCodeReissueService implements AttendanceCodeReissueUseCas
     public void reissueCode(Lecture.LectureId lectureId) {
 
         Attendance attendance = loadAttendancePort.loadAttendanceByLectureAndAttendanceStatus(
-                lectureId.getValue(),
+                lectureId,
                 AttendanceStatus.PERIOD_VALID);
 
         attendance.updateCode(RandomGenerator.generate());
