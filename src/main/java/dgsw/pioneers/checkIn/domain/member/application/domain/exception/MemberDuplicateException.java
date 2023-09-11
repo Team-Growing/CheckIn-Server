@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.FORBIDDEN)
-public class DuplicateMemberException extends CustomException {
+public class MemberDuplicateException extends CustomException {
 
-    public DuplicateMemberException() {
+    public MemberDuplicateException() {
         super(MemberExceptionCode.MEMBER_DUPLICATION);
     }
 }

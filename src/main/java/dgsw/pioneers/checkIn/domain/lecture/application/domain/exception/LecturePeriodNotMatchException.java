@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class LecturePeriodNotMatchException extends CustomException {
 
     public LecturePeriodNotMatchException() {
-        super(LectureExceptionCode.NOT_MATCH_PERIOD);
+        super(LectureExceptionCode.PERIOD_NOT_MATCH);
     }
 }

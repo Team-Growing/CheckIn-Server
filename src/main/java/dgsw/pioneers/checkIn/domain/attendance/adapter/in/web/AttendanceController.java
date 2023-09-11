@@ -1,7 +1,9 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceCodeDto;
+import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.req.AttendanceConfirmReq;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceCodeReissueUseCase;
+import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceEradicateUseCase;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceLoadUseCase;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
@@ -28,6 +30,7 @@ public class AttendanceController {
     private final AttendanceCodeReissueUseCase attendanceCodeReissueUseCase;
     private final AttendanceLoadUseCase attendanceLoadUseCase;
     private final AttendanceUseCase attendanceUseCase;
+    private final AttendanceEradicateUseCase attendanceEradicateUseCase;
 
     @PatchMapping("/code/{lectureId}")
     @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
@@ -57,7 +60,29 @@ public class AttendanceController {
             @PathVariable("lectureId") long id,
             @RequestBody AttendanceCodeDto attendanceCodeDto
     ) {
-        attendanceUseCase.attendance(new Lecture.LectureId(id), member.getMemberId(), attendanceCodeDto.getCode());
+        attendanceUseCase.attendanceByCode(new Lecture.LectureId(id), member.getMemberId(), attendanceCodeDto.getCode());
         return Response.of(HttpStatus.OK, "출석 성공");
+    }
+
+    @DeleteMapping("/{lectureId}/cancellation/{memberId}")
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
+    public Response cancelAttendance(
+            @PathVariable("lectureId") long lectureId,
+            @PathVariable("memberId") String  memberId
+    ) {
+        attendanceEradicateUseCase.eradicate(new Lecture.LectureId(lectureId), new Member.MemberId(memberId));
+        return Response.of(HttpStatus.OK, "출석 취소 처리 성공");
+    }
+
+    @PostMapping("/confirmation/{lectureId}")
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
+    public Response confirmAttendance(
+            @PathVariable("lectureId") long lectureId,
+            @RequestBody AttendanceConfirmReq attendanceConfirmReq
+    ) {
+        attendanceUseCase.attendance(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceConfirmReq.getMemberId()));
+        return Response.of(HttpStatus.OK, "출석 확인 처리 성공");
     }
 }

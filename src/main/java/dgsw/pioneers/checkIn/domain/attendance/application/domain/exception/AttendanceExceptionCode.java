@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum AttendanceExceptionCode implements ExceptionCode {
 
-    NOT_MATCH_CODE(HttpStatus.PRECONDITION_FAILED, "강좌 상태와 맞지 않는 요청"),
-    ATTENDANCE_DUPLICATED(HttpStatus.GONE, "이미 출석한 강좌");
+    CODE_NOT_MATCH(HttpStatus.PRECONDITION_FAILED, "강좌 상태와 맞지 않는 요청"),
+    ATTENDANCE_DUPLICATED(HttpStatus.GONE, "이미 출석한 강좌"),
+    ATTENDANT_NOT_FOUND(HttpStatus.NOT_FOUND, "찾을 수 없는 출석자");
 
     private final HttpStatus status;
     private final String message;

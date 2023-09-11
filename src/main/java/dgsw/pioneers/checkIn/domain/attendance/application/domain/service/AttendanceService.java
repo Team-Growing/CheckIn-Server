@@ -21,14 +21,27 @@ public class AttendanceService implements AttendanceUseCase {
 
     @Override
     @Transactional
-    public void attendance(Lecture.LectureId lectureId, Member.MemberId memberId, String code) {
+    public void attendance(Lecture.LectureId lectureId, Member.MemberId memberId) {
 
         Attendance attendance = loadAttendancePort.loadAttendanceByLectureAndAttendanceStatusWithAttendants(
                 lectureId,
                 AttendanceStatus.PERIOD_VALID
         );
 
-        attendance.addAttendant(code, memberId);
+        attendance.addAttendant(memberId);
+        createAttendantPort.createAttendant(attendance);
+    }
+
+    @Override
+    @Transactional
+    public void attendanceByCode(Lecture.LectureId lectureId, Member.MemberId memberId, String code) {
+
+        Attendance attendance = loadAttendancePort.loadAttendanceByLectureAndAttendanceStatusWithAttendants(
+                lectureId,
+                AttendanceStatus.PERIOD_VALID
+        );
+
+        attendance.confirmCodeAndAddAttendant(code, memberId);
         createAttendantPort.createAttendant(attendance);
     }
 }
