@@ -25,7 +25,7 @@ public class LectureLoadService implements LectureLoadUseCase {
     @Override
     public Lecture loadLecture(Lecture.LectureId lectureId) {
 
-        Lecture lecture = loadLecturePort.loadLecture(lectureId);
+        Lecture lecture = loadLecturePort.loadLectureWithWeekPlans(lectureId);
         updateTeacherInfo(lecture);
 
         return lecture;

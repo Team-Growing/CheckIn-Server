@@ -69,7 +69,7 @@ public class AttendanceController {
     @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response cancelAttendance(
             @PathVariable("lectureId") long lectureId,
-            @PathVariable("memberId") String  memberId
+            @PathVariable("memberId") String memberId
     ) {
         attendanceEradicateUseCase.eradicate(new Lecture.LectureId(lectureId), new Member.MemberId(memberId));
         return Response.of(HttpStatus.OK, "출석 취소 처리 성공");
