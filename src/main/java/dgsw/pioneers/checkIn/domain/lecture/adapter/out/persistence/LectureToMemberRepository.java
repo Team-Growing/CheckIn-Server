@@ -16,11 +16,12 @@ public interface LectureToMemberRepository extends JpaRepository<LectureToMember
 
     boolean existsByLectureJpaEntityAndMemberJpaEntity(LectureJpaEntity lectureJpa, MemberJpaEntity memberJpaEntity);
 
-    @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
-    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(
-            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus);
+    @EntityGraph(attributePaths = {"lectureJpaEntity"})
+    List<LectureToMemberEntity> findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatus(
+            String memberId, LectureStatus lectureStatus
+    );
 
-    @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
-    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
-            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
+    @EntityGraph(attributePaths = {"lectureJpaEntity"})
+    List<LectureToMemberEntity> findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
+            String memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

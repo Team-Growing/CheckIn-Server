@@ -9,13 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AttendanceGenerateService implements AttendanceGenerateUseCase {
 
     private final CreateAttendancePort createAttendancePort;
 
     @Override
+    @Transactional
     public void generateAttendance(Attendance attendance) {
 
         attendance.updateCode(RandomGenerator.generate());
