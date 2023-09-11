@@ -22,25 +22,33 @@ public class LectureLoadAdapter implements LoadLecturePort {
     private final LectureMapper lectureMapper;
 
     @Override
-    public Lecture loadLecture(Long lectureId) {
+    public Lecture loadLectureWithWeekPlans(Lecture.LectureId lectureId) {
 
-        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId)
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
-        return lectureMapper.mapToDomainEntity(lectureJpaEntity);
+        return lectureMapper.mapToDomainEntityWithWeekPlans(lectureJpaEntity);
+    }
+
+    @Override
+    public Lecture loadLectureWithParticipants(Lecture.LectureId lectureId) {
+
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findByIdWithParticipants(lectureId.getValue())
+                .orElseThrow(ResourceNotFoundException::new);
+        return lectureMapper.mapToDomainEntityWithParticipants(lectureJpaEntity);
     }
 
     @Override
     public List<Lecture> loadAllLectureByStatus(LectureStatus lectureStatus) {
 
         return lectureRepository.findAllByLectureStatus(lectureStatus).stream()
-                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+                .map(lectureMapper::mapToDomainEntityWithWeekPlans).collect(Collectors.toList());
     }
 
     @Override
     public List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
 
         return lectureRepository.findAllByLectureStatusAndLectureScheduleDayOfWeek(lectureStatus, dayOfWeek).stream()
-                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+                .map(lectureMapper::mapToDomainEntityWithWeekPlans).collect(Collectors.toList());
     }
 
     public LectureJpaEntity loadLectureJpaEntity(Long lectureId) {

@@ -4,6 +4,7 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.Le
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
@@ -15,6 +16,9 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
 
     @EntityGraph(attributePaths = "weekPlans")
     Optional<LectureJpaEntity> findById(Long lectureId);
+
+    @Query("SELECT DISTINCT l FROM LectureJpaEntity l LEFT JOIN FETCH l.participants WHERE l.id = :lectureId")
+    Optional<LectureJpaEntity> findByIdWithParticipants(Long lectureId);
 
     List<LectureJpaEntity> findAllByLectureStatus(LectureStatus lectureStatus);
 

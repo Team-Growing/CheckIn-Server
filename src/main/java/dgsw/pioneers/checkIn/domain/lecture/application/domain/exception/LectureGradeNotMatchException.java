@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class LectureGradeNotMatchException extends CustomException {
 
     public LectureGradeNotMatchException() {
-        super(LectureExceptionCode.NOT_MATCH_GRADE);
+        super(LectureExceptionCode.GRADE_NOT_MATCH);
     }
 }

@@ -24,19 +24,19 @@ public class ParticipantLoadAdapter implements LoadParticipantPort {
     @Override
     public boolean existByLectureIdAndMemberId(Lecture.LectureId lectureId, Member.MemberId memberId) {
         return lectureToMemberRepository.existsByLectureJpaEntityAndMemberJpaEntity(
-                lectureLoadAdapter.loadLectureJpaEntity(lectureId.getValue()),
-                memberLoadAdapter.loadMemberJpaEntity(memberId.getValue()));
+                lectureLoadAdapter.loadLectureJpaEntity(lectureId.getValue()), //selectQuery - 1
+                memberLoadAdapter.loadMemberJpaEntity(memberId.getValue())); //selectQuery - 2
     }
 
     public List<LectureToMemberEntity> loadAllLectureByMemberAndLectureStatus(Member.MemberId memberId, LectureStatus lectureStatus) {
-        return lectureToMemberRepository.findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(
-                memberLoadAdapter.loadMemberJpaEntity(memberId.getValue()),
+        return lectureToMemberRepository.findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatus(
+                memberId.getValue(),
                 lectureStatus);
     }
 
     public List<LectureToMemberEntity> loadAllTodayLectureByMemberAndLectureStatus(Member.MemberId memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
-        return lectureToMemberRepository.findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
-                memberLoadAdapter.loadMemberJpaEntity(memberId.getValue()),
+        return lectureToMemberRepository.findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
+                memberId.getValue(),
                 lectureStatus,
                 dayOfWeek);
     }

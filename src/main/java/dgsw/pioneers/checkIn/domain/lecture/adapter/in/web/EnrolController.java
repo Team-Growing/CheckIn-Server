@@ -23,12 +23,12 @@ public class EnrolController {
 
     private final EnrolmentUseCase enrolmentUseCase;
 
-    @PostMapping("/{id}")
+    @PostMapping("/{lectureId}")
     @AuthCheck(roles = {MemberRole.STUDENT})
-    @Operation(summary = "Enrolment Lecture", description = "강좌 수강 신청", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "enrolment lecture", description = "강좌 수강 신청", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestAttribute Member member,
-            @PathVariable long id
+            @PathVariable("lectureId") long id
     ) {
         enrolmentUseCase.lectureEnrolment(new Lecture.LectureId(id), member);
         return Response.of(HttpStatus.OK, "강좌 수강 신청 성공");

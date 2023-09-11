@@ -2,7 +2,6 @@ package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureDuplicatedException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
-import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Participant;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.EnrolmentUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.CreateParticipantPort;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
@@ -29,9 +28,9 @@ public class EnrolmentService implements EnrolmentUseCase {
             throw new LectureDuplicatedException();
         }
 
-        Lecture lecture = loadLecturePort.loadLecture(lectureId.getValue());
+        Lecture lecture = loadLecturePort.loadLectureWithWeekPlans(lectureId);
 
-        Participant participant = lecture.registerParticipant(student);
-        createParticipantPort.createParticipant(lecture, participant);
+        lecture.addParticipant(student);
+        createParticipantPort.createParticipant(lecture);
     }
 }

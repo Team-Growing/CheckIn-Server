@@ -14,13 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class AttendanceGenerateService implements AttendanceGenerateUseCase {
 
     private final CreateAttendancePort createAttendancePort;
-    private final RandomGenerator randomGenerator;
 
-    @Transactional
     @Override
+    @Transactional
     public void generateAttendance(Attendance attendance) {
 
-        attendance.setCode(randomGenerator.generate());
+        attendance.updateCode(RandomGenerator.generate());
         createAttendancePort.createAttendance(attendance);
     }
 }

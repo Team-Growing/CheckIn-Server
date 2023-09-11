@@ -16,11 +16,22 @@ public interface LectureToMemberRepository extends JpaRepository<LectureToMember
 
     boolean existsByLectureJpaEntityAndMemberJpaEntity(LectureJpaEntity lectureJpa, MemberJpaEntity memberJpaEntity);
 
-    @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
-    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatus(
-            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus);
+//    @Query("SELECT ltm FROM LectureToMemberEntity ltm " +
+//            "JOIN FETCH ltm.lectureJpaEntity lecture " +
+//            "WHERE ltm.memberJpaEntity.id = :memberId " +
+//            "AND lecture.lectureStatus = :lectureStatus ")
+    @EntityGraph(attributePaths = {"lectureJpaEntity", "lectureJpaEntity.weekPlans"}) //join lecture, lecture.weekPlans
+    List<LectureToMemberEntity> findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatus(
+            String memberId, LectureStatus lectureStatus
+    );
 
-    @EntityGraph(attributePaths = {"memberJpaEntity", "lectureJpaEntity"})
-    List<LectureToMemberEntity> findAllByMemberJpaEntityAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
-            MemberJpaEntity memberJpaEntity, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
+//    @Query("SELECT ltm FROM LectureToMemberEntity ltm " +
+//            "JOIN FETCH ltm.lectureJpaEntity lecture " +
+//            "WHERE ltm.memberJpaEntity.id = :memberId " +
+//            "AND lecture.lectureStatus = :lectureStatus " +
+//            "AND lecture.lectureSchedule.dayOfWeek = :dayOfWeek")
+    @EntityGraph(attributePaths = {"lectureJpaEntity", "lectureJpaEntity.weekPlans"}) //join lecture, lecture.weekPlans
+    List<LectureToMemberEntity> findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatusAndLectureJpaEntity_LectureSchedule_DayOfWeek(
+            String memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek
+    );
 }

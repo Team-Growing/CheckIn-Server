@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
@@ -15,6 +16,7 @@ public class WeekPlanJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private int week;
     private String introduction;
     @ManyToOne(fetch = FetchType.LAZY)

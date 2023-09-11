@@ -2,7 +2,7 @@ package dgsw.pioneers.checkIn.domain.member.application.domain.service;
 
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.exception.custom.ParameterNotFoundException;
-import dgsw.pioneers.checkIn.domain.member.application.domain.exception.DuplicateMemberException;
+import dgsw.pioneers.checkIn.domain.member.application.domain.exception.MemberDuplicateException;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member.MemberId;
 import dgsw.pioneers.checkIn.domain.member.application.port.in.SignUpUseCase;
@@ -50,7 +50,7 @@ public class SignUpService implements SignUpUseCase {
 
     private void checkExistMember(MemberId signUpCommand) {
         if (existMemberPort.existByMemberId(signUpCommand)) {
-            throw new DuplicateMemberException();
+            throw new MemberDuplicateException();
         }
     }
 }
