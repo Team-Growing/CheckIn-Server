@@ -31,7 +31,7 @@ public class EnrolmentService implements EnrolmentUseCase {
 
         Lecture lecture = loadLecturePort.loadLecture(lectureId.getValue());
 
-        Participant participant = lecture.registerParticipant(student);
-        createParticipantPort.createParticipant(lecture, participant);
+        lecture.addParticipant(student);
+        createParticipantPort.createParticipant(lecture);
     }
 }

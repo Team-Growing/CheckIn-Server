@@ -76,7 +76,7 @@ public class Lecture {
         this.weekPlans = weekPlans;
     }
 
-    public Participant registerParticipant(Member student) {
+    public void addParticipant(Member student) {
 
         if (!this.lectureStatus.equals(LectureStatus.ENROLMENT)) {
             throw new LecturePeriodNotMatchException();
@@ -90,12 +90,11 @@ public class Lecture {
             throw new LectureStudentExcessException();
         }
 
-        this.enrollStudent++;
-
-        return Participant.builder()
+        this.participants.add(Participant.builder()
                 .applyDateTime(ZoneDateTimeUtil.nowToLocalDateTime())
                 .memberId(student.getMemberId())
-                .build();
+                .build());
+        this.enrollStudent++;
     }
 
     public void updateTeacherInfo(String teacherName) {
