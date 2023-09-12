@@ -96,7 +96,7 @@ public class LectureMapper {
 
     private Participant participantMapToDomain(LectureToMemberEntity lectureToMember) {
         return Participant.builder()
-                .memberId(new Member.MemberId(lectureToMember.getMemberJpaEntity().getId()))
+                .participantId(new Member.MemberId(lectureToMember.getMemberJpaEntity().getId()))
                 .applyDateTime(lectureToMember.getApplyDateTime())
                 .build();
     }

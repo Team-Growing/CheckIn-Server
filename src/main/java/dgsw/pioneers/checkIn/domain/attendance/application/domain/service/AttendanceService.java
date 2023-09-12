@@ -55,7 +55,7 @@ public class AttendanceService implements AttendanceUseCase {
     private void verifyParticipant(Lecture.LectureId lectureId, Member.MemberId memberId) {
 
         boolean hasMatchingParticipant = loadLecturePort.loadLectureWithParticipants(lectureId).getParticipants()
-                .stream().anyMatch(participant -> participant.getMemberId().equals(memberId));
+                .stream().anyMatch(participant -> participant.getParticipantId().equals(memberId));
 
         if (!hasMatchingParticipant) {
             throw new AttendantNotMatchException();

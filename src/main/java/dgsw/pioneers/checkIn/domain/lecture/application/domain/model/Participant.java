@@ -14,5 +14,5 @@ import java.time.LocalDateTime;
 public class Participant {
 
     LocalDateTime applyDateTime;
-    Member.MemberId memberId;
+    Member.MemberId participantId;
 }

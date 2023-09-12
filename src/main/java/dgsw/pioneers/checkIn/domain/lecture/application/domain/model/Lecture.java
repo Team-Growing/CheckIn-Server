@@ -92,7 +92,7 @@ public class Lecture {
 
         this.participants.add(Participant.builder()
                 .applyDateTime(ZoneDateTimeUtil.nowToLocalDateTime())
-                .memberId(student.getMemberId())
+                .participantId(student.getMemberId())
                 .build());
         this.enrollStudent++;
     }

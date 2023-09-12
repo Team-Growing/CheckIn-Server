@@ -51,7 +51,7 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         lectureToMemberRepository.save(LectureToMemberEntity.builder()
                         .lectureJpaEntity(lectureRepository.findById(lecture.getLectureId().getValue()).get())
-                        .memberJpaEntity(memberLoadAdapter.loadMemberJpaEntity(newParticipant.getMemberId().getValue()))
+                        .memberJpaEntity(memberLoadAdapter.loadMemberJpaEntity(newParticipant.getParticipantId().getValue()))
                         .applyDateTime(newParticipant.getApplyDateTime())
                 .build());
 
