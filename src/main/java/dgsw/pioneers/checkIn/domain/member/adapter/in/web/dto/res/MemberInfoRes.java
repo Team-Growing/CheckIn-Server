@@ -27,10 +27,7 @@ public class MemberInfoRes {
                 .name(member.getName())
                 .subject(member.getSubject())
                 .memberRole(member.getMemberRole())
-                .studentInfo(StudentInfoDto.builder()
-                        .grade(member.getStudentInfo().getGrade())
-                        .room(member.getStudentInfo().getRoom())
-                        .number(member.getStudentInfo().getNumber()).build()
-                ).build();
+                .studentInfo(StudentInfoDto.convertToDTO(member.getStudentInfo()))
+                .build();
     }
 }

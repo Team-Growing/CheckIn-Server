@@ -45,11 +45,11 @@ public class AttendantPersistenceAdapter implements CreateAttendantPort, DeleteA
     public void deleteAttendant(Attendance.AttendanceId attendanceId, Attendant attendant) {
 
         /**
-        출석자를 삭제하기 위하여 AttendantJpaEntity를 불러오는 과정에서
-        AttendantJpaEntity의 attendanceJpaEntity는 Lazy Loding 이지만 어쩔 수 없이 초기화된다. (AttendantJpaEntity가 VO이기 때문 - 식별자 X)
-        이 경우엔 POJO 에서 동기화 오류가 생길 수 있기 때문에, JPA는 삭제 쿼리를 날리지 않는다.
-        그래서 이를 해결하기 위해 select 쿼리가 한번더 나가지만 EntityManager를 초기화 해주었다.
-        **/
+         * 출석자를 삭제하기 위하여 AttendantJpaEntity를 불러오는 과정에서
+         * AttendantJpaEntity의 attendanceJpaEntity는 Lazy Loding 이지만 어쩔 수 없이 초기화된다. (AttendantJpaEntity가 VO이기 때문 - 식별자 X)
+         * 이 경우엔 POJO 에서 동기화 오류가 생길 수 있기 때문에, JPA는 삭제 쿼리를 날리지 않는다.
+         * 그래서 이를 해결하기 위해 select 쿼리가 한번더 나가지만 EntityManager를 초기화 해주었다.
+         */
 
         entityManager.clear();
         attendantRepository.deleteByMemberId_IdAndAttendanceJpaEntity_Id(

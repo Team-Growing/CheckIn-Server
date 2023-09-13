@@ -18,7 +18,7 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
     Optional<LectureJpaEntity> findById(Long lectureId);
 
     @Query("SELECT DISTINCT l FROM LectureJpaEntity l LEFT JOIN FETCH l.participants WHERE l.id = :lectureId")
-    Optional<LectureJpaEntity> findByIdWithParticipants(Long lectureId);
+    Optional<LectureJpaEntity> selectByIdWithParticipants(Long lectureId);
 
     List<LectureJpaEntity> findAllByLectureStatus(LectureStatus lectureStatus);
 

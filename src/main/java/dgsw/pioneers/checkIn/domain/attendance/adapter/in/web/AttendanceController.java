@@ -2,10 +2,8 @@ package dgsw.pioneers.checkIn.domain.attendance.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceCodeDto;
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.req.AttendanceConfirmReq;
-import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceCodeReissueUseCase;
-import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceEradicateUseCase;
-import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceLoadUseCase;
-import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendanceUseCase;
+import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.res.AttendanceListRes;
+import dgsw.pioneers.checkIn.domain.attendance.application.port.in.*;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
@@ -20,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @WebAdapter
 @RestController
 @RequestMapping(value = "/attendance")
@@ -31,9 +31,25 @@ public class AttendanceController {
     private final AttendanceLoadUseCase attendanceLoadUseCase;
     private final AttendanceUseCase attendanceUseCase;
     private final AttendanceEradicateUseCase attendanceEradicateUseCase;
+    private final AttendantsLoadUseCase attendantsLoadUseCase;
+
+    @GetMapping("/{lectureId}/attendants")
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @Operation(summary = "load attendance", description = "출석 명단 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<AttendanceListRes> getAttendance(
+            @PathVariable("lectureId") long id
+    ) {
+        Lecture.LectureId lectureId = new Lecture.LectureId(id);
+        List<Member> attendants = attendantsLoadUseCase.loadAttendants(lectureId);
+        AttendanceListRes attendanceListRes = AttendanceListRes.convertToDTO(
+                attendants,
+                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants)
+        );
+        return ResponseData.of(HttpStatus.OK, "출석 명단 불러오기 성공", attendanceListRes);
+    }
 
     @PatchMapping("/code/{lectureId}")
-    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @AuthCheck(roles = MemberRole.TEACHER)
     @Operation(summary = "reissue attendance code", description = "출석 코드 재발급", security = @SecurityRequirement(name = "Authorization"))
     public Response reissueCode(
             @PathVariable("lectureId") long id
@@ -65,7 +81,7 @@ public class AttendanceController {
     }
 
     @DeleteMapping("/{lectureId}/cancellation/{memberId}")
-    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @AuthCheck(roles = MemberRole.TEACHER)
     @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response cancelAttendance(
             @PathVariable("lectureId") long lectureId,
@@ -76,7 +92,7 @@ public class AttendanceController {
     }
 
     @PostMapping("/confirmation/{lectureId}")
-    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
+    @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response confirmAttendance(
             @PathVariable("lectureId") long lectureId,

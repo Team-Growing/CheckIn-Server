@@ -32,7 +32,7 @@ public class LectureLoadAdapter implements LoadLecturePort {
     @Override
     public Lecture loadLectureWithParticipants(Lecture.LectureId lectureId) {
 
-        LectureJpaEntity lectureJpaEntity = lectureRepository.findByIdWithParticipants(lectureId.getValue())
+        LectureJpaEntity lectureJpaEntity = lectureRepository.selectByIdWithParticipants(lectureId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
         return lectureMapper.mapToDomainEntityWithParticipants(lectureJpaEntity);
     }

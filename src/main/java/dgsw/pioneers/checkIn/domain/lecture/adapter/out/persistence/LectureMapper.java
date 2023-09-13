@@ -89,7 +89,7 @@ public class LectureMapper {
                 .build();
     }
 
-    private List<Participant> getParticipants(LectureJpaEntity lectureJpa) {
+    public List<Participant> getParticipants(LectureJpaEntity lectureJpa) {
         if (lectureJpa.getParticipants() == null) return null;
         else return lectureJpa.getParticipants().stream().map(this::participantMapToDomain).collect(Collectors.toList());
     }

@@ -1,6 +1,10 @@
 package dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.adapter;
 
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.MemberRepository;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.dao.MembersAsAttendantsDao;
+import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.dao.MembersAsNonAttendantsDao;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.ExistMemberPort;
@@ -19,6 +23,8 @@ import java.util.stream.Collectors;
 public class MemberLoadAdapter implements LoadMemberPort, ExistMemberPort {
 
     private final MemberRepository memberRepository;
+    private final MembersAsAttendantsDao membersAsAttendantsDao;
+    private final MembersAsNonAttendantsDao membersAsNonAttendantsDao;
     private final MemberMapper memberMapper;
 
     @Override
@@ -37,7 +43,23 @@ public class MemberLoadAdapter implements LoadMemberPort, ExistMemberPort {
     }
 
     @Override
+    public List<Member> loadAttendants(Lecture.LectureId lectureId, AttendanceStatus attendanceStatus) {
+
+        return membersAsAttendantsDao.findAllMembersWithAttendants(lectureId.getValue(), attendanceStatus)
+                .stream().map(memberMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Member> loadNonAttendants(Lecture.LectureId lectureId, List<Member> members) {
+
+        return membersAsNonAttendantsDao.findAllMembersWithAttendants(
+                lectureId.getValue(), members.stream().map(member -> member.getMemberId().getValue()).collect(Collectors.toList()))
+                .stream().map(memberMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
     public boolean existByMemberId(Member.MemberId memberId) {
+
         return memberRepository.existsById(memberId.getValue());
     }
 
