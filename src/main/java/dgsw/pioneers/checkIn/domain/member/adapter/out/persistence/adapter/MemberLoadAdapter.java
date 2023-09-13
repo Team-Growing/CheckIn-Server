@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.adapter;
 
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendant;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.MemberRepository;
@@ -50,11 +51,19 @@ public class MemberLoadAdapter implements LoadMemberPort, ExistMemberPort {
     }
 
     @Override
-    public List<Member> loadNonAttendants(Lecture.LectureId lectureId, List<Member> members) {
+    public List<Member> loadNonAttendantsByMember(Lecture.LectureId lectureId, List<Member> members) {
 
         return membersAsNonAttendantsDao.findAllMembersWithAttendants(
-                lectureId.getValue(), members.stream().map(member -> member.getMemberId().getValue()).collect(Collectors.toList()))
+                        lectureId.getValue(), members.stream().map(member -> member.getMemberId().getValue()).collect(Collectors.toList()))
                 .stream().map(memberMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Member.MemberId> loadNonAttendantsByAttendant(Lecture.LectureId lectureId, List<Attendant> attendants) {
+
+        return membersAsNonAttendantsDao.findAllMembersWithAttendants(
+                        lectureId.getValue(), attendants.stream().map(attendant -> attendant.getAttendantId().getValue()).collect(Collectors.toList()))
+                .stream().map(memberJpaEntity -> new Member.MemberId(memberJpaEntity.getId())).collect(Collectors.toList());
     }
 
     @Override

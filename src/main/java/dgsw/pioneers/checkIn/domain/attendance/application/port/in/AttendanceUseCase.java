@@ -8,4 +8,6 @@ public interface AttendanceUseCase {
     void attendance(Lecture.LectureId lectureId, Member.MemberId memberId);
 
     void attendanceByCode(Lecture.LectureId lectureId, Member.MemberId memberId, String code);
+
+    void collectiveAttendance(Lecture.LectureId lectureId);
 }

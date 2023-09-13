@@ -9,6 +9,7 @@ import dgsw.pioneers.checkIn.domain.attendance.application.port.out.LoadAttendan
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class AttendanceService implements AttendanceUseCase {
     private final LoadAttendancePort loadAttendancePort;
     private final LoadLecturePort loadLecturePort;
     private final CreateAttendantPort createAttendantPort;
+    private final LoadMemberPort loadMemberPort;
 
     @Override
     @Transactional
@@ -50,6 +52,22 @@ public class AttendanceService implements AttendanceUseCase {
 
         attendance.confirmCodeAndAddAttendant(code, memberId);
         createAttendantPort.createAttendant(attendance);
+    }
+
+    @Override
+    @Transactional
+    public void collectiveAttendance(Lecture.LectureId lectureId) {
+
+        Attendance attendance = loadAttendancePort.loadAttendanceByLectureAndAttendanceStatusWithAttendants(
+                lectureId,
+                AttendanceStatus.PERIOD_VALID
+        );
+
+        loadMemberPort.loadNonAttendantsByAttendant(lectureId, attendance.getAttendants())
+                .forEach(memberId -> {
+                    attendance.addAttendant(memberId);
+                    createAttendantPort.createAttendant(attendance);
+                });
     }
 
     private void verifyParticipant(Lecture.LectureId lectureId, Member.MemberId memberId) {

@@ -70,7 +70,7 @@ public class AttendanceController {
 
     @PostMapping("/{lectureId}")
     @AuthCheck(roles = MemberRole.STUDENT)
-    @Operation(summary = "attendance", description = "출석", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "attendance", description = "출석하기", security = @SecurityRequirement(name = "Authorization"))
     public Response attendance(
             @RequestAttribute Member member,
             @PathVariable("lectureId") long id,
@@ -92,7 +92,7 @@ public class AttendanceController {
     }
 
     @PostMapping("/confirmation/{lectureId}")
-    @AuthCheck(roles = MemberRole.ADMIN)
+    @AuthCheck(roles = MemberRole.TEACHER)
     @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response confirmAttendance(
             @PathVariable("lectureId") long lectureId,
@@ -100,5 +100,15 @@ public class AttendanceController {
     ) {
         attendanceUseCase.attendance(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceConfirmReq.getMemberId()));
         return Response.of(HttpStatus.OK, "출석 확인 처리 성공");
+    }
+
+    @PostMapping("/collective/{lectureId}")
+    @AuthCheck(roles = MemberRole.TEACHER)
+    @Operation(summary = "collective attendance", description = "일괄 출석 처리", security = @SecurityRequirement(name = "Authorization"))
+    public Response collectiveAttendance(
+            @PathVariable("lectureId") long lectureId
+    ) {
+        attendanceUseCase.collectiveAttendance(new Lecture.LectureId(lectureId));
+        return Response.of(HttpStatus.OK, "일괄 출석 처리 성공");
     }
 }

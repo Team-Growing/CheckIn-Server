@@ -27,6 +27,6 @@ public class AttendantsLoadService implements AttendantsLoadUseCase {
     @Override
     public List<Member> loadNonAttendants(Lecture.LectureId lectureId, List<Member> members) {
 
-        return loadMemberPort.loadNonAttendants(lectureId, members);
+        return loadMemberPort.loadNonAttendantsByMember(lectureId, members);
     }
 }
