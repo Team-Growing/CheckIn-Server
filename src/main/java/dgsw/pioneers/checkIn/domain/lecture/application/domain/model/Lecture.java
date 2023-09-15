@@ -99,7 +99,7 @@ public class Lecture {
 
     public void updateTeacherInfo(String teacherName) {
         this.lectureTeacher = LectureTeacher.builder()
-                .memberId(this.lectureTeacher.getMemberId())
+                .teacherId(this.lectureTeacher.getTeacherId())
                 .name(teacherName)
                 .build();
     }

@@ -38,7 +38,7 @@ public class LectureGenerateReq {
                 this.lectureTag,
                 this.acceptableStudent,
                 LectureTeacher.builder()
-                        .memberId(new Member.MemberId(teacherId)).build(),
+                        .teacherId(new Member.MemberId(teacherId)).build(),
                 this.lectureSchedule
         );
     }

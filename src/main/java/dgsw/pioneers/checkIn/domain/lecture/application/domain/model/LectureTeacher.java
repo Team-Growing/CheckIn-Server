@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LectureTeacher {
 
-    MemberId memberId;
+    MemberId teacherId;
     String name;
 }

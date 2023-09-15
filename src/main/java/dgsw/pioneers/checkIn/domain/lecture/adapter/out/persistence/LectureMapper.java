@@ -28,7 +28,7 @@ public class LectureMapper {
                         .minStudent(lectureJpa.getAcceptableStudent().getMinStudent())
                         .targetGrade(lectureJpa.getAcceptableStudent().getTargetGrade()).build(),
                 LectureTeacher.builder()
-                        .memberId(new Member.MemberId(lectureJpa.getTeacherId())).build(),
+                        .teacherId(new Member.MemberId(lectureJpa.getTeacherId())).build(),
                 LectureSchedule.builder()
                         .startDay(lectureJpa.getLectureSchedule().getStartDay())
                         .endDay(lectureJpa.getLectureSchedule().getEndDay())
@@ -53,7 +53,7 @@ public class LectureMapper {
                         .minStudent(lectureJpa.getAcceptableStudent().getMinStudent())
                         .targetGrade(lectureJpa.getAcceptableStudent().getTargetGrade()).build(),
                 LectureTeacher.builder()
-                        .memberId(new Member.MemberId(lectureJpa.getTeacherId())).build(),
+                        .teacherId(new Member.MemberId(lectureJpa.getTeacherId())).build(),
                 LectureSchedule.builder()
                         .startDay(lectureJpa.getLectureSchedule().getStartDay())
                         .endDay(lectureJpa.getLectureSchedule().getEndDay())
@@ -72,7 +72,7 @@ public class LectureMapper {
                 .lectureStatus(lecture.getLectureStatus())
                 .placeType(lecture.getPlaceType())
                 .lectureTag(lecture.getLectureTag())
-                .teacherId(lecture.getLectureTeacher().getMemberId().getValue())
+                .teacherId(lecture.getLectureTeacher().getTeacherId().getValue())
                 .acceptableStudent(new AcceptableStudentJpaVO(
                         lecture.getAcceptableStudent().getMaxStudent(),
                         lecture.getAcceptableStudent().getMinStudent(),

@@ -49,7 +49,7 @@ public class LectureLoadService implements LectureLoadUseCase {
 
     private void updateTeacherInfo(Lecture lecture) {
 
-        Member teacher = loadMemberPort.loadMember(lecture.getLectureTeacher().getMemberId());
+        Member teacher = loadMemberPort.loadMember(lecture.getLectureTeacher().getTeacherId());
         lecture.updateTeacherInfo(teacher.getName());
     }
 }

@@ -27,7 +27,7 @@ public class WeekPlanUpdateService implements WeekPlanUpdateUseCase {
         Lecture lecture = loadLecturePort.loadLectureWithWeekPlans(new Lecture.LectureId(weekPlanUpdateReq.getLectureId()));
 
         if (memberRole.equals(MemberRole.TEACHER)) {
-            if (!lecture.getLectureTeacher().getMemberId().equals(memberId)) throw new PermissionInvalidException();
+            if (!lecture.getLectureTeacher().getTeacherId().equals(memberId)) throw new PermissionInvalidException();
         }
 
         lecture.updateWeekPlans(weekPlanUpdateReq.getWeekPlans());
