@@ -37,6 +37,11 @@ public class LectureLoadService implements LectureLoadUseCase {
     }
 
     @Override
+    public List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, int targetGrade) {
+        return loadLecturePort.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
+    }
+
+    @Override
     public List<Lecture> loadTodayLecture() {
 
         DayOfWeek dayOfWeek = ZoneDateTimeUtil.nowToLocalDate().getDayOfWeek();

@@ -15,6 +15,31 @@ import java.util.stream.Collectors;
 @Mapper
 public class LectureMapper {
 
+    public Lecture mapToDomainEntity(LectureJpaEntity lectureJpa) {
+        return Lecture.withId(
+                new Lecture.LectureId(lectureJpa.getId()),
+                lectureJpa.getLectureName(),
+                lectureJpa.getExplanation(),
+                lectureJpa.getLectureStatus(),
+                lectureJpa.getPlaceType(),
+                lectureJpa.getLectureTag(),
+                AcceptableStudent.builder()
+                        .maxStudent(lectureJpa.getAcceptableStudent().getMaxStudent())
+                        .minStudent(lectureJpa.getAcceptableStudent().getMinStudent())
+                        .targetGrade(lectureJpa.getAcceptableStudent().getTargetGrade()).build(),
+                LectureTeacher.builder()
+                        .teacherId(new Member.MemberId(lectureJpa.getTeacherId())).build(),
+                LectureSchedule.builder()
+                        .startDay(lectureJpa.getLectureSchedule().getStartDay())
+                        .endDay(lectureJpa.getLectureSchedule().getEndDay())
+                        .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
+                        .startTime(lectureJpa.getLectureSchedule().getStartTime())
+                        .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
+                lectureJpa.getEnrollStudent(),
+                null,
+                null);
+    }
+
      public Lecture mapToDomainEntityWithWeekPlans(LectureJpaEntity lectureJpa) {
          return Lecture.withId(
                 new Lecture.LectureId(lectureJpa.getId()),

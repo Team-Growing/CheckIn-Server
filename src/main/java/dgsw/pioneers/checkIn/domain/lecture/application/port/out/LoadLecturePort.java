@@ -13,5 +13,7 @@ public interface LoadLecturePort {
 
     List<Lecture> loadAllLectureByStatus(LectureStatus lectureStatus);
 
+    List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, int targetGrade);
+
     List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

@@ -41,14 +41,21 @@ public class LectureLoadAdapter implements LoadLecturePort {
     public List<Lecture> loadAllLectureByStatus(LectureStatus lectureStatus) {
 
         return lectureRepository.findAllByLectureStatus(lectureStatus).stream()
-                .map(lectureMapper::mapToDomainEntityWithWeekPlans).collect(Collectors.toList());
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, int targetGrade) {
+
+        return lectureRepository.findAllByLectureStatusAndAcceptableStudent_TargetGrade(lectureStatus, targetGrade).stream()
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
 
         return lectureRepository.findAllByLectureStatusAndLectureScheduleDayOfWeek(lectureStatus, dayOfWeek).stream()
-                .map(lectureMapper::mapToDomainEntityWithWeekPlans).collect(Collectors.toList());
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 
     public LectureJpaEntity loadLectureJpaEntity(Long lectureId) {

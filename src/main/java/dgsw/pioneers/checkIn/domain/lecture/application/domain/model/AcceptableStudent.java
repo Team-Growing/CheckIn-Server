@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Value
@@ -12,7 +14,14 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AcceptableStudent {
 
-    @NotNull int maxStudent;
-    @NotNull int minStudent;
-    @NotNull int targetGrade;
+    @NotNull
+    int maxStudent;
+
+    @Min(value = 1)
+    @NotNull
+    int minStudent;
+
+    @Min(1) @Max(2)
+    @NotNull
+    int targetGrade;
 }

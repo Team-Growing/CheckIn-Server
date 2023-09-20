@@ -2,6 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
@@ -20,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @WebAdapter
@@ -66,5 +69,16 @@ public class LectureController {
     public ResponseData<List<Lecture>> loadTodayLecture() {
         List<Lecture> lectures = lectureLoadUseCase.loadTodayLecture();
         return ResponseData.of(HttpStatus.OK, "오늘 강좌 불러오기 성공", lectures);
+    }
+
+    @GetMapping
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "load lectures with lectureStatus", description = "강좌 상태로 강좌 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<List<Lecture>> loadEnrolmentLecture(
+            @RequestParam("status") LectureStatus lectureStatus,
+            @RequestParam("grade") @Min(1) @Max(2) int targetGrade
+    ) {
+        List<Lecture> lectures = lectureLoadUseCase.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
+        return ResponseData.of(HttpStatus.OK, "강좌 상태로 강좌 불러오기 성공", lectures);
     }
 }

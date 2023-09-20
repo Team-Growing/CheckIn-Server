@@ -27,7 +27,16 @@ public class MemberInfoRes {
                 .name(member.getName())
                 .subject(member.getSubject())
                 .memberRole(member.getMemberRole())
-                .studentInfo(StudentInfoDto.convertToDTO(member.getStudentInfo()))
+                .studentInfo(convertStudentInfoDto(member))
                 .build();
+    }
+
+    private static StudentInfoDto convertStudentInfoDto(Member member) {
+
+        if (member.getMemberRole().equals(MemberRole.STUDENT)) {
+            return StudentInfoDto.convertToDTO(member.getStudentInfo());
+        } else {
+            return null;
+        }
     }
 }
