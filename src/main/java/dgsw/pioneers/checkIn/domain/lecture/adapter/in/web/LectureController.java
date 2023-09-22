@@ -1,10 +1,12 @@
 package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureStatusUpdateReq;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.response.Response;
@@ -33,6 +35,7 @@ import java.util.List;
 public class LectureController {
 
     private final LectureGenerateUseCase lectureGenerateUseCase;
+    private final LectureStatusUpdateUseCase lectureStatusUpdateUseCase;
     private final WeekPlanUpdateUseCase weekPlanUpdateUseCase;
     private final LectureLoadUseCase lectureLoadUseCase;
 
@@ -46,14 +49,15 @@ public class LectureController {
         return Response.of(HttpStatus.OK, "강좌 생성 성공");
     }
 
-    @PatchMapping("/week-plan")
+    @PatchMapping("/week-plan/{lectureId}")
     @AuthCheck(roles = {MemberRole.ADMIN, MemberRole.TEACHER})
     @Operation(summary = "update week plan", description = "주차 게획 수정", security = @SecurityRequirement(name = "Authorization"))
     public Response updateWeekPlan(
             @RequestAttribute Member member,
+            @PathVariable("lectureId") long id,
             @RequestBody @Valid WeekPlanUpdateReq weekPlanUpdateReq
     ) {
-        weekPlanUpdateUseCase.updateWeekPlan(member.getMemberId(), weekPlanUpdateReq, member.getMemberRole());
+        weekPlanUpdateUseCase.updateWeekPlan(member, new Lecture.LectureId(id), weekPlanUpdateReq.getWeekPlans());
         return Response.of(HttpStatus.OK, "주차 게획 수정 성공");
     }
 
@@ -80,5 +84,16 @@ public class LectureController {
     ) {
         List<Lecture> lectures = lectureLoadUseCase.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
         return ResponseData.of(HttpStatus.OK, "강좌 상태로 강좌 불러오기 성공", lectures);
+    }
+
+    @PatchMapping("/status/{lectureId}")
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "update lectureStatus", description = "강좌 상태 수정", security = @SecurityRequirement(name = "Authorization"))
+    public Response updateLectureStatus(
+            @PathVariable("lectureId") long id,
+            @RequestBody @Valid LectureStatusUpdateReq lectureStatusUpdateReq
+    ) {
+        lectureStatusUpdateUseCase.updateStatus(new Lecture.LectureId(id), lectureStatusUpdateReq.getLectureStatus());
+        return Response.of(HttpStatus.OK, "강좌 상태 수정 성공");
     }
 }

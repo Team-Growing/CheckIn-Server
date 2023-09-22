@@ -10,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Participant;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.CreateLecturePort;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.CreateParticipantPort;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLectureStatusPort;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLectureWeekPlansPort;
 import dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.adapter.MemberLoadAdapter;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectureWeekPlansPort, CreateParticipantPort {
+public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectureWeekPlansPort, CreateParticipantPort, UpdateLectureStatusPort {
 
     private final LectureRepository lectureRepository;
     private final LectureToMemberRepository lectureToMemberRepository;
@@ -57,5 +58,14 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
         lectureJpaEntity.updateEnrollStudent(lecture.getEnrollStudent());
+    }
+
+    @Override
+    public void updateLectureStatus(Lecture lecture) {
+
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
+        lectureJpaEntity.updateLectureStatus(lecture.getLectureStatus());
+
+        lectureRepository.save(lectureJpaEntity);
     }
 }

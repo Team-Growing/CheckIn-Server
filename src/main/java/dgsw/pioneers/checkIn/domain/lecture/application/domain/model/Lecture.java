@@ -21,7 +21,7 @@ public class Lecture {
 
     private String explanation;
 
-    private final LectureStatus lectureStatus;
+    private LectureStatus lectureStatus;
 
     private final PlaceType placeType;
 
@@ -74,6 +74,10 @@ public class Lecture {
 
     public void updateWeekPlans(List<WeekPlan> weekPlans) {
         this.weekPlans = weekPlans;
+    }
+
+    public void updateLectureStatus(LectureStatus lectureStatus) {
+        this.lectureStatus = lectureStatus;
     }
 
     public void addParticipant(Member student) {

@@ -1,9 +1,11 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.port.in;
 
-import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.WeekPlan;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
+
+import java.util.List;
 
 public interface WeekPlanUpdateUseCase {
-    void updateWeekPlan(Member.MemberId memberId, WeekPlanUpdateReq weekPlanUpdateReq, MemberRole memberRole);
+    void updateWeekPlan(Member member, Lecture.LectureId lectureId, List<WeekPlan> weekPlans);
 }

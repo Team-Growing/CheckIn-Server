@@ -82,4 +82,8 @@ public class LectureJpaEntity {
     public void updateEnrollStudent(int enrollStudent) {
         this.enrollStudent = enrollStudent;
     }
+
+    public void updateLectureStatus(LectureStatus lectureStatus) {
+        this.lectureStatus = lectureStatus;
+    }
 }

@@ -8,6 +8,5 @@ import java.util.List;
 @Getter
 public class WeekPlanUpdateReq {
 
-    Long lectureId;
     List<WeekPlan> weekPlans;
 }
