@@ -38,4 +38,8 @@ public class Notice {
     public static Notice generate(String content) {
         return new Notice(null, NoticeStatus.ACTIVE, content, ZoneDateTimeUtil.nowToLocalDateTime());
     }
+
+    public void updateNoticeStatus(NoticeStatus noticeStatus) {
+        this.noticeStatus = noticeStatus;
+    }
 }

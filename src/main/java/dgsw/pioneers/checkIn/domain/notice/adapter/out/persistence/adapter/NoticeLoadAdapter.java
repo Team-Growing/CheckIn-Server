@@ -6,6 +6,7 @@ import dgsw.pioneers.checkIn.domain.notice.application.domain.model.Notice;
 import dgsw.pioneers.checkIn.domain.notice.application.domain.model.enums.NoticeStatus;
 import dgsw.pioneers.checkIn.domain.notice.application.port.out.LoadNoticePort;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
+import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,6 +18,11 @@ public class NoticeLoadAdapter implements LoadNoticePort {
 
     private final NoticeRepository noticeRepository;
     private final NoticeMapper noticeMapper;
+
+    @Override
+    public Notice loadNoticeById(Notice.NoticeId noticeId) {
+        return noticeMapper.mapToDomainEntity(noticeRepository.findById(noticeId.getValue()).orElseThrow(ResourceNotFoundException::new));
+    }
 
     @Override
     public boolean existNoticeById(Notice.NoticeId noticeId) {

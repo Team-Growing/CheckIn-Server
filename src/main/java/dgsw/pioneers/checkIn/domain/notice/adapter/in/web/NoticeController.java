@@ -2,10 +2,12 @@ package dgsw.pioneers.checkIn.domain.notice.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.notice.adapter.in.web.dto.req.NoticeGenerateReq;
+import dgsw.pioneers.checkIn.domain.notice.adapter.in.web.dto.req.NoticeStatusModifyReq;
 import dgsw.pioneers.checkIn.domain.notice.application.domain.model.Notice;
 import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeDeleteUseCase;
 import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeLoadUseCase;
+import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
@@ -29,6 +31,7 @@ public class NoticeController {
 
     private final NoticeGenerateUseCase noticeGenerateUseCase;
     private final NoticeDeleteUseCase noticeDeleteUseCase;
+    private final NoticeStatusUpdateUseCase noticeStatusUpdateUseCase;
     private final NoticeLoadUseCase noticeLoadUseCase;
 
     @PostMapping
@@ -59,10 +62,21 @@ public class NoticeController {
     @DeleteMapping("/{noticeId}")
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "delete notice", description = "공지 삭제", security = @SecurityRequirement(name = "Authorization"))
-    public Response cancelAttendance(
+    public Response deleteNotice(
             @PathVariable("noticeId") long noticeId
     ) {
         noticeDeleteUseCase.deleteNotice(new Notice.NoticeId(noticeId));
         return Response.of(HttpStatus.OK, "공지 삭제 처리 성공");
+    }
+
+    @PatchMapping("/status/{noticeId}")
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "modify notice status", description = "공지 상태 수정", security = @SecurityRequirement(name = "Authorization"))
+    public Response modifyNoticeStatus(
+            @PathVariable("noticeId") long noticeId,
+            @RequestBody NoticeStatusModifyReq noticeStatusModifyReq
+    ) {
+        noticeStatusUpdateUseCase.updateNoticeStatus(new Notice.NoticeId(noticeId), noticeStatusModifyReq.getNoticeStatus());
+        return Response.of(HttpStatus.OK, "공지 상태 수정 성공");
     }
 }
