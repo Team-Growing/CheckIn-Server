@@ -22,6 +22,7 @@ public class Member {
 
     private final MemberRole memberRole;
     private StudentInfo studentInfo;
+
     private String subject; //선생님이면 자기 담당 역할 ex) '나르샤', 학생이면 '학생'이라 저장
 
     @Value

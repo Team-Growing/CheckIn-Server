@@ -19,6 +19,7 @@ import java.util.List;
 public class Lecture {
 
     private final LectureId lectureId;
+
     private final String lectureName;
 
     private String explanation;
