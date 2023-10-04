@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/notice")
 @RequiredArgsConstructor
-@Tag(name = "LNoticeecture", description = "Notice Api")
+@Tag(name = "Notice", description = "Notice Api")
 public class NoticeController {
 
     private final NoticeGenerateUseCase noticeGenerateUseCase;
