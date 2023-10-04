@@ -24,7 +24,7 @@ public class LectureLoadAdapter implements LoadLecturePort {
     @Override
     public Lecture loadLectureWithWeekPlans(Lecture.LectureId lectureId) {
 
-        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lectureId.getValue())
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findByIdWithWeekPlans(lectureId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
         return lectureMapper.mapToDomainEntityWithWeekPlans(lectureJpaEntity);
     }
