@@ -36,4 +36,8 @@ public class NoticeJpaEntity {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    public void updateNoticeStatus(NoticeStatus noticeStatus) {
+        this.noticeStatus = noticeStatus;
+    }
 }
