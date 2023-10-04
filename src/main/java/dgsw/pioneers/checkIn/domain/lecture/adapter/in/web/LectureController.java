@@ -41,7 +41,7 @@ public class LectureController {
 
     @PostMapping
     @AuthCheck(roles = MemberRole.ADMIN)
-    @Operation(summary = "generate Lecture", description = "강좌 생성", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "generate lecture", description = "강좌 생성", security = @SecurityRequirement(name = "Authorization"))
     public Response generateLecture(
             @RequestBody @Valid LectureGenerateReq lectureGenerateReq
     ) {
