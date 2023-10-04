@@ -29,7 +29,7 @@ public class QuestionMapper {
                 questionJpaEntity.getCreatedAt(),
                 Questioner.builder()
                         .memberId(new Member.MemberId(questionJpaEntity.getMember().getId()))
-                        .name(questionJpaEntity.getMember().getName())
+                        .name(questionJpaEntity.getMember().getName() + " (" + questionJpaEntity.getMember().getSubject() + ")")
                         .build()
         );
     }
