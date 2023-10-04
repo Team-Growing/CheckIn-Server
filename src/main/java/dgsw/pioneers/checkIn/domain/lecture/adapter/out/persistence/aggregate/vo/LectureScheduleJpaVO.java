@@ -2,10 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.v
 
 import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.time.DayOfWeek;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -18,9 +15,6 @@ public class LectureScheduleJpaVO {
     private LocalDate startDay;
 
     private LocalDate EndDay;
-
-    @Enumerated(EnumType.STRING)
-    private DayOfWeek dayOfWeek;
 
     private LocalTime startTime;
 

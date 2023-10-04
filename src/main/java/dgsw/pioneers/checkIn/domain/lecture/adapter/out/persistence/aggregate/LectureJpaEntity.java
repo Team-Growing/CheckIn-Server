@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.relation.LectureToMemberEntity;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.DayOfWeekVO;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.LectureScheduleJpaVO;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -53,6 +55,13 @@ public class LectureJpaEntity {
     @Embedded
     private LectureScheduleJpaVO lectureSchedule;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "lecture_of_dayOfWeek",
+            joinColumns = @JoinColumn(name = "lecture_id")
+    )
+    private Set<DayOfWeekVO> dayOfWeekVO;
+
     @NotNull
     private int enrollStudent;
 
@@ -63,7 +72,7 @@ public class LectureJpaEntity {
     private List<LectureToMemberEntity> participants;
 
     @Builder
-    public LectureJpaEntity(String lectureName, String explanation, LectureStatus lectureStatus, PlaceType placeType, LectureTag lectureTag, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent) {
+    public LectureJpaEntity(String lectureName, String explanation, LectureStatus lectureStatus, PlaceType placeType, LectureTag lectureTag, String teacherId, AcceptableStudentJpaVO acceptableStudent, LectureScheduleJpaVO lectureSchedule, int enrollStudent, Set<DayOfWeekVO> dayOfWeekVO) {
         this.lectureName = lectureName;
         this.explanation = explanation;
         this.lectureStatus = lectureStatus;
@@ -73,6 +82,7 @@ public class LectureJpaEntity {
         this.lectureSchedule = lectureSchedule;
         this.enrollStudent = enrollStudent;
         this.lectureTag = lectureTag;
+        this.dayOfWeekVO = dayOfWeekVO;
     }
 
     public void addWeekPlans(WeekPlanJpaEntity weekPlan) {

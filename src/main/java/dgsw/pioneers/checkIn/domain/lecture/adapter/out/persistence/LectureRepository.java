@@ -24,5 +24,6 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
 
     List<LectureJpaEntity> findAllByLectureStatusAndAcceptableStudent_TargetGrade(LectureStatus lectureStatus, int targetGrade);
 
-    List<LectureJpaEntity> findAllByLectureStatusAndLectureScheduleDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
+    @Query("SELECT l FROM LectureJpaEntity l JOIN l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus AND d.dayOfWeek = :dayOfWeek")
+    List<LectureJpaEntity> findAllByLectureStatusAndDayOfWeekVO(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

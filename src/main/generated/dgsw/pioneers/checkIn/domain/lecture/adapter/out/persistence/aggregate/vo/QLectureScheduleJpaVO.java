@@ -19,9 +19,9 @@ public class QLectureScheduleJpaVO extends BeanPath<LectureScheduleJpaVO> {
 
     public static final QLectureScheduleJpaVO lectureScheduleJpaVO = new QLectureScheduleJpaVO("lectureScheduleJpaVO");
 
-    public final EnumPath<java.time.DayOfWeek> dayOfWeek = createEnum("dayOfWeek", java.time.DayOfWeek.class);
-
     public final DatePath<java.time.LocalDate> EndDay = createDate("EndDay", java.time.LocalDate.class);
+
+    public final DatePath<java.time.LocalDate> endDay = createDate("endDay", java.time.LocalDate.class);
 
     public final TimePath<java.time.LocalTime> endTime = createTime("endTime", java.time.LocalTime.class);
 

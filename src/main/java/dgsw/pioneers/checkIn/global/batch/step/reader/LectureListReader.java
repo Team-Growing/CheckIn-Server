@@ -34,8 +34,12 @@ public class LectureListReader implements Tasklet, StepExecutionListener {
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-        this.attendances = lectureLoadUseCase.loadAllCoursePeriodLecture().stream()
-                .map(AttendanceJobDto::new).toList();
+        this.attendances = lectureLoadUseCase.loadAllCoursePeriodLecture()
+                .stream()
+                .flatMap(lecture -> lecture.getLectureSchedule().getDayOfWeek()
+                        .stream()
+                        .map(dayOfWeek -> new AttendanceJobDto(lecture.getLectureId(), dayOfWeek))
+                ).toList();
 
         return RepeatStatus.FINISHED;
     }

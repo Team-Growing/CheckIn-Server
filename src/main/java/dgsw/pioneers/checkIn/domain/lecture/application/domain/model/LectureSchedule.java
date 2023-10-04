@@ -10,6 +10,7 @@ import lombok.Value;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Value
 @Builder
@@ -22,7 +23,7 @@ public class LectureSchedule {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @NotNull LocalDate endDay;
 
-    @NotNull DayOfWeek dayOfWeek;
+    @NotNull Set<DayOfWeek> dayOfWeek;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @NotNull LocalTime startTime;

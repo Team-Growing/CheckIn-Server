@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.model;
 
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureDayOfWeekNotAllowException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureGradeNotMatchException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LecturePeriodNotMatchException;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.exception.LectureStudentExcessException;
@@ -10,6 +11,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.*;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Getter
@@ -69,6 +71,21 @@ public class Lecture {
             AcceptableStudent acceptableStudent,
             LectureTeacher lectureTeacher,
             LectureSchedule lectureSchedule) {
+
+        for (DayOfWeek dayOfWeek : lectureSchedule.getDayOfWeek()) {
+            if (dayOfWeek.equals(DayOfWeek.FRIDAY)) {
+                throw new LectureDayOfWeekNotAllowException();
+            }
+
+            if (dayOfWeek.equals(DayOfWeek.SATURDAY)) {
+                throw new LectureDayOfWeekNotAllowException();
+            }
+
+            if (dayOfWeek.equals(DayOfWeek.SUNDAY)) {
+                throw new LectureDayOfWeekNotAllowException();
+            }
+        }
+
         return new Lecture(null, lectureName, explanation, LectureStatus.WAITING_PERIOD, placeType, lectureTag, acceptableStudent, lectureTeacher, lectureSchedule, 0,null, null);
     }
 

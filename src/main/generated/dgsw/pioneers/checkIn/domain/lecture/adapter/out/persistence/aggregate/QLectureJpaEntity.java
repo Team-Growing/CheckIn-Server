@@ -24,6 +24,8 @@ public class QLectureJpaEntity extends EntityPathBase<LectureJpaEntity> {
 
     public final dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.QAcceptableStudentJpaVO acceptableStudent;
 
+    public final SetPath<dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.DayOfWeekVO, dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.QDayOfWeekVO> dayOfWeekVO = this.<dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.DayOfWeekVO, dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.QDayOfWeekVO>createSet("dayOfWeekVO", dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.DayOfWeekVO.class, dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.QDayOfWeekVO.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> enrollStudent = createNumber("enrollStudent", Integer.class);
 
     public final StringPath explanation = createString("explanation");

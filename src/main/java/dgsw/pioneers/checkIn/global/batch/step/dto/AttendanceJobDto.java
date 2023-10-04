@@ -28,8 +28,8 @@ public class AttendanceJobDto implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate lectureDate;
 
-    public AttendanceJobDto(Lecture lecture) {
-       this(AttendanceStatus.PERIOD_EXPIRED, lecture.getLectureSchedule().getDayOfWeek(), lecture.getLectureId(), null);
+    public AttendanceJobDto(LectureId lectureId, DayOfWeek dayOfWeek) {
+       this(AttendanceStatus.PERIOD_EXPIRED, dayOfWeek, lectureId, null);
     }
 
     public void setLectureDate(LocalDate lectureDate) {

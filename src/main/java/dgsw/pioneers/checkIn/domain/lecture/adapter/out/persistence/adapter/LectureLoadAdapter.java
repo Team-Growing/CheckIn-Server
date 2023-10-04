@@ -54,7 +54,7 @@ public class LectureLoadAdapter implements LoadLecturePort {
     @Override
     public List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
 
-        return lectureRepository.findAllByLectureStatusAndLectureScheduleDayOfWeek(lectureStatus, dayOfWeek).stream()
+        return lectureRepository.findAllByLectureStatusAndDayOfWeekVO(lectureStatus, dayOfWeek).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 

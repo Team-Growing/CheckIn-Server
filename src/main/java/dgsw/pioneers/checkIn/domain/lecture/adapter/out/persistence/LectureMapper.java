@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.relation.LectureToMemberEntity;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.DayOfWeekVO;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.*;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.WeekPlanJpaEntity;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo.AcceptableStudentJpaVO;
@@ -9,7 +10,9 @@ import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.vo
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.Mapper;
 
+import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper
@@ -32,7 +35,7 @@ public class LectureMapper {
                 LectureSchedule.builder()
                         .startDay(lectureJpa.getLectureSchedule().getStartDay())
                         .endDay(lectureJpa.getLectureSchedule().getEndDay())
-                        .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
+                        .dayOfWeek(getDayOfWeek(lectureJpa.getDayOfWeekVO()))
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
                 lectureJpa.getEnrollStudent(),
@@ -57,7 +60,7 @@ public class LectureMapper {
                 LectureSchedule.builder()
                         .startDay(lectureJpa.getLectureSchedule().getStartDay())
                         .endDay(lectureJpa.getLectureSchedule().getEndDay())
-                        .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
+                        .dayOfWeek(getDayOfWeek(lectureJpa.getDayOfWeekVO()))
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
                 lectureJpa.getEnrollStudent(),
@@ -82,7 +85,7 @@ public class LectureMapper {
                 LectureSchedule.builder()
                         .startDay(lectureJpa.getLectureSchedule().getStartDay())
                         .endDay(lectureJpa.getLectureSchedule().getEndDay())
-                        .dayOfWeek(lectureJpa.getLectureSchedule().getDayOfWeek())
+                        .dayOfWeek(getDayOfWeek(lectureJpa.getDayOfWeekVO()))
                         .startTime(lectureJpa.getLectureSchedule().getStartTime())
                         .endTime(lectureJpa.getLectureSchedule().getEndTime()).build(),
                 lectureJpa.getEnrollStudent(),
@@ -106,12 +109,20 @@ public class LectureMapper {
                 .lectureSchedule(new LectureScheduleJpaVO(
                         lecture.getLectureSchedule().getStartDay(),
                         lecture.getLectureSchedule().getEndDay(),
-                        lecture.getLectureSchedule().getDayOfWeek(),
                         lecture.getLectureSchedule().getStartTime(),
                         lecture.getLectureSchedule().getEndTime()
                 ))
+                .dayOfWeekVO(getDayOfWeekVO(lecture.getLectureSchedule().getDayOfWeek()))
                 .enrollStudent(lecture.getEnrollStudent())
                 .build();
+    }
+
+    private Set<DayOfWeekVO> getDayOfWeekVO(Set<DayOfWeek> dayOfWeeks) {
+        return dayOfWeeks.stream().map(DayOfWeekVO::new).collect(Collectors.toSet());
+    }
+
+    private Set<DayOfWeek> getDayOfWeek(Set<DayOfWeekVO> dayOfWeeks) {
+        return dayOfWeeks.stream().map(DayOfWeekVO::getDayOfWeek).collect(Collectors.toSet());
     }
 
     public List<Participant> getParticipants(LectureJpaEntity lectureJpa) {
