@@ -1,10 +1,7 @@
 package dgsw.pioneers.checkIn.domain.notice.adapter.out.persistence.aggregate;
 
 import dgsw.pioneers.checkIn.domain.notice.application.domain.model.enums.NoticeStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -32,4 +29,11 @@ public class NoticeJpaEntity {
 
     @NotNull
     private LocalDateTime createdAt;
+
+    @Builder
+    public NoticeJpaEntity(NoticeStatus noticeStatus, String content, LocalDateTime createdAt) {
+        this.noticeStatus = noticeStatus;
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 }
