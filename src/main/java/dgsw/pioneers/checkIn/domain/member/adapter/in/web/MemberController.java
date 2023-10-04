@@ -61,6 +61,6 @@ public class MemberController {
     @GetMapping("/teachers")
     public ResponseData<List<TeacherInfoRes>> getTeachers() {
         List<TeacherInfoRes> teacherInfoRes = memberLoadUseCase.loadTeachers().stream().map(TeacherInfoRes::convertToDTO).toList();
-        return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", teacherInfoRes);
+        return ResponseData.of(HttpStatus.OK, "선생님 리스트 불러오기 성공", teacherInfoRes);
     }
 }

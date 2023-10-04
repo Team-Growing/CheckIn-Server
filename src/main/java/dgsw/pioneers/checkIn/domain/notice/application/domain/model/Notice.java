@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Notice {
 
-    private NoticeId noticeId;
+    private final NoticeId noticeId;
 
     private NoticeStatus noticeStatus;
 
-    private String content;
+    private final String content;
 
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     @Value
     @AllArgsConstructor

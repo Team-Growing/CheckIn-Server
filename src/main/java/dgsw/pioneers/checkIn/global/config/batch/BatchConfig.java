@@ -13,8 +13,10 @@ import org.springframework.batch.core.repository.dao.Jackson2ExecutionContextStr
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
@@ -33,9 +35,16 @@ public class BatchConfig {
 
     @Bean
     public BatchConfigurer myBatchConfigurer(DataSource dataSource,
+                                             EntityManagerFactory entityManagerFactory,
                                              ExecutionContextSerializer executionContextSerializer,
                                              PlatformTransactionManager transactionManager) {
         return new DefaultBatchConfigurer(dataSource) {
+
+            @Override
+            public PlatformTransactionManager getTransactionManager() {
+                return new JpaTransactionManager(entityManagerFactory);
+            }
+
             @Override
             protected JobExplorer createJobExplorer() throws Exception {
 

@@ -36,7 +36,7 @@ public class NoticeController {
 
     @PostMapping
     @AuthCheck(roles = MemberRole.ADMIN)
-    @Operation(summary = "generate Notice", description = "공지 생성", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "generate notice", description = "공지 생성", security = @SecurityRequirement(name = "Authorization"))
     public Response generateNotice(
             @RequestBody @Valid NoticeGenerateReq noticeGenerateReq
     ) {
