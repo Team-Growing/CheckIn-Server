@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.notice.adapter.in.web;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.notice.adapter.in.web.dto.req.NoticeGenerateReq;
 import dgsw.pioneers.checkIn.domain.notice.application.domain.model.Notice;
+import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeDeleteUseCase;
 import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.notice.application.port.in.NoticeLoadUseCase;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
@@ -27,6 +28,7 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeGenerateUseCase noticeGenerateUseCase;
+    private final NoticeDeleteUseCase noticeDeleteUseCase;
     private final NoticeLoadUseCase noticeLoadUseCase;
 
     @PostMapping
@@ -52,5 +54,15 @@ public class NoticeController {
     public ResponseData<List<Notice>> loadActiveNotice() {
         List<Notice> notices = noticeLoadUseCase.loadActiveNotice();
         return ResponseData.of(HttpStatus.OK, "활성화 상태 공지 불러오기 성공", notices);
+    }
+
+    @DeleteMapping("/{noticeId}")
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "delete notice", description = "공지 삭제", security = @SecurityRequirement(name = "Authorization"))
+    public Response cancelAttendance(
+            @PathVariable("noticeId") long noticeId
+    ) {
+        noticeDeleteUseCase.deleteNotice(new Notice.NoticeId(noticeId));
+        return Response.of(HttpStatus.OK, "공지 삭제 처리 성공");
     }
 }

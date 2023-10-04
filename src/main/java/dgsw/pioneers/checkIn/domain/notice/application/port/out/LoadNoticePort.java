@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface LoadNoticePort {
 
+    boolean existNoticeById(Notice.NoticeId noticeId);
+
     List<Notice> loadAllNotice();
 
     List<Notice> loadAllNoticeByNoticeStatus(NoticeStatus noticeStatus);

@@ -19,6 +19,11 @@ public class NoticeLoadAdapter implements LoadNoticePort {
     private final NoticeMapper noticeMapper;
 
     @Override
+    public boolean existNoticeById(Notice.NoticeId noticeId) {
+        return noticeRepository.existsById(noticeId.getValue());
+    }
+
+    @Override
     public List<Notice> loadAllNotice() {
         return noticeRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(noticeMapper::mapToDomainEntity).collect(Collectors.toList());
