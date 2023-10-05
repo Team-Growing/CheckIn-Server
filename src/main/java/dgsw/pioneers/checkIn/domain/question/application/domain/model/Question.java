@@ -54,4 +54,8 @@ public class Question {
                         .build()
         );
     }
+
+    public void confirmQuestion() {
+        this.questionStatus = QuestionStatus.CONFIRMED;
+    }
 }
