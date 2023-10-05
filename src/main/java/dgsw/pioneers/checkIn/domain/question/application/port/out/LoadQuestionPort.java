@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface LoadQuestionPort {
 
+    Question loadQuestionById(Question.QuestionId questionId);
     List<Question> loadAllQuestion();
 }

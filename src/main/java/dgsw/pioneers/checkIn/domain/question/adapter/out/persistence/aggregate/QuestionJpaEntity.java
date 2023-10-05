@@ -46,4 +46,8 @@ public class QuestionJpaEntity {
         this.createdAt = createdAt;
         this.member = memberJpaEntity;
     }
+
+    public void updateQuestionStatus(QuestionStatus questionStatus) {
+        this.questionStatus = questionStatus;
+    }
 }
