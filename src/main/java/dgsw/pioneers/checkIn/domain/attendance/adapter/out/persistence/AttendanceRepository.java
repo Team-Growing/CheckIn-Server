@@ -1,12 +1,15 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence;
 
 import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendanceJpaEntity;
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +23,6 @@ public interface AttendanceRepository extends JpaRepository<AttendanceJpaEntity,
 
     @EntityGraph(attributePaths = {"attendants"})
     Optional<AttendanceJpaEntity> findById(Long attendanceId);
+
+    List<AttendanceJpaEntity> findAllByLectureDateAndAttendanceTime(LocalDate lectureDate, AttendanceTime attendanceTime);
 }

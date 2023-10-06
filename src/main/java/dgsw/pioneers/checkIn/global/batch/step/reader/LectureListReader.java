@@ -38,7 +38,7 @@ public class LectureListReader implements Tasklet, StepExecutionListener {
                 .stream()
                 .flatMap(lecture -> lecture.getLectureSchedule().getDayOfWeek()
                         .stream()
-                        .map(dayOfWeek -> new AttendanceJobDto(lecture.getLectureId(), dayOfWeek))
+                        .map(dayOfWeek -> new AttendanceJobDto(lecture.getLectureId(), lecture.getLectureSchedule().getEndTime(), dayOfWeek))
                 ).toList();
 
         return RepeatStatus.FINISHED;

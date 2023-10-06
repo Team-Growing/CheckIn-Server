@@ -24,6 +24,8 @@ public class QAttendanceJpaEntity extends EntityPathBase<AttendanceJpaEntity> {
 
     public final EnumPath<dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus> attendanceStatus = createEnum("attendanceStatus", dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus.class);
 
+    public final EnumPath<dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime> attendanceTime = createEnum("attendanceTime", dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime.class);
+
     public final ListPath<AttendantJpaEntity, QAttendantJpaEntity> attendants = this.<AttendantJpaEntity, QAttendantJpaEntity>createList("attendants", AttendantJpaEntity.class, QAttendantJpaEntity.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> attendStudent = createNumber("attendStudent", Integer.class);

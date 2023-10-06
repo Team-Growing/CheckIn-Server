@@ -4,6 +4,7 @@ import dgsw.pioneers.checkIn.domain.attendance.application.domain.exception.Atte
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.exception.AttendanceDuplicatedException;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.exception.AttendantNotFoundException;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture.LectureId;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.*;
@@ -18,7 +19,9 @@ public class Attendance {
 
     private final AttendanceId attendanceId;
 
-    private final AttendanceStatus attendanceStatus;
+    private AttendanceStatus attendanceStatus;
+
+    private final AttendanceTime attendanceTime;
 
     private final LocalDate lectureDate;
 
@@ -39,21 +42,24 @@ public class Attendance {
     public static Attendance withId(
             AttendanceId attendanceId,
             AttendanceStatus attendanceStatus,
+            AttendanceTime attendanceTime,
             LocalDate lectureDate,
             int attendStudent,
             String code,
             LectureId lectureId,
             List<Attendant> attendants) {
-        return new Attendance(attendanceId, attendanceStatus, lectureDate, attendStudent, code, lectureId, attendants);
+        return new Attendance(attendanceId, attendanceStatus, attendanceTime, lectureDate, attendStudent, code, lectureId, attendants);
     }
 
     @Builder
     public Attendance(
             AttendanceStatus attendanceStatus,
+            AttendanceTime attendanceTime,
             LectureId lectureId,
             LocalDate lectureDate) {
         this.attendanceId = null;
         this.attendanceStatus = attendanceStatus;
+        this.attendanceTime = attendanceTime;
         this.lectureDate = lectureDate;
         this.attendStudent = 0;
         this.lectureId = lectureId;
@@ -91,5 +97,13 @@ public class Attendance {
         return attendants.stream()
                 .filter(attendant -> attendant.getAttendantId().equals(memberId))
                 .findFirst();
+    }
+
+    public void activate() {
+        this.attendanceStatus = AttendanceStatus.PERIOD_VALID;
+    }
+
+    public void deactivate() {
+        this.attendanceStatus = AttendanceStatus.PERIOD_EXPIRED_AFTER;
     }
 }

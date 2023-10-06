@@ -1,8 +1,8 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate;
 
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.LectureJpaEntity;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.aggregate.WeekPlanJpaEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -28,6 +28,10 @@ public class AttendanceJpaEntity {
     private AttendanceStatus attendanceStatus;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private AttendanceTime attendanceTime;
+
+    @NotNull
     private LocalDate lectureDate;
 
     @NotNull
@@ -45,12 +49,17 @@ public class AttendanceJpaEntity {
     private List<AttendantJpaEntity> attendants;
 
     @Builder
-    public AttendanceJpaEntity(AttendanceStatus attendanceStatus, LocalDate lectureDate, int attendStudent, String code, LectureJpaEntity lecture) {
+    public AttendanceJpaEntity(AttendanceStatus attendanceStatus, AttendanceTime attendanceTime, LocalDate lectureDate, int attendStudent, String code, LectureJpaEntity lecture) {
         this.attendanceStatus = attendanceStatus;
         this.lectureDate = lectureDate;
+        this.attendanceTime = attendanceTime;
         this.attendStudent = attendStudent;
         this.lecture = lecture;
         this.code = code;
+    }
+
+    public void updateStatus(AttendanceStatus attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
     }
 
     public void updateCode(String code) {

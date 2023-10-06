@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.global.batch.step.processor;
 
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime;
 import dgsw.pioneers.checkIn.global.annotation.batch.Processor;
 import dgsw.pioneers.checkIn.global.batch.step.dto.AttendanceJobDto;
 import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
@@ -14,6 +15,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -39,9 +41,19 @@ public class AttendanceDateProcessor implements Tasklet, StepExecutionListener {
 
         this.attendances.forEach(attendanceJobDto -> {
             attendanceJobDto.setLectureDate(ZoneDateTimeUtil.nowToLocalDate().plusDays(attendanceJobDto.getDayOfWeek().getValue()));
+            attendanceJobDto.setAttendanceTime(checkAttendanceTime(attendanceJobDto.getEndTime()));
         });
 
         return RepeatStatus.FINISHED;
+    }
+
+    private AttendanceTime checkAttendanceTime(LocalTime endTime) {
+
+        if (endTime.isBefore(LocalTime.of(18, 30))) {
+            return AttendanceTime.LESSON_8_9;
+        } else {
+            return AttendanceTime.LESSON_10_11;
+        }
     }
 
     @Override

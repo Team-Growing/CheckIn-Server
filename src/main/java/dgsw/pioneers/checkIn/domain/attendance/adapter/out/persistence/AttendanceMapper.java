@@ -18,6 +18,7 @@ public class AttendanceMapper {
     public AttendanceJpaEntity mapToJpaEntity(Attendance attendance, LectureJpaEntity lecture) {
         return AttendanceJpaEntity.builder()
                 .attendanceStatus(attendance.getAttendanceStatus())
+                .attendanceTime(attendance.getAttendanceTime())
                 .lectureDate(attendance.getLectureDate())
                 .attendStudent(attendance.getAttendStudent())
                 .lecture(lecture)
@@ -25,10 +26,24 @@ public class AttendanceMapper {
                 .build();
     }
 
-    public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpa, Long lectureId) { //파라미터로 강좌 아이디를 받는 이유 : Lazy Loading
+    public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpa) { //파라미터로 강좌 아이디를 받는 이유 : Lazy Loading
         return Attendance.withId(
                 new Attendance.AttendanceId(attendanceJpa.getId()),
                 attendanceJpa.getAttendanceStatus(),
+                attendanceJpa.getAttendanceTime(),
+                attendanceJpa.getLectureDate(),
+                attendanceJpa.getAttendStudent(),
+                attendanceJpa.getCode(),
+                null,
+                null
+        );
+    }
+
+    public Attendance mapToDomainEntityWithLecture(AttendanceJpaEntity attendanceJpa, Long lectureId) { //파라미터로 강좌 아이디를 받는 이유 : Lazy Loading
+        return Attendance.withId(
+                new Attendance.AttendanceId(attendanceJpa.getId()),
+                attendanceJpa.getAttendanceStatus(),
+                attendanceJpa.getAttendanceTime(),
                 attendanceJpa.getLectureDate(),
                 attendanceJpa.getAttendStudent(),
                 attendanceJpa.getCode(),

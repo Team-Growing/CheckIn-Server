@@ -5,11 +5,16 @@ import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.Attendanc
 import dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.AttendanceJpaEntity;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
+import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceTime;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.out.LoadAttendancePort;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -25,7 +30,7 @@ public class AttendanceLoadAdapter implements LoadAttendancePort {
                 lectureId.getValue(), attendanceStatus
         ).orElseThrow(ResourceNotFoundException::new);
 
-        return attendanceMapper.mapToDomainEntity(attendanceJpaEntity, lectureId.getValue());
+        return attendanceMapper.mapToDomainEntityWithLecture(attendanceJpaEntity, lectureId.getValue());
     }
 
     @Override
@@ -35,6 +40,13 @@ public class AttendanceLoadAdapter implements LoadAttendancePort {
                 lectureId.getValue(), attendanceStatus
         ).orElseThrow(ResourceNotFoundException::new);
 
-        return attendanceMapper.mapToDomainEntity(attendanceJpaEntity, lectureId.getValue());
+        return attendanceMapper.mapToDomainEntityWithLecture(attendanceJpaEntity, lectureId.getValue());
+    }
+
+    @Override
+    public List<Attendance> loadAttendanceByLectureDateAndAttendanceTime(LocalDate lectureDate, AttendanceTime attendanceTime) {
+
+        return attendanceRepository.findAllByLectureDateAndAttendanceTime(lectureDate, attendanceTime).stream()
+                .map(attendanceMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 }
