@@ -49,7 +49,7 @@ public class MemberMapper {
          }
     }
 
-    private StudentInfo getStudentInfo(StudentInfoJpaVO studentInfoJpaVO) {
+    public StudentInfo getStudentInfo(StudentInfoJpaVO studentInfoJpaVO) {
 
         if (Optional.ofNullable(studentInfoJpaVO).isEmpty()) {
             return null;

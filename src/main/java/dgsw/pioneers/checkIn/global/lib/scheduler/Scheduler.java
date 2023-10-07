@@ -43,7 +43,7 @@ public class Scheduler {
     @Scheduled(cron = "0 0 16 * * MON-THU", zone = "Asia/Seoul")
     public void activateLesson89() {
         try {
-            log.info("<<<<<<<<<< activate Lesson 8-9 Start {} >>>>>>>>>>", ZoneDateTimeUtil.nowToLocalDate());
+            log.info("<<<<<<<<<< activate Lesson 10-11 Start & deactivate Lesson 8-9 {} >>>>>>>>>>", ZoneDateTimeUtil.nowToLocalDate());
             attendanceActivateUseCase.activate(AttendanceTime.LESSON_8_9);
         } catch (Exception e) {
             log.error("fail to process file", e);
