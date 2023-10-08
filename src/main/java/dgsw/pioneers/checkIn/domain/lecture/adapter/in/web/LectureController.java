@@ -76,13 +76,14 @@ public class LectureController {
     }
 
     @GetMapping
-    @AuthCheck(roles = MemberRole.ADMIN)
+    @AuthCheck
     @Operation(summary = "load lectures with lectureStatus", description = "강좌 상태로 강좌 불러오기", security = @SecurityRequirement(name = "Authorization"))
     public ResponseData<List<Lecture>> loadEnrolmentLecture(
+            @RequestAttribute Member member,
             @RequestParam("status") LectureStatus lectureStatus,
             @RequestParam("grade") @Min(1) @Max(2) int targetGrade
     ) {
-        List<Lecture> lectures = lectureLoadUseCase.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
+        List<Lecture> lectures = lectureLoadUseCase.loadAllLectureByStatusAndTargetGrade(lectureStatus, member.getMemberRole(), targetGrade);
         return ResponseData.of(HttpStatus.OK, "강좌 상태로 강좌 불러오기 성공", lectures);
     }
 

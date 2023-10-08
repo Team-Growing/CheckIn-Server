@@ -5,8 +5,10 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Lectu
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.exception.custom.PermissionInvalidException;
 import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,13 @@ public class LectureLoadService implements LectureLoadUseCase {
     }
 
     @Override
-    public List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, int targetGrade) {
+    public List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, MemberRole memberRole, int targetGrade) {
+
+        if (!lectureStatus.equals(LectureStatus.ENROLMENT)) {
+            if (!memberRole.equals(MemberRole.ADMIN)) {
+                throw  new PermissionInvalidException();
+            }
+        }
         return loadLecturePort.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
     }
 
