@@ -6,6 +6,7 @@ import dgsw.pioneers.checkIn.domain.suggestion.application.domain.model.Suggesti
 import dgsw.pioneers.checkIn.domain.suggestion.application.port.out.LoadSuggestionPort;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +19,8 @@ public class SuggestionLoadAdapter implements LoadSuggestionPort {
     private final SuggestionMapper suggestionMapper;
 
     @Override
-    public List<Suggestion> loadAllSuggestion() {
-        return suggestionRepository.findAllByOrderByCreatedAtDesc().stream()
+    public List<Suggestion> loadAllSuggestion(PageRequest pageRequest) {
+        return suggestionRepository.findAllByOrderByCreatedAtDesc(pageRequest).stream()
                 .map(suggestionMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 }

@@ -41,11 +41,14 @@ public class SuggestionController {
         return Response.of(HttpStatus.OK, "수업 제안 생성 성공");
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "load all suggestion", description = "모든 제안 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    public ResponseData<List<Suggestion>> loadAllNotice() {
-        List<Suggestion> suggestions = suggestionLoadUseCase.loadAllSuggestion();
+    public ResponseData<List<Suggestion>> loadNotice(
+            @RequestParam(name = "page") int page,
+            @RequestParam(name = "limit") int limit
+    ) {
+        List<Suggestion> suggestions = suggestionLoadUseCase.loadSuggestion(page, limit);
         return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공", suggestions);
     }
 }

@@ -5,6 +5,7 @@ import dgsw.pioneers.checkIn.domain.suggestion.application.port.in.SuggestionLoa
 import dgsw.pioneers.checkIn.domain.suggestion.application.port.out.LoadSuggestionPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,7 +18,9 @@ public class SuggestionLoadService implements SuggestionLoadUseCase {
     private final LoadSuggestionPort loadSuggestionPort;
 
     @Override
-    public List<Suggestion> loadAllSuggestion() {
-        return loadSuggestionPort.loadAllSuggestion();
+    public List<Suggestion> loadSuggestion(int page, int limit) {
+
+        PageRequest pageRequest = PageRequest.of(page - 1, limit);
+        return loadSuggestionPort.loadAllSuggestion(pageRequest);
     }
 }
