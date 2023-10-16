@@ -72,7 +72,7 @@ public class MemberLoadAdapter implements LoadMemberPort, ExistMemberPort {
         return memberRepository.existsById(memberId.getValue());
     }
 
-    public MemberJpaEntity loadMemberJpaEntity(String  memberId) {
+    public MemberJpaEntity loadMemberJpaEntity(String memberId) {
         return memberRepository.findById(memberId).get();
     }
 }

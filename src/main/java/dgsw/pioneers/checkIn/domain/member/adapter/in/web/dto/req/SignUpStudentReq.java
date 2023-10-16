@@ -15,6 +15,7 @@ public class SignUpStudentReq {
     @NotBlank
     private String id;
     @Email
+    @NotBlank
     private String email;
     @NotBlank
     private String pw;

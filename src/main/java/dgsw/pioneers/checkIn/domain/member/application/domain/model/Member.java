@@ -18,7 +18,7 @@ public class Member {
 
     private String pw;
 
-    private final String email;
+    private String email;
 
     private final MemberRole memberRole;
     private StudentInfo studentInfo;
@@ -77,7 +77,24 @@ public class Member {
         this.pw = encodedPw;
     }
 
-    public void modifyInfo(int year) {
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void updateStudentInfo(int year, int grade, int room, int number) {
+        this.studentInfo = StudentInfo.builder()
+                .year(year)
+                .grade(grade)
+                .room(room)
+                .number(number)
+                .build();
+    }
+
+    public void modifyInfoYear(int year) {
         this.studentInfo = StudentInfo.builder()
                 .year(year)
                 .grade(this.studentInfo.getGrade())

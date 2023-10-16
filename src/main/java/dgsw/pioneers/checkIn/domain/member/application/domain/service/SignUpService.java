@@ -8,14 +8,13 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member.Membe
 import dgsw.pioneers.checkIn.domain.member.application.port.in.SignUpUseCase;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.CreateMemberPort;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.ExistMemberPort;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.transaction.Transactional;
-import java.time.LocalDate;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SignUpService implements SignUpUseCase {
 
@@ -24,6 +23,7 @@ public class SignUpService implements SignUpUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public void signUpTeacher(Member member) {
 
         checkExistMember(member.getMemberId());
@@ -35,6 +35,7 @@ public class SignUpService implements SignUpUseCase {
     }
 
     @Override
+    @Transactional
     public void signUpStudent(Member member) {
 
         checkExistMember(member.getMemberId());
@@ -42,8 +43,7 @@ public class SignUpService implements SignUpUseCase {
         if (!member.checkStudentRole()) throw new ParameterNotFoundException();
         member.encodePw(passwordEncoder.encode(member.getPw()));
 
-        LocalDate now = LocalDate.now();
-        member.modifyInfo(now.getYear());
+        member.modifyInfoYear(ZoneDateTimeUtil.nowToLocalDate().getYear());
 
         createMemberPort.createMember(member);
     }

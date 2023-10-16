@@ -35,7 +35,7 @@ public class MemberMapper {
                 .build();
     }
 
-    private StudentInfoJpaVO getStudentJPAInfo(StudentInfo studentInfo) {
+    public StudentInfoJpaVO getStudentJPAInfo(StudentInfo studentInfo) {
 
          if (Optional.ofNullable(studentInfo).isEmpty()) {
              return null;
