@@ -7,4 +7,5 @@ import java.util.List;
 public interface SuggestionLoadUseCase {
 
     List<Suggestion> loadSuggestion(int page, int limit);
+    Suggestion loadSuggestionById(Suggestion.SuggestionId suggestionId);
 }

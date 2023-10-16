@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface LoadSuggestionPort {
 
+    Suggestion loadSuggestionById(Suggestion.SuggestionId suggestionId);
     List<Suggestion> loadAllSuggestion(PageRequest pageRequest);
 }

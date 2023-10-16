@@ -51,4 +51,14 @@ public class SuggestionController {
         List<Suggestion> suggestions = suggestionLoadUseCase.loadSuggestion(page, limit);
         return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공", suggestions);
     }
+
+    @GetMapping("/{suggestionId}")
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "load suggestion", description = "단일 제안 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<Suggestion> loadSuggestion(
+            @PathVariable("suggestionId") long id
+    ) {
+        Suggestion suggestion = suggestionLoadUseCase.loadSuggestionById(new Suggestion.SuggestionId(id));
+        return ResponseData.of(HttpStatus.OK, "단일 제안 불러오기 성공", suggestion);
+    }
 }

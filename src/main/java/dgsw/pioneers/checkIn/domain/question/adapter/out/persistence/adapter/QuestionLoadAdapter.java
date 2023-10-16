@@ -8,6 +8,7 @@ import dgsw.pioneers.checkIn.domain.question.application.port.out.LoadQuestionPo
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +30,8 @@ public class QuestionLoadAdapter implements LoadQuestionPort {
     }
 
     @Override
-    public List<Question> loadAllQuestion() {
-        return questionRepository.findAllByOrderByCreatedAtDesc().stream()
+    public List<Question> loadAllQuestion(PageRequest pageRequest) {
+        return questionRepository.findAllByOrderByCreatedAtDesc(pageRequest).stream()
                 .map(questionMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 }

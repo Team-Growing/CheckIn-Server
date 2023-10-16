@@ -23,4 +23,9 @@ public class SuggestionLoadService implements SuggestionLoadUseCase {
         PageRequest pageRequest = PageRequest.of(page - 1, limit);
         return loadSuggestionPort.loadAllSuggestion(pageRequest);
     }
+
+    @Override
+    public Suggestion loadSuggestionById(Suggestion.SuggestionId suggestionId) {
+        return loadSuggestionPort.loadSuggestionById(suggestionId);
+    }
 }

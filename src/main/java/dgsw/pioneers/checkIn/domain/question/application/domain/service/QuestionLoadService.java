@@ -7,6 +7,7 @@ import dgsw.pioneers.checkIn.domain.question.application.port.out.LoadQuestionPo
 import dgsw.pioneers.checkIn.domain.question.application.port.out.UpdateQuestionStatusPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,7 +37,9 @@ public class QuestionLoadService implements QuestionLoadUseCase {
     }
 
     @Override
-    public List<Question> loadAllQuestion() {
-        return loadQuestionPort.loadAllQuestion();
+    public List<Question> loadAllQuestion(int page, int limit) {
+
+        PageRequest pageRequest = PageRequest.of(page - 1, limit);
+        return loadQuestionPort.loadAllQuestion(pageRequest);
     }
 }
