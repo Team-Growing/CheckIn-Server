@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.suggestion.adapter.in.web;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.suggestion.adapter.in.web.dto.req.SuggestionGenerateReq;
+import dgsw.pioneers.checkIn.domain.suggestion.adapter.in.web.dto.res.SuggestionWithTotalCountRes;
 import dgsw.pioneers.checkIn.domain.suggestion.application.domain.model.Suggestion;
 import dgsw.pioneers.checkIn.domain.suggestion.application.port.in.SuggestionGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.suggestion.application.port.in.SuggestionLoadUseCase;
@@ -44,12 +45,17 @@ public class SuggestionController {
     @GetMapping
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "load all suggestion", description = "모든 제안 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    public ResponseData<List<Suggestion>> loadNotice(
+    public ResponseData<SuggestionWithTotalCountRes> loadNotice(
             @RequestParam(name = "page") int page,
             @RequestParam(name = "limit") int limit
     ) {
         List<Suggestion> suggestions = suggestionLoadUseCase.loadSuggestion(page, limit);
-        return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공", suggestions);
+        return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공",
+                SuggestionWithTotalCountRes.builder()
+                        .totalCount(suggestions.size())
+                        .value(suggestions)
+                        .build()
+        );
     }
 
     @GetMapping("/{suggestionId}")

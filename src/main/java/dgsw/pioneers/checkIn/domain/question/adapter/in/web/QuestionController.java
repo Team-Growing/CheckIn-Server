@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.question.adapter.in.web;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.question.adapter.in.web.dto.req.QuestionGenerateReq;
+import dgsw.pioneers.checkIn.domain.question.adapter.in.web.dto.res.QuestionWithTotalCountRes;
 import dgsw.pioneers.checkIn.domain.question.application.domain.model.Question;
 import dgsw.pioneers.checkIn.domain.question.application.port.in.QuestionGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.question.application.port.in.QuestionLoadUseCase;
@@ -44,12 +45,17 @@ public class QuestionController {
     @GetMapping("/all")
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "load all question", description = "모든 문의 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    public ResponseData<List<Question>> loadAllQuestion(
+    public ResponseData<QuestionWithTotalCountRes> loadAllQuestion(
             @RequestParam(name = "page") int page,
             @RequestParam(name = "limit") int limit
     ) {
         List<Question> questions = questionLoadUseCase.loadAllQuestion(page, limit);
-        return ResponseData.of(HttpStatus.OK, "모든 문의 불러오기 성공", questions);
+        return ResponseData.of(HttpStatus.OK, "모든 문의 불러오기 성공",
+                QuestionWithTotalCountRes.builder()
+                        .totalCount(questions.size())
+                        .value(questions)
+                        .build()
+        );
     }
 
     @GetMapping("/{questionId}")
