@@ -3,6 +3,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureStatusUpdateReq;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture.LectureId;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureGenerateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
@@ -26,6 +27,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebAdapter
 @RestController
@@ -87,14 +89,16 @@ public class LectureController {
         return ResponseData.of(HttpStatus.OK, "강좌 상태로 강좌 불러오기 성공", lectures);
     }
 
-    @PatchMapping("/status/{lectureId}")
+    @PatchMapping("/status")
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "update lectureStatus", description = "강좌 상태 수정", security = @SecurityRequirement(name = "Authorization"))
     public Response updateLectureStatus(
-            @PathVariable("lectureId") long id,
             @RequestBody @Valid LectureStatusUpdateReq lectureStatusUpdateReq
     ) {
-        lectureStatusUpdateUseCase.updateStatus(new Lecture.LectureId(id), lectureStatusUpdateReq.getLectureStatus());
+        lectureStatusUpdateUseCase.updateStatus(
+                lectureStatusUpdateReq.getIds().stream().map(LectureId::new).collect(Collectors.toList()),
+                lectureStatusUpdateReq.getLectureStatus()
+        );
         return Response.of(HttpStatus.OK, "강좌 상태 수정 성공");
     }
 }

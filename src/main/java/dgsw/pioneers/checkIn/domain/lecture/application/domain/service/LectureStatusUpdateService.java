@@ -1,6 +1,7 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
+import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture.LectureId;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort;
@@ -8,6 +9,8 @@ import dgsw.pioneers.checkIn.domain.lecture.application.port.out.UpdateLectureSt
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @UseCase
 @Transactional(readOnly = true)
@@ -19,11 +22,12 @@ public class LectureStatusUpdateService implements LectureStatusUpdateUseCase {
 
     @Override
     @Transactional
-    public void updateStatus(Lecture.LectureId lectureId, LectureStatus lectureStatus) {
+    public void updateStatus(List<LectureId> lectureIds, LectureStatus lectureStatus) {
 
-        Lecture lecture = loadLecturePort.loadLectureWithWeekPlans(lectureId);
-        lecture.updateLectureStatus(lectureStatus);
+        List<Lecture> lectures = lectureIds.stream().map(loadLecturePort::loadLectureWithWeekPlans).toList();
 
-        updateLectureStatusPort.updateLectureStatus(lecture);
+        lectures.forEach(lecture -> lecture.updateLectureStatus(lectureStatus));
+
+        lectures.forEach(updateLectureStatusPort::updateLectureStatus);
     }
 }
