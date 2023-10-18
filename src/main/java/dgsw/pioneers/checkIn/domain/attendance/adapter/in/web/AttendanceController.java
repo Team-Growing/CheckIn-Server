@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @WebAdapter
@@ -74,7 +75,7 @@ public class AttendanceController {
     public Response attendance(
             @RequestAttribute Member member,
             @PathVariable("lectureId") long id,
-            @RequestBody AttendanceCodeDto attendanceCodeDto
+            @RequestBody @Valid AttendanceCodeDto attendanceCodeDto
     ) {
         attendanceUseCase.attendanceByCode(new Lecture.LectureId(id), member.getMemberId(), attendanceCodeDto.getCode());
         return Response.of(HttpStatus.OK, "출석 성공");
@@ -96,7 +97,7 @@ public class AttendanceController {
     @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response confirmAttendance(
             @PathVariable("lectureId") long lectureId,
-            @RequestBody AttendanceConfirmReq attendanceConfirmReq
+            @RequestBody @Valid AttendanceConfirmReq attendanceConfirmReq
     ) {
         attendanceUseCase.attendance(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceConfirmReq.getMemberId()));
         return Response.of(HttpStatus.OK, "출석 확인 처리 성공");
