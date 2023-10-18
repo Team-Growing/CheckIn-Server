@@ -34,4 +34,9 @@ public class QuestionLoadAdapter implements LoadQuestionPort {
         return questionRepository.findAllByOrderByCreatedAtDesc(pageRequest).stream()
                 .map(questionMapper::mapToDomainEntity).collect(Collectors.toList());
     }
+
+    @Override
+    public Long loadAllCount() {
+        return questionRepository.countBy();
+    }
 }

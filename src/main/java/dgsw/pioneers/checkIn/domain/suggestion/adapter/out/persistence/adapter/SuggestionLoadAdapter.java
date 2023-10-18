@@ -34,4 +34,9 @@ public class SuggestionLoadAdapter implements LoadSuggestionPort {
         return suggestionRepository.findAllByOrderByCreatedAtDesc(pageRequest).stream()
                 .map(suggestionMapper::mapToDomainEntity).collect(Collectors.toList());
     }
+
+    @Override
+    public Long loadAllCount() {
+        return suggestionRepository.countBy();
+    }
 }

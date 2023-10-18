@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.question.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.question.adapter.in.web.dto.res.QuestionWithTotalCountRes;
 import dgsw.pioneers.checkIn.domain.question.application.domain.model.Question;
 import dgsw.pioneers.checkIn.domain.question.application.domain.model.enums.QuestionStatus;
 import dgsw.pioneers.checkIn.domain.question.application.port.in.QuestionLoadUseCase;
@@ -9,8 +10,6 @@ import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @UseCase
 @Transactional(readOnly = true)
@@ -37,9 +36,13 @@ public class QuestionLoadService implements QuestionLoadUseCase {
     }
 
     @Override
-    public List<Question> loadAllQuestion(int page, int limit) {
+    public QuestionWithTotalCountRes loadAllQuestion(int page, int limit) {
 
         PageRequest pageRequest = PageRequest.of(page - 1, limit);
-        return loadQuestionPort.loadAllQuestion(pageRequest);
+
+        return QuestionWithTotalCountRes.builder()
+                .totalCount(loadQuestionPort.loadAllCount())
+                .value(loadQuestionPort.loadAllQuestion(pageRequest))
+                .build();
     }
 }

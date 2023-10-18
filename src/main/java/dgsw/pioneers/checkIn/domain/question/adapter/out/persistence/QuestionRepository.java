@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionJpaEntity, Long> {
 
+    Long countBy();
+
     @EntityGraph(attributePaths = {"member"})
     Optional<QuestionJpaEntity> findById(Long questionId);
 

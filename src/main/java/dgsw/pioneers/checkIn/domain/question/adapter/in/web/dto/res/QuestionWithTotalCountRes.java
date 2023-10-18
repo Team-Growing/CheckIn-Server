@@ -10,6 +10,6 @@ import java.util.List;
 @Builder
 public class QuestionWithTotalCountRes {
 
-    private int totalCount;
+    private long totalCount;
     private List<Question> value;
 }

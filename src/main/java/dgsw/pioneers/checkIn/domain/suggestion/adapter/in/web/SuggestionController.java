@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @WebAdapter
 @RestController
@@ -49,13 +48,8 @@ public class SuggestionController {
             @RequestParam(name = "page") int page,
             @RequestParam(name = "limit") int limit
     ) {
-        List<Suggestion> suggestions = suggestionLoadUseCase.loadSuggestion(page, limit);
-        return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공",
-                SuggestionWithTotalCountRes.builder()
-                        .totalCount(suggestions.size())
-                        .value(suggestions)
-                        .build()
-        );
+        SuggestionWithTotalCountRes res = suggestionLoadUseCase.loadSuggestion(page, limit);
+        return ResponseData.of(HttpStatus.OK, "모든 제안 불러오기 성공", res);
     }
 
     @GetMapping("/{suggestionId}")

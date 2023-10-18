@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @WebAdapter
 @RestController
@@ -49,13 +48,8 @@ public class QuestionController {
             @RequestParam(name = "page") int page,
             @RequestParam(name = "limit") int limit
     ) {
-        List<Question> questions = questionLoadUseCase.loadAllQuestion(page, limit);
-        return ResponseData.of(HttpStatus.OK, "모든 문의 불러오기 성공",
-                QuestionWithTotalCountRes.builder()
-                        .totalCount(questions.size())
-                        .value(questions)
-                        .build()
-        );
+        QuestionWithTotalCountRes res = questionLoadUseCase.loadAllQuestion(page, limit);
+        return ResponseData.of(HttpStatus.OK, "모든 문의 불러오기 성공", res);
     }
 
     @GetMapping("/{questionId}")

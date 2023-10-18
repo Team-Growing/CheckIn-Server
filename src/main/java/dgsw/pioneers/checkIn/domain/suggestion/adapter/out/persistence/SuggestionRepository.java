@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface SuggestionRepository extends JpaRepository<SuggestionJpaEntity, Long> {
 
+    Long countBy();
+
     @EntityGraph(attributePaths = {"member"})
     List<SuggestionJpaEntity> findAllByOrderByCreatedAtDesc(PageRequest pageRequest);
 }

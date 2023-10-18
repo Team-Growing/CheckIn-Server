@@ -10,6 +10,6 @@ import java.util.List;
 @Builder
 public class SuggestionWithTotalCountRes {
 
-    private int totalCount;
+    private Long totalCount;
     private List<Suggestion> value;
 }

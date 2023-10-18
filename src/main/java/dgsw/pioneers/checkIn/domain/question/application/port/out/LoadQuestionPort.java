@@ -9,4 +9,5 @@ public interface LoadQuestionPort {
 
     Question loadQuestionById(Question.QuestionId questionId);
     List<Question> loadAllQuestion(PageRequest pageRequest);
+    Long loadAllCount();
 }
