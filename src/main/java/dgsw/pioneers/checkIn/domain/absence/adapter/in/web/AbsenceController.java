@@ -2,6 +2,7 @@ package dgsw.pioneers.checkIn.domain.absence.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.absence.adapter.in.web.dto.req.AbsenceGenerateReq;
 import dgsw.pioneers.checkIn.domain.absence.application.domain.model.Absence;
+import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceLoadUseCase;
 import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceUseCase;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
@@ -9,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.Member
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
 import dgsw.pioneers.checkIn.global.response.Response;
+import dgsw.pioneers.checkIn.global.response.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @WebAdapter
 @RestController
@@ -26,7 +29,18 @@ import javax.validation.Valid;
 public class AbsenceController {
 
     private final AbsenceUseCase absenceUseCase;
+    private final AbsenceLoadUseCase absenceLoadUseCase;
     private final AbsenceStatusUpdateUseCase absenceStatusUpdateUseCase;
+
+    @GetMapping("/my")
+    @AuthCheck(roles = MemberRole.STUDENT)
+    @Operation(summary = "load my absence", description = "나의 결강 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<List<Absence>> loadMyAbsence(
+            @RequestAttribute Member member
+    ) {
+        List<Absence> absences = absenceLoadUseCase.loadMyAbsence(member.getMemberId());
+        return ResponseData.of(HttpStatus.OK, "나의 결강 불러오기 성공", absences);
+    }
 
     @PatchMapping("/allow/{absenceId}")
     @AuthCheck(roles = MemberRole.ADMIN)
