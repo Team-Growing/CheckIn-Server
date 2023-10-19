@@ -10,6 +10,6 @@ public interface LoadAbsencePort {
 
     Absence loadAbsenceById(Absence.AbsenceId absenceId);
     Absence loadAbsenceByIdWithMember(Absence.AbsenceId absenceId);
-    List<Absence> loadAbsence();
+    List<Absence> loadAbsences();
     boolean existByAttendanceIdAndMemberId(AttendanceId attendanceId, MemberId memberId);
 }

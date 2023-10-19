@@ -34,6 +34,18 @@ public class AbsenceMapper {
                 absenceJpaEntity.getCreatedAt(),
                 new Lecture.LectureId(absenceJpaEntity.getLectureId().getId()),
                 new Attendance.AttendanceId(absenceJpaEntity.getAttendanceId().getId()),
+                null
+        );
+    }
+
+    public Absence mapToDomainEntityWithMember(AbsenceJpaEntity absenceJpaEntity) {
+        return Absence.withId(
+                new Absence.AbsenceId(absenceJpaEntity.getId()),
+                absenceJpaEntity.getAbsenceStatus(),
+                absenceJpaEntity.getReason(),
+                absenceJpaEntity.getCreatedAt(),
+                new Lecture.LectureId(absenceJpaEntity.getLectureId().getId()),
+                new Attendance.AttendanceId(absenceJpaEntity.getAttendanceId().getId()),
                 Absentee.builder()
                         .memberId(new Member.MemberId(absenceJpaEntity.getMemberJpaEntity().getId()))
                         .name(absenceJpaEntity.getMemberJpaEntity().getName())
