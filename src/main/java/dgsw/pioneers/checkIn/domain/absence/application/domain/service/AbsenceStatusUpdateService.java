@@ -33,6 +33,7 @@ public class AbsenceStatusUpdateService implements AbsenceStatusUpdateUseCase {
 
         Absence absence = loadAbsencePort.loadAbsenceById(absenceId);
         absence.updateAbsenceStatus(AbsenceStatus.ABSENCE_DENIED);
+
         updateAbsenceStatusPort.updateAbsenceStatus(absence);
     }
 }
