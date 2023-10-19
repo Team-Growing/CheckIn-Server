@@ -49,14 +49,14 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         List<Participant> participants = lecture.getParticipants();
         Participant newParticipant = participants.get(participants.size() - 1);
+        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
 
         lectureToMemberRepository.save(LectureToMemberEntity.builder()
-                        .lectureJpaEntity(lectureRepository.findById(lecture.getLectureId().getValue()).get())
+                        .lectureJpaEntity(lectureJpaEntity)
                         .memberJpaEntity(memberLoadAdapter.loadMemberJpaEntity(newParticipant.getParticipantId().getValue()))
                         .applyDateTime(newParticipant.getApplyDateTime())
                 .build());
 
-        LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
         lectureJpaEntity.updateEnrollStudent(lecture.getEnrollStudent());
     }
 
@@ -65,7 +65,5 @@ public class LecturePersistenceAdapter implements CreateLecturePort, UpdateLectu
 
         LectureJpaEntity lectureJpaEntity = lectureRepository.findById(lecture.getLectureId().getValue()).get();
         lectureJpaEntity.updateLectureStatus(lecture.getLectureStatus());
-
-        lectureRepository.save(lectureJpaEntity);
     }
 }
