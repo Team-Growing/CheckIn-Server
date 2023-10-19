@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.res.LectureAllListRes;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCase;
@@ -34,6 +35,16 @@ public class LectureLoadService implements LectureLoadUseCase {
     }
 
     @Override
+    public LectureAllListRes loadAllLecture(int targetGrade) {
+        return LectureAllListRes.builder()
+                .waitingPeriod(loadLecturePort.loadAllLectureByStatusAndTargetGrade(LectureStatus.WAITING_PERIOD, targetGrade))
+                .enrolment(loadLecturePort.loadAllLectureByStatusAndTargetGrade(LectureStatus.ENROLMENT, targetGrade))
+                .coursePeriod(loadLecturePort.loadAllLectureByStatusAndTargetGrade(LectureStatus.COURSE_PERIOD, targetGrade))
+                .termination(loadLecturePort.loadAllLectureByStatusAndTargetGrade(LectureStatus.TERMINATION, targetGrade))
+                .build();
+    }
+
+    @Override
     public List<Lecture> loadAllCoursePeriodLecture() {
         return loadLecturePort.loadAllLectureByStatus(LectureStatus.COURSE_PERIOD);
     }
@@ -43,7 +54,7 @@ public class LectureLoadService implements LectureLoadUseCase {
 
         if (!lectureStatus.equals(LectureStatus.ENROLMENT)) {
             if (!memberRole.equals(MemberRole.ADMIN)) {
-                throw  new PermissionInvalidException();
+                throw new PermissionInvalidException();
             }
         }
         return loadLecturePort.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
