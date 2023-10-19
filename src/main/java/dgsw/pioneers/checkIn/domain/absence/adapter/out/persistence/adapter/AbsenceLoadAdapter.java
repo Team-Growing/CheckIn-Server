@@ -11,6 +11,7 @@ import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +22,12 @@ public class AbsenceLoadAdapter implements LoadAbsencePort {
     private final AbsenceRepository absenceRepository;
     private final AbsenceMapper absenceMapper;
 
-
     @Override
     public Absence loadAbsenceById(Absence.AbsenceId absenceId) {
 
         AbsenceJpaEntity absenceJpaEntity = absenceRepository.selectOne(absenceId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
+
         return absenceMapper.mapToDomainEntity(absenceJpaEntity);
     }
 
@@ -35,13 +36,19 @@ public class AbsenceLoadAdapter implements LoadAbsencePort {
 
         AbsenceJpaEntity absenceJpaEntity = absenceRepository.findById(absenceId.getValue())
                 .orElseThrow(ResourceNotFoundException::new);
+
         return absenceMapper.mapToDomainEntityWithMember(absenceJpaEntity);
     }
 
     @Override
     public List<Absence> loadAbsences() {
-
         return absenceRepository.findAllByOrderByCreatedAtDesc().stream()
+                .map(absenceMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Absence> loadAbsencesByMemberIdAndCreatedAt(Member.MemberId memberId, LocalDate now) {
+        return absenceRepository.findAllByMemberJpaEntity_IdAndCreatedAt(memberId.getValue(), now).stream()
                 .map(absenceMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 
