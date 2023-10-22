@@ -28,7 +28,7 @@ public class EnrolmentService implements EnrolmentUseCase {
             throw new LectureDuplicatedException();
         }
 
-        Lecture lecture = loadLecturePort.loadLectureWithWeekPlans(lectureId);
+        Lecture lecture = loadLecturePort.loadLectureWithParticipants(lectureId);
 
         lecture.addParticipant(student);
         createParticipantPort.createParticipant(lecture);

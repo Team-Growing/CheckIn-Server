@@ -53,8 +53,8 @@ public class AttendanceMapper {
     }
 
     private List<Attendant> getAttendants(AttendanceJpaEntity attendanceJpa) {
-        if (attendanceJpa.getAttendants() == null) return null;
-        else return attendanceJpa.getAttendants().stream().map(this::attendantMapToDomain).collect(Collectors.toList());
+        return attendanceJpa.getAttendants().stream()
+                .map(this::attendantMapToDomain).collect(Collectors.toList());
     }
 
     private Attendant attendantMapToDomain(AttendantJpaEntity attendantJpaEntity) {

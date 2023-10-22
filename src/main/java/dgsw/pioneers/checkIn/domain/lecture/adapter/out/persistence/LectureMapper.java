@@ -126,8 +126,8 @@ public class LectureMapper {
     }
 
     public List<Participant> getParticipants(LectureJpaEntity lectureJpa) {
-        if (lectureJpa.getParticipants() == null) return null;
-        else return lectureJpa.getParticipants().stream().map(this::participantMapToDomain).collect(Collectors.toList());
+        return lectureJpa.getParticipants().stream()
+                .map(this::participantMapToDomain).collect(Collectors.toList());
     }
 
     private Participant participantMapToDomain(LectureToMemberEntity lectureToMember) {
@@ -138,8 +138,8 @@ public class LectureMapper {
     }
 
     private List<WeekPlan> getWeekPlans(LectureJpaEntity lectureJpa) {
-         if (lectureJpa.getWeekPlans() == null) return null;
-         else return lectureJpa.getWeekPlans().stream().map(this::weekPlanMapToDomain).collect(Collectors.toList());
+         return lectureJpa.getWeekPlans().stream()
+                 .map(this::weekPlanMapToDomain).collect(Collectors.toList());
     }
 
     private WeekPlan weekPlanMapToDomain(WeekPlanJpaEntity weekPlanJpaEntity) {
