@@ -25,7 +25,7 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
     @Query("SELECT l FROM LectureJpaEntity l LEFT JOIN FETCH l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus ORDER BY l.lectureName")
     List<LectureJpaEntity> findAllByLectureStatus(LectureStatus lectureStatus);
 
-    @Query("SELECT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus AND l.acceptableStudent.targetGrade = :targetGrade ORDER BY l.lectureName")
+    @Query("SELECT DISTINCT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus AND l.acceptableStudent.targetGrade = :targetGrade ORDER BY l.lectureName")
     List<LectureJpaEntity> findAllByLectureStatusAndAcceptableStudent_TargetGrade(LectureStatus lectureStatus, int targetGrade);
 
     @Query("SELECT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus AND d.dayOfWeek = :dayOfWeek")
