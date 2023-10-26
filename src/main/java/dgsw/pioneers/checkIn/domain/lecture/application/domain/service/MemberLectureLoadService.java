@@ -1,10 +1,10 @@
-package dgsw.pioneers.checkIn.domain.member.application.domain.service;
+package dgsw.pioneers.checkIn.domain.lecture.application.domain.service;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLectureByParticipantPort;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
-import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLectureLoadUseCase;
+import dgsw.pioneers.checkIn.domain.lecture.application.port.in.MemberLectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
 import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;

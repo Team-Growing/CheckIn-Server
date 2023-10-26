@@ -1,6 +1,5 @@
 package dgsw.pioneers.checkIn.domain.member.adapter.in.web;
 
-import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.UpdateStudentInfoReq;
 import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.req.UpdateTeacherInfoReq;
 import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res.MemberInfoRes;
@@ -8,7 +7,6 @@ import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res.TeacherInfoRes
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberInfoUpdateUseCase;
-import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLectureLoadUseCase;
 import dgsw.pioneers.checkIn.domain.member.application.port.in.MemberLoadUseCase;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.annotation.WebAdapter;
@@ -31,7 +29,6 @@ import java.util.List;
 @Tag(name = "Member", description = "Member Api")
 public class MemberController {
 
-    private final MemberLectureLoadUseCase memberLectureLoadUseCase;
     private final MemberLoadUseCase memberLoadUseCase;
     private final MemberInfoUpdateUseCase memberInfoUpdateUseCase;
 
@@ -63,22 +60,6 @@ public class MemberController {
             ) {
         memberInfoUpdateUseCase.updateTeacherInfo(member, updateTeacherInfoReq);
         return Response.of(HttpStatus.OK, "선생님 정보 수정 성공");
-    }
-
-    @AuthCheck
-    @Operation(summary = "load member lectures", description = "내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    @GetMapping("/lectures/my")
-    public ResponseData<List<Lecture>> getMemberLecture(@RequestAttribute Member member) {
-        List<Lecture> lectures = memberLectureLoadUseCase.loadLectureByMember(member.getMemberId());
-        return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectures);
-    }
-
-    @AuthCheck
-    @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    @GetMapping("/lectures/my/today")
-    public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
-        List<Lecture> lectures = memberLectureLoadUseCase.loadTodayLectureByMember(member.getMemberId());
-        return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
     }
 
     @AuthCheck(roles = MemberRole.ADMIN)

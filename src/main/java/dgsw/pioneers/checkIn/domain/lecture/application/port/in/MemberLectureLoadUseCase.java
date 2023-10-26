@@ -1,4 +1,4 @@
-package dgsw.pioneers.checkIn.domain.member.application.port.in;
+package dgsw.pioneers.checkIn.domain.lecture.application.port.in;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
