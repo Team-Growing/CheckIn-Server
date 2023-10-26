@@ -60,9 +60,16 @@ public class LectureLoadAdapter implements LoadLecturePort {
     }
 
     @Override
-    public List<Lecture> loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(Member.MemberId teacherId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+    public List<Lecture> loadAllLectureByLectureTeacherAndLectureStatus(Member.MemberId memberId, LectureStatus lectureStatus) {
 
-        return lectureRepository.findAllByTeacherIdAndLectureStatusAndDayOfWeekVO(teacherId.getValue(), lectureStatus, dayOfWeek).stream()
+        return lectureRepository.findAllByTeacherIdAndLectureStatus(memberId.getValue(), lectureStatus).stream()
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Lecture> loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(Member.MemberId memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+
+        return lectureRepository.findAllByTeacherIdAndLectureStatusAndDayOfWeekVO(memberId.getValue(), lectureStatus, dayOfWeek).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 

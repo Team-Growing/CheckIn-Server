@@ -31,6 +31,9 @@ public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long>
     @Query("SELECT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.lectureStatus = :lectureStatus AND d.dayOfWeek = :dayOfWeek")
     List<LectureJpaEntity> findAllByLectureStatusAndDayOfWeekVO(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 
+    @Query("SELECT DISTINCT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.teacherId = :teacherId AND l.lectureStatus = :lectureStatus")
+    List<LectureJpaEntity> findAllByTeacherIdAndLectureStatus(String teacherId, LectureStatus lectureStatus);
+
     @Query("SELECT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.teacherId = :teacherId AND l.lectureStatus = :lectureStatus AND d.dayOfWeek = :dayOfWeek")
     List<LectureJpaEntity> findAllByTeacherIdAndLectureStatusAndDayOfWeekVO(String teacherId, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }

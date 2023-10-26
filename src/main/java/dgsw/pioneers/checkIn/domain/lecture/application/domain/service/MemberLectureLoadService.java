@@ -28,8 +28,16 @@ public class MemberLectureLoadService implements MemberLectureLoadUseCase {
     @Override
     public List<Lecture> loadLectureByMember(Member member) {
 
-        List<Lecture> lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatus(member.getMemberId(), LectureStatus.COURSE_PERIOD);
-        lectures.forEach(this::updateTeacherInfo);
+        List<Lecture> lectures;
+
+        switch (member.getMemberRole()) {
+            case STUDENT -> {
+                lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatus(member.getMemberId(), LectureStatus.COURSE_PERIOD);
+                lectures.forEach(this::updateTeacherInfo);
+            }
+            case TEACHER -> lectures = loadLecturePort.loadAllLectureByLectureTeacherAndLectureStatus(member.getMemberId(), LectureStatus.COURSE_PERIOD);
+            default -> throw new InternalServerException();
+        }
 
         return lectures;
     }
@@ -43,7 +51,7 @@ public class MemberLectureLoadService implements MemberLectureLoadUseCase {
 
         switch (member.getMemberRole()) {
             case STUDENT -> {
-                lectures=loadLectureByParticipantPort.loadAllLectureByMemberAndStatusAndDayOfWeek(member.getMemberId(), LectureStatus.COURSE_PERIOD, dayOfWeek);
+                lectures = loadLectureByParticipantPort.loadAllLectureByMemberAndStatusAndDayOfWeek(member.getMemberId(), LectureStatus.COURSE_PERIOD, dayOfWeek);
                 lectures.forEach(this::updateTeacherInfo);
             }
             case TEACHER -> lectures = loadLecturePort.loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(member.getMemberId(), LectureStatus.COURSE_PERIOD, dayOfWeek);

@@ -19,5 +19,7 @@ public interface LoadLecturePort {
 
     List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 
-    List<Lecture> loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(Member.MemberId teacherId, LectureStatus coursePeriod, DayOfWeek dayOfWeek);
+    List<Lecture> loadAllLectureByLectureTeacherAndLectureStatus(Member.MemberId memberId, LectureStatus lectureStatus);
+
+    List<Lecture> loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(Member.MemberId teacherId, LectureStatus lectureStatus, DayOfWeek dayOfWeek);
 }
