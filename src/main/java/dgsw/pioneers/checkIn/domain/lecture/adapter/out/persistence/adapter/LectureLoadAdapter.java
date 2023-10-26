@@ -2,6 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.adapter;
 
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
+import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.global.annotation.PersistenceAdapter;
 import dgsw.pioneers.checkIn.global.exception.custom.ResourceNotFoundException;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.out.persistence.LectureMapper;
@@ -55,6 +56,13 @@ public class LectureLoadAdapter implements LoadLecturePort {
     public List<Lecture> loadAllLectureByDayOfWeek(LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
 
         return lectureRepository.findAllByLectureStatusAndDayOfWeekVO(lectureStatus, dayOfWeek).stream()
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Lecture> loadAllLectureByLectureTeacherAndLectureStatusAndDayOfWeek(Member.MemberId teacherId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
+
+        return lectureRepository.findAllByTeacherIdAndLectureStatusAndDayOfWeekVO(teacherId.getValue(), lectureStatus, dayOfWeek).stream()
                 .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 

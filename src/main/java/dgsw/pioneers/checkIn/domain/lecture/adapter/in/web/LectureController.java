@@ -115,19 +115,19 @@ public class LectureController {
         return Response.of(HttpStatus.OK, "강좌 상태 수정 성공");
     }
 
-    @AuthCheck
+    @AuthCheck(roles = {MemberRole.STUDENT, MemberRole.TEACHER})
     @Operation(summary = "load member lectures", description = "내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my")
     public ResponseData<List<Lecture>> getMemberLecture(@RequestAttribute Member member) {
-        List<Lecture> lectures = memberLectureLoadUseCase.loadLectureByMember(member.getMemberId());
+        List<Lecture> lectures = memberLectureLoadUseCase.loadLectureByMember(member);
         return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectures);
     }
 
-    @AuthCheck
+    @AuthCheck(roles = {MemberRole.STUDENT, MemberRole.TEACHER})
     @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my/today")
     public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
-        List<Lecture> lectures = memberLectureLoadUseCase.loadTodayLectureByMember(member.getMemberId());
+        List<Lecture> lectures = memberLectureLoadUseCase.loadTodayLectureByMember(member);
         return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
     }
 }
