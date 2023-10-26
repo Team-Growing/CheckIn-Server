@@ -23,7 +23,7 @@ public class LectureByParticipantAdapter implements LoadLectureByParticipantPort
     public List<Lecture> loadAllLectureByMemberAndStatus(Member.MemberId memberId, LectureStatus lectureStatus) {
 
         return participantLoadAdapter.loadAllLectureByMemberAndLectureStatus(memberId, lectureStatus)
-                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntityWithWeekPlans(lectureToMember.getLectureJpaEntity()))
+                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntity(lectureToMember.getLectureJpaEntity())) //no with weekPlans, participants
                 .collect(Collectors.toList());
     }
 
@@ -31,7 +31,7 @@ public class LectureByParticipantAdapter implements LoadLectureByParticipantPort
     public List<Lecture> loadAllLectureByMemberAndStatusAndDayOfWeek(Member.MemberId memberId, LectureStatus lectureStatus, DayOfWeek dayOfWeek) {
 
         return participantLoadAdapter.loadAllTodayLectureByMemberAndLectureStatus(memberId, lectureStatus, dayOfWeek)
-                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntityWithWeekPlans(lectureToMember.getLectureJpaEntity()))
+                .stream().map(lectureToMember -> lectureMapper.mapToDomainEntity(lectureToMember.getLectureJpaEntity())) //no with weekPlans, participants
                 .collect(Collectors.toList());
     }
 }

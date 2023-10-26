@@ -21,14 +21,14 @@ public interface LectureToMemberRepository extends JpaRepository<LectureToMember
 //            "JOIN FETCH ltm.lectureJpaEntity lecture " +
 //            "WHERE ltm.memberJpaEntity.id = :memberId " +
 //            "AND lecture.lectureStatus = :lectureStatus ")
-    @EntityGraph(attributePaths = {"lectureJpaEntity", "lectureJpaEntity.weekPlans"}) //join lecture, lecture.weekPlans
+    @EntityGraph(attributePaths = {"lectureJpaEntity", "lectureJpaEntity.dayOfWeekVO"}) //join lecture, lecture.dayOfWeekVO
     List<LectureToMemberEntity> findAllByMemberJpaEntity_IdAndLectureJpaEntity_LectureStatus(
             String memberId, LectureStatus lectureStatus
     );
 
     @Query("SELECT ltm FROM LectureToMemberEntity ltm " +
             "JOIN FETCH ltm.lectureJpaEntity lecture " +
-            "JOIN lecture.dayOfWeekVO d " +
+            "JOIN FETCH lecture.dayOfWeekVO d " +
             "WHERE ltm.memberJpaEntity.id = :memberId " +
             "AND lecture.lectureStatus = :lectureStatus " +
             "AND d.dayOfWeek = :dayOfWeek")
