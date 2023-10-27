@@ -41,8 +41,8 @@ public class AbsenceLoadAdapter implements LoadAbsencePort {
     }
 
     @Override
-    public List<Absence> loadAbsences() {
-        return absenceRepository.findAllByOrderByCreatedAtDesc().stream()
+    public List<Absence> loadAbsences(LocalDate date) {
+        return absenceRepository.findAllByCreatedAtOrderByCreatedAtDesc(date).stream()
                 .map(absenceMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 

@@ -9,6 +9,7 @@ import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @UseCase
@@ -21,5 +22,10 @@ public class AbsenceLoadService implements AbsenceLoadUseCase {
     @Override
     public List<Absence> loadMyAbsence(Member.MemberId memberId) {
         return loadAbsencePort.loadAbsencesByMemberIdAndCreatedAt(memberId, ZoneDateTimeUtil.nowToLocalDate());
+    }
+
+    @Override
+    public List<Absence> loadAbsence(LocalDate date) {
+        return loadAbsencePort.loadAbsences(date);
     }
 }

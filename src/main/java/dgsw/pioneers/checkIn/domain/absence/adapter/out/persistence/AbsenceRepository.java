@@ -19,8 +19,8 @@ public interface AbsenceRepository extends JpaRepository<AbsenceJpaEntity, Long>
     @EntityGraph(attributePaths = {"memberJpaEntity"})
     Optional<AbsenceJpaEntity> findById(Long id);
 
-    @EntityGraph(attributePaths = {"memberJpaEntity"})
-    List<AbsenceJpaEntity> findAllByOrderByCreatedAtDesc();
+    @Query("SELECT a FROM AbsenceJpaEntity a LEFT JOIN FETCH a.memberJpaEntity m WHERE DATE(a.createdAt) = DATE(:date) ORDER BY a.createdAt DESC")
+    List<AbsenceJpaEntity> findAllByCreatedAtOrderByCreatedAtDesc(LocalDate date);
 
     //JPQL 은 메개변수를 자동으로 변환해주지 않는다. 그러므로 LocalDate -> Date 변환을 해주어야 한다.
     @Query("SELECT a FROM AbsenceJpaEntity a WHERE a.memberJpaEntity.id = :id AND DATE(a.createdAt) = DATE(:now)")
