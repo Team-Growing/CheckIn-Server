@@ -15,10 +15,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebAdapter
@@ -40,6 +42,16 @@ public class AbsenceController {
     ) {
         List<Absence> absences = absenceLoadUseCase.loadMyAbsence(member.getMemberId());
         return ResponseData.of(HttpStatus.OK, "나의 결강 불러오기 성공", absences);
+    }
+
+    @GetMapping
+    @AuthCheck(roles = MemberRole.ADMIN)
+    @Operation(summary = "load my absence", description = "결강 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    public ResponseData<List<Absence>> loadAbsence(
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+    ) {
+        List<Absence> absences = absenceLoadUseCase.loadAbsence(date);
+        return ResponseData.of(HttpStatus.OK, "결강 불러오기 성공", absences);
     }
 
     @PatchMapping("/allow/{absenceId}")
