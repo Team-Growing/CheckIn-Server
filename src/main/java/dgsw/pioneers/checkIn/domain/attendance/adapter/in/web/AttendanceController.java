@@ -1,5 +1,7 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.in.web;
 
+import dgsw.pioneers.checkIn.domain.absence.application.domain.model.Absence;
+import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceLoadUseCase;
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceCodeDto;
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.req.AttendanceReq;
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.res.AttendanceListRes;
@@ -33,6 +35,7 @@ public class AttendanceController {
     private final AttendanceUseCase attendanceUseCase;
     private final AttendanceEradicateUseCase attendanceEradicateUseCase;
     private final AttendantsLoadUseCase attendantsLoadUseCase;
+    private final AbsenceLoadUseCase absenceLoadUseCase;
 
     @GetMapping("/{lectureId}/attendants")
     @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
@@ -42,10 +45,10 @@ public class AttendanceController {
     ) {
         Lecture.LectureId lectureId = new Lecture.LectureId(id);
         List<Member> attendants = attendantsLoadUseCase.loadAttendants(lectureId);
+//        List<Absence> absences = absenceLoadUseCase.loadAbsenceForAttendance(lectureId);
         AttendanceListRes attendanceListRes = AttendanceListRes.convertToDTO(
                 attendants,
-                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants),
-                null
+                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants)
         );
         return ResponseData.of(HttpStatus.OK, "출석 명단 불러오기 성공", attendanceListRes);
     }
