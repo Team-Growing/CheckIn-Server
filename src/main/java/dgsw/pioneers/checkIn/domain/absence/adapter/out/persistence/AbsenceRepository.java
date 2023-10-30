@@ -28,7 +28,7 @@ public interface AbsenceRepository extends JpaRepository<AbsenceJpaEntity, Long>
     List<AbsenceJpaEntity> findAllByMemberJpaEntity_IdAndCreatedAt(String id, LocalDate now);
 
     @Query("SELECT a FROM AbsenceJpaEntity a LEFT JOIN FETCH a.memberJpaEntity m WHERE a.lectureId.id = :id AND DATE(a.createdAt) = DATE(:date) AND a.absenceStatus = :absenceAllowed")
-    List<AbsenceJpaEntity> findAllByLectureIdAndCreatedAtAndAbsenceStatus(Long id, AbsenceStatus absenceAllowed, LocalDate nowToLocalDate);
+    List<AbsenceJpaEntity> findAllByLectureIdAndCreatedAtAndAbsenceStatus(Long id, AbsenceStatus absenceAllowed, LocalDate date);
 
     boolean existsByAttendanceId_IdAndMemberJpaEntity_Id(Long attendanceId, String memberId);
 }
