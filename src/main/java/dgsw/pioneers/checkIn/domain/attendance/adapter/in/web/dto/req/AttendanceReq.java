@@ -5,7 +5,7 @@ import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class AttendanceConfirmReq {
+public class AttendanceReq {
 
     @NotBlank
     private String memberId;

@@ -1,7 +1,7 @@
 package dgsw.pioneers.checkIn.domain.attendance.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.AttendanceCodeDto;
-import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.req.AttendanceConfirmReq;
+import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.req.AttendanceReq;
 import dgsw.pioneers.checkIn.domain.attendance.adapter.in.web.dto.res.AttendanceListRes;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.*;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
@@ -44,7 +44,8 @@ public class AttendanceController {
         List<Member> attendants = attendantsLoadUseCase.loadAttendants(lectureId);
         AttendanceListRes attendanceListRes = AttendanceListRes.convertToDTO(
                 attendants,
-                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants)
+                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants),
+                null
         );
         return ResponseData.of(HttpStatus.OK, "출석 명단 불러오기 성공", attendanceListRes);
     }
@@ -86,9 +87,9 @@ public class AttendanceController {
     @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response cancelAttendance(
             @PathVariable("lectureId") long lectureId,
-            @PathVariable("memberId") String memberId
+            @RequestBody @Valid AttendanceReq attendanceReq
     ) {
-        attendanceEradicateUseCase.eradicate(new Lecture.LectureId(lectureId), new Member.MemberId(memberId));
+        attendanceEradicateUseCase.eradicate(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceReq.getMemberId()));
         return Response.of(HttpStatus.OK, "출석 취소 처리 성공");
     }
 
@@ -97,9 +98,9 @@ public class AttendanceController {
     @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response confirmAttendance(
             @PathVariable("lectureId") long lectureId,
-            @RequestBody @Valid AttendanceConfirmReq attendanceConfirmReq
+            @RequestBody @Valid AttendanceReq attendanceReq
     ) {
-        attendanceUseCase.attendance(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceConfirmReq.getMemberId()));
+        attendanceUseCase.attendance(new Lecture.LectureId(lectureId), new Member.MemberId(attendanceReq.getMemberId()));
         return Response.of(HttpStatus.OK, "출석 확인 처리 성공");
     }
 
