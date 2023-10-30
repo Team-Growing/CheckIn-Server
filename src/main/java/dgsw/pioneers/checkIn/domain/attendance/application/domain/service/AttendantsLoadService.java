@@ -1,5 +1,6 @@
 package dgsw.pioneers.checkIn.domain.attendance.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.absence.application.domain.model.Absence;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
 import dgsw.pioneers.checkIn.domain.attendance.application.port.in.AttendantsLoadUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @UseCase
 @Transactional(readOnly = true)
@@ -25,8 +27,9 @@ public class AttendantsLoadService implements AttendantsLoadUseCase {
     }
 
     @Override
-    public List<Member> loadNonAttendants(Lecture.LectureId lectureId, List<Member> members) {
+    public List<Member> loadNonAttendants(Lecture.LectureId lectureId, List<Member> members, List<Absence> absences) {
 
-        return loadMemberPort.loadNonAttendantsByMember(lectureId, members);
+        List<String> absenteeIds = absences.stream().map(absence -> absence.getAbsentee().getMemberId().getValue()).toList();
+        return loadMemberPort.loadNonAttendantsByMember(lectureId, members, absenteeIds);
     }
 }

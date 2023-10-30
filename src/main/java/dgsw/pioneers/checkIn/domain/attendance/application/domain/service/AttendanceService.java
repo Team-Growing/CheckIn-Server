@@ -1,5 +1,8 @@
 package dgsw.pioneers.checkIn.domain.attendance.application.domain.service;
 
+import dgsw.pioneers.checkIn.domain.absence.application.domain.model.Absence;
+import dgsw.pioneers.checkIn.domain.absence.application.domain.model.enums.AbsenceStatus;
+import dgsw.pioneers.checkIn.domain.absence.application.port.out.LoadAbsencePort;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.exception.AttendantNotMatchException;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.Attendance;
 import dgsw.pioneers.checkIn.domain.attendance.application.domain.model.enums.AttendanceStatus;
@@ -11,8 +14,12 @@ import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.port.out.LoadMemberPort;
 import dgsw.pioneers.checkIn.global.annotation.UseCase;
+import dgsw.pioneers.checkIn.global.lib.zonedatetime.ZoneDateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @UseCase
 @Transactional(readOnly = true)
@@ -23,6 +30,7 @@ public class AttendanceService implements AttendanceUseCase {
     private final LoadLecturePort loadLecturePort;
     private final CreateAttendantPort createAttendantPort;
     private final LoadMemberPort loadMemberPort;
+    private final LoadAbsencePort loadAbsencePort;
 
     @Override
     @Transactional
@@ -63,7 +71,11 @@ public class AttendanceService implements AttendanceUseCase {
                 AttendanceStatus.PERIOD_VALID
         );
 
-        loadMemberPort.loadNonAttendantsByAttendant(lectureId, attendance.getAttendants())
+        List<String> absenteeIds = loadAbsencePort.loadAbsencesByLectureIdAndCreatedAtAndAbsenceStatus(lectureId, AbsenceStatus.ABSENCE_ALLOWED, ZoneDateTimeUtil.nowToLocalDate()).stream()
+                .map(absence -> absence.getAbsentee().getMemberId().getValue()).toList();
+
+
+        loadMemberPort.loadNonAttendantsByAttendant(lectureId, attendance.getAttendants(), absenteeIds)
                 .forEach(memberId -> {
                     attendance.addAttendant(memberId);
                     createAttendantPort.createAttendant(attendance);

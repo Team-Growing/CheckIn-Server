@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.QAttendantJpaEntity.attendantJpaEntity;
+import static dgsw.pioneers.checkIn.domain.attendance.adapter.out.persistence.aggregate.QAttendanceJpaEntity.attendanceJpaEntity;
 import static dgsw.pioneers.checkIn.domain.member.adapter.out.persistence.aggregate.QMemberJpaEntity.memberJpaEntity;
 
 @Repository
@@ -61,9 +62,10 @@ public class MembersAsAttendantsDao {
         return queryFactory
                 .selectFrom(memberJpaEntity)
                 .join(attendantJpaEntity).on(memberJpaEntity.id.eq(attendantJpaEntity.memberId.id))
+                .join(attendantJpaEntity.attendanceJpaEntity, attendanceJpaEntity)
                 .where(
-                        attendantJpaEntity.attendanceJpaEntity.lecture.id.eq(lectureId),
-                        attendantJpaEntity.attendanceJpaEntity.attendanceStatus.eq(attendanceStatus)
+                        attendanceJpaEntity.lecture.id.eq(lectureId),
+                        attendanceJpaEntity.attendanceStatus.eq(attendanceStatus)
                 )
                 .orderBy(
                         memberJpaEntity.studentInfo.grade.asc(),

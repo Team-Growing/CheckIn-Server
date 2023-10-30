@@ -45,10 +45,11 @@ public class AttendanceController {
     ) {
         Lecture.LectureId lectureId = new Lecture.LectureId(id);
         List<Member> attendants = attendantsLoadUseCase.loadAttendants(lectureId);
-//        List<Absence> absences = absenceLoadUseCase.loadAbsenceForAttendance(lectureId);
+        List<Absence> absences = absenceLoadUseCase.loadAbsenceForAttendance(lectureId);
         AttendanceListRes attendanceListRes = AttendanceListRes.convertToDTO(
                 attendants,
-                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants)
+                attendantsLoadUseCase.loadNonAttendants(lectureId, attendants, absences),
+                absences
         );
         return ResponseData.of(HttpStatus.OK, "출석 명단 불러오기 성공", attendanceListRes);
     }

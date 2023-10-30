@@ -16,14 +16,15 @@ public class MembersAsNonAttendantsDao {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<MemberJpaEntity> findAllMembersWithAttendants(Long lectureId, List<String> memberIds) {
+    public List<MemberJpaEntity> findAllMembersWithAttendants(Long lectureId, List<String> memberIds, List<String> absenteeIds) {
 
         return queryFactory
                 .selectFrom(memberJpaEntity)
                 .join(lectureToMemberEntity).on(memberJpaEntity.id.eq(lectureToMemberEntity.memberJpaEntity.id))
                 .where(
                         lectureToMemberEntity.lectureJpaEntity.id.eq(lectureId),
-                        lectureToMemberEntity.memberJpaEntity.id.notIn(memberIds)
+                        lectureToMemberEntity.memberJpaEntity.id.notIn(memberIds),
+                        lectureToMemberEntity.memberJpaEntity.id.notIn(absenteeIds)
                 )
                 .orderBy(
                         memberJpaEntity.studentInfo.grade.asc(),

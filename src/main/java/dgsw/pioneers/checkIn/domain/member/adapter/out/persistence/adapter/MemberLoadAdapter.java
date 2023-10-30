@@ -51,18 +51,18 @@ public class MemberLoadAdapter implements LoadMemberPort, ExistMemberPort {
     }
 
     @Override
-    public List<Member> loadNonAttendantsByMember(Lecture.LectureId lectureId, List<Member> members) {
+    public List<Member> loadNonAttendantsByMember(Lecture.LectureId lectureId, List<Member> members, List<String> absenteeIds) {
 
         return membersAsNonAttendantsDao.findAllMembersWithAttendants(
-                        lectureId.getValue(), members.stream().map(member -> member.getMemberId().getValue()).collect(Collectors.toList()))
+                        lectureId.getValue(), members.stream().map(member -> member.getMemberId().getValue()).toList(), absenteeIds)
                 .stream().map(memberMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 
     @Override
-    public List<Member.MemberId> loadNonAttendantsByAttendant(Lecture.LectureId lectureId, List<Attendant> attendants) {
+    public List<Member.MemberId> loadNonAttendantsByAttendant(Lecture.LectureId lectureId, List<Attendant> attendants, List<String> absenteeIds) {
 
         return membersAsNonAttendantsDao.findAllMembersWithAttendants(
-                        lectureId.getValue(), attendants.stream().map(attendant -> attendant.getAttendantId().getValue()).collect(Collectors.toList()))
+                        lectureId.getValue(), attendants.stream().map(attendant -> attendant.getAttendantId().getValue()).toList(), absenteeIds)
                 .stream().map(memberJpaEntity -> new Member.MemberId(memberJpaEntity.getId())).collect(Collectors.toList());
     }
 
