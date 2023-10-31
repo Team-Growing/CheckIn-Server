@@ -34,18 +34,9 @@ public class AbsenceLoadAdapter implements LoadAbsencePort {
     }
 
     @Override
-    public Absence loadAbsenceByIdWithMember(Absence.AbsenceId absenceId) {
-
-        AbsenceJpaEntity absenceJpaEntity = absenceRepository.findById(absenceId.getValue())
-                .orElseThrow(ResourceNotFoundException::new);
-
-        return absenceMapper.mapToDomainEntityWithMember(absenceJpaEntity);
-    }
-
-    @Override
     public List<Absence> loadAbsences(LocalDate date) {
         return absenceRepository.findAllByCreatedAtOrderByCreatedAtDesc(date).stream()
-                .map(absenceMapper::mapToDomainEntity).collect(Collectors.toList());
+                .map(absenceMapper::mapToDomainEntityWithMember).collect(Collectors.toList());
     }
 
     @Override

@@ -2,7 +2,6 @@ package dgsw.pioneers.checkIn.domain.absence.adapter.out.persistence;
 
 import dgsw.pioneers.checkIn.domain.absence.adapter.out.persistence.aggregate.AbsenceJpaEntity;
 import dgsw.pioneers.checkIn.domain.absence.application.domain.model.enums.AbsenceStatus;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,9 +15,6 @@ public interface AbsenceRepository extends JpaRepository<AbsenceJpaEntity, Long>
 
     @Query("SELECT a FROM AbsenceJpaEntity a WHERE a.id = :id")
     Optional<AbsenceJpaEntity> selectOne(Long id);
-
-    @EntityGraph(attributePaths = {"memberJpaEntity"})
-    Optional<AbsenceJpaEntity> findById(Long id);
 
     @Query("SELECT a FROM AbsenceJpaEntity a LEFT JOIN FETCH a.memberJpaEntity m WHERE DATE(a.createdAt) = DATE(:date) ORDER BY a.createdAt DESC")
     List<AbsenceJpaEntity> findAllByCreatedAtOrderByCreatedAtDesc(LocalDate date);

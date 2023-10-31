@@ -74,7 +74,6 @@ public class AttendanceService implements AttendanceUseCase {
         List<String> absenteeIds = loadAbsencePort.loadAbsencesByLectureIdAndCreatedAtAndAbsenceStatus(lectureId, AbsenceStatus.ABSENCE_ALLOWED, ZoneDateTimeUtil.nowToLocalDate()).stream()
                 .map(absence -> absence.getAbsentee().getMemberId().getValue()).toList();
 
-
         loadMemberPort.loadNonAttendantsByAttendant(lectureId, attendance.getAttendants(), absenteeIds)
                 .forEach(memberId -> {
                     attendance.addAttendant(memberId);

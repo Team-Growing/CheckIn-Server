@@ -46,7 +46,7 @@ public class AbsenceController {
 
     @GetMapping
     @AuthCheck(roles = MemberRole.ADMIN)
-    @Operation(summary = "load my absence", description = "결강 불러오기", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "load absence", description = "결강 불러오기", security = @SecurityRequirement(name = "Authorization"))
     public ResponseData<List<Absence>> loadAbsence(
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
