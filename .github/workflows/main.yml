@@ -49,7 +49,7 @@ jobs:
       run: |
           echo "$SSH_PEM_KEY" >> $HOME/checkIn-key.pem
           chmod 400 $HOME/checkIn-key.pem
-          ssh -i $HOME/checkIn-key.pem -o StrictHostKeyChecking=no ${{ secrets.LINUX_USERNAME }}@${{ secrets.LINUX_HOST }} '~/script.sh'
+          ssh -i $HOME/checkIn-key.pem -o StrictHostKeyChecking=no ${{ secrets.LINUX_USERNAME }}@${{ secrets.LINUX_HOST }}
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker stop checkIn
           docker rm checkIn
