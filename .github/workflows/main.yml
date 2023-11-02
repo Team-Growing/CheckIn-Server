@@ -45,19 +45,21 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Docker Run
+    - name: ubuntu login
       run: |
           echo "$SSH_PEM_KEY" >> $HOME/checkIn-key.pem
           chmod 400 $HOME/checkIn-key.pem
           ssh -i $HOME/checkIn-key.pem -o StrictHostKeyChecking=no ${{ secrets.LINUX_USERNAME }}@${{ secrets.LINUX_HOST }}
+      env:
+          SSH_PEM_KEY: ${{secrets.SSH_PEM_KEY}}
+    - name: Docker Run
+      run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker stop checkIn
           docker rm checkIn
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
           docker run -d -p 8080:8080 --name checkIn ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
-      env:
-          SSH_PEM_KEY: ${{secrets.SSH_PEM_KEY}}
           
       # uses: appleboy/ssh-action@v0.1.8
       # with:
