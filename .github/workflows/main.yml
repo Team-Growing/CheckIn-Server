@@ -45,32 +45,16 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: ubuntu login
-      run: |
-          echo "$SSH_PEM_KEY" >> $HOME/checkIn-key.pem
-          chmod 400 $HOME/checkIn-key.pem
-          ssh -i $HOME/checkIn-key.pem -o StrictHostKeyChecking=no ${{ secrets.LINUX_USERNAME }}@${{ secrets.LINUX_HOST }}
-      env:
-          SSH_PEM_KEY: ${{secrets.SSH_PEM_KEY}}
     - name: Docker Run
-      run: |
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.LINUX_HOST }}
+        username: ${{ secrets.LINUX_USERNAME }}
+        password: ${{ secrets.LINUX_PASSWORD }}
+        script: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker stop checkIn
           docker rm checkIn
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
           docker run -d -p 8080:8080 --name checkIn ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
-          
-      # uses: appleboy/ssh-action@v0.1.8
-      # with:
-      #   host: ${{ secrets.LINUX_HOST }}
-      #   username: ${{ secrets.LINUX_USERNAME }}
-      #   password: ${{ secrets.LINUX_PASSWORD }}
-      #   port: ${{ secrets.LINUX_SSH_PORT }}
-      #   script: |
-      #     docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-      #     docker stop checkin
-      #     docker rm checkin
-      #     docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
-      #     docker pull ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
-      #     docker run -d -p 33333:8080 --name checkin ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
