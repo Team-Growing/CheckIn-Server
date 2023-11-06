@@ -5,9 +5,12 @@ import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.Lectu
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface LoadLecturePort {
+
+    boolean isLectureActive(Lecture.LectureId lectureId, LocalTime currentTime);
 
     Lecture loadLecture(Lecture.LectureId lectureId);
 

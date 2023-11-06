@@ -24,7 +24,7 @@ public class AttendanceLoadAdapter implements LoadAttendancePort {
     private final AttendanceMapper attendanceMapper;
 
     @Override
-    public Attendance loadAttendanceByLectureAndAttendanceStatus(Lecture.LectureId lectureId, AttendanceStatus attendanceStatus) {
+    public Attendance loadAttendanceByLectureAndAttendanceStatus(Lecture.LectureId lectureId, AttendanceStatus attendanceStatus) throws ResourceNotFoundException {
 
         AttendanceJpaEntity attendanceJpaEntity = attendanceRepository.selectAttendanceByLectureAndAndAttendanceStatus(
                 lectureId.getValue(), attendanceStatus

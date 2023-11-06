@@ -12,6 +12,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.port.out.LoadLecturePort
 import lombok.RequiredArgsConstructor;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,11 @@ public class LectureLoadAdapter implements LoadLecturePort {
 
     private final LectureRepository lectureRepository;
     private final LectureMapper lectureMapper;
+
+    @Override
+    public boolean isLectureActive(Lecture.LectureId lectureId, LocalTime currentTime) {
+        return lectureRepository.isLectureActive(lectureId.getValue(), currentTime);
+    }
 
     @Override
     public Lecture loadLecture(Lecture.LectureId lectureId) {

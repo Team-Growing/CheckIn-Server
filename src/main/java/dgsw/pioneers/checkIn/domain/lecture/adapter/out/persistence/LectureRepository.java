@@ -7,11 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface LectureRepository extends JpaRepository<LectureJpaEntity, Long> {
+
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LectureJpaEntity l " +
+            "WHERE l.id = :lectureId " +
+            "AND TIME_FORMAT(:currentTime, '%H:%i:%s') BETWEEN l.lectureSchedule.startTime AND l.lectureSchedule.endTime")
+    boolean isLectureActive(Long lectureId, LocalTime currentTime);
 
     @Query("SELECT DISTINCT l FROM LectureJpaEntity l JOIN FETCH l.dayOfWeekVO d WHERE l.id = :lectureId")
     Optional<LectureJpaEntity> findById(Long lectureId);
