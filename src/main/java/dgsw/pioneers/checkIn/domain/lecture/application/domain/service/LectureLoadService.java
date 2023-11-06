@@ -57,7 +57,11 @@ public class LectureLoadService implements LectureLoadUseCase {
                 throw new PermissionInvalidException();
             }
         }
-        return loadLecturePort.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
+
+        List<Lecture> lectures = loadLecturePort.loadAllLectureByStatusAndTargetGrade(lectureStatus, targetGrade);
+        lectures.forEach(this::updateTeacherInfo);
+
+        return lectures;
     }
 
     @Override

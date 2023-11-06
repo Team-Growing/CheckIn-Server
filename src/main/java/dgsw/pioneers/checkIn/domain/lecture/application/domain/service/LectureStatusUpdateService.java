@@ -24,7 +24,7 @@ public class LectureStatusUpdateService implements LectureStatusUpdateUseCase {
     @Transactional
     public void updateStatus(List<LectureId> lectureIds, LectureStatus lectureStatus) {
 
-        List<Lecture> lectures = lectureIds.stream().map(loadLecturePort::loadLectureWithWeekPlans).toList();
+        List<Lecture> lectures = lectureIds.stream().map(loadLecturePort::loadLecture).toList();
 
         lectures.forEach(lecture -> lecture.updateLectureStatus(lectureStatus));
 

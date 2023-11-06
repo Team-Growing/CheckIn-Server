@@ -10,6 +10,7 @@ import java.util.List;
 public interface LoadLecturePort {
 
     Lecture loadLecture(Lecture.LectureId lectureId);
+
     Lecture loadLectureWithWeekPlans(Lecture.LectureId lectureId);
 
     Lecture loadLectureWithParticipants(Lecture.LectureId lectureId);
