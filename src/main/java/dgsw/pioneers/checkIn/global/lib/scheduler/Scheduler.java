@@ -63,7 +63,6 @@ public class Scheduler {
         }
     }
 
-
     //10-11교시 출석 비활성화
     //월-목 오후 9시에 작업 실행
     @Scheduled(cron = "0 0 21 * * MON-THU", zone = "Asia/Seoul")

@@ -48,7 +48,7 @@ public class AttendanceMapper {
                 attendanceJpa.getAttendStudent(),
                 attendanceJpa.getCode(),
                 new Lecture.LectureId(lectureId),
-                getAttendants(attendanceJpa)
+                null
         );
     }
 
