@@ -51,11 +51,10 @@ jobs:
         host: ${{ secrets.LINUX_HOST }}
         username: ${{ secrets.LINUX_USERNAME }}
         password: ${{ secrets.LINUX_PASSWORD }}
-        port: ${{ secrets.LINUX_SSH_PORT }}
         script: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-          docker stop checkin
-          docker rm checkin
+          docker stop checkIn
+          docker rm checkIn
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
-          docker run -d -p 33333:8080 --name checkin ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
+          docker run -d -p 8080:8080 --name checkIn ${{ secrets.DOCKERHUB_USERNAME }}/checkin:latest
