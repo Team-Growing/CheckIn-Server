@@ -56,7 +56,7 @@ public class AbsenceController {
 
     @PatchMapping("/allow/{absenceId}")
     @AuthCheck(roles = MemberRole.ADMIN)
-    @Operation(summary = "allow absence", description = "결강 승인", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "allow absence", description = "결강 신청 승인", security = @SecurityRequirement(name = "Authorization"))
     public Response allowAbsence(
             @PathVariable("absenceId") long id
     ) {
@@ -66,7 +66,7 @@ public class AbsenceController {
 
     @PatchMapping("/deny/{absenceId}")
     @AuthCheck(roles = MemberRole.ADMIN)
-    @Operation(summary = "deny absence", description = "결강 거절 재발급", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(summary = "deny absence", description = "결강 신청 거절", security = @SecurityRequirement(name = "Authorization"))
     public Response denyAbsence(
             @PathVariable("absenceId") long id
     ) {
