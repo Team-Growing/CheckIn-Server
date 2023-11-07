@@ -86,7 +86,7 @@ public class AttendanceController {
         return Response.of(HttpStatus.OK, "출석 성공");
     }
 
-    @DeleteMapping("/{lectureId}/cancellation/{memberId}")
+    @DeleteMapping("/{lectureId}/cancellation")
     @AuthCheck(roles = MemberRole.TEACHER)
     @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response cancelAttendance(

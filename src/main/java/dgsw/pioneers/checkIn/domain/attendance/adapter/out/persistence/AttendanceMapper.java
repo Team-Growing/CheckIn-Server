@@ -26,6 +26,19 @@ public class AttendanceMapper {
                 .build();
     }
 
+    public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpa) {
+        return Attendance.withId(
+                new Attendance.AttendanceId(attendanceJpa.getId()),
+                attendanceJpa.getAttendanceStatus(),
+                attendanceJpa.getAttendanceTime(),
+                attendanceJpa.getLectureDate(),
+                attendanceJpa.getAttendStudent(),
+                attendanceJpa.getCode(),
+                null,
+                null
+        );
+    }
+
     public Attendance mapToDomainEntityWithAttendants(AttendanceJpaEntity attendanceJpa) {
         return Attendance.withId(
                 new Attendance.AttendanceId(attendanceJpa.getId()),

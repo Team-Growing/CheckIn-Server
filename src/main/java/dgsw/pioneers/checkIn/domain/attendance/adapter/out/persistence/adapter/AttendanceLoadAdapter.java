@@ -40,13 +40,13 @@ public class AttendanceLoadAdapter implements LoadAttendancePort {
                 lectureId.getValue(), attendanceStatus
         ).orElseThrow(ResourceNotFoundException::new);
 
-        return attendanceMapper.mapToDomainEntityWithLecture(attendanceJpaEntity, lectureId.getValue());
+        return attendanceMapper.mapToDomainEntityWithAttendants(attendanceJpaEntity);
     }
 
     @Override
     public List<Attendance> loadAttendanceByLectureDateAndAttendanceTime(LocalDate lectureDate, AttendanceTime attendanceTime) {
 
         return attendanceRepository.findAllByLectureDateAndAttendanceTime(lectureDate, attendanceTime).stream()
-                .map(attendanceMapper::mapToDomainEntityWithAttendants).collect(Collectors.toList());
+                .map(attendanceMapper::mapToDomainEntity).collect(Collectors.toList());
     }
 }
