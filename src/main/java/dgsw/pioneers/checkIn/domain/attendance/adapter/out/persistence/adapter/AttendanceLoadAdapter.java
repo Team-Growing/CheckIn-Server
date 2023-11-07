@@ -47,6 +47,6 @@ public class AttendanceLoadAdapter implements LoadAttendancePort {
     public List<Attendance> loadAttendanceByLectureDateAndAttendanceTime(LocalDate lectureDate, AttendanceTime attendanceTime) {
 
         return attendanceRepository.findAllByLectureDateAndAttendanceTime(lectureDate, attendanceTime).stream()
-                .map(attendanceMapper::mapToDomainEntity).collect(Collectors.toList());
+                .map(attendanceMapper::mapToDomainEntityWithAttendants).collect(Collectors.toList());
     }
 }

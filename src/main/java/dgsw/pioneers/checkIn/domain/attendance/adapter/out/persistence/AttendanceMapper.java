@@ -26,7 +26,7 @@ public class AttendanceMapper {
                 .build();
     }
 
-    public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpa) { //파라미터로 강좌 아이디를 받는 이유 : Lazy Loading
+    public Attendance mapToDomainEntityWithAttendants(AttendanceJpaEntity attendanceJpa) {
         return Attendance.withId(
                 new Attendance.AttendanceId(attendanceJpa.getId()),
                 attendanceJpa.getAttendanceStatus(),
@@ -35,7 +35,7 @@ public class AttendanceMapper {
                 attendanceJpa.getAttendStudent(),
                 attendanceJpa.getCode(),
                 null,
-                null
+                getAttendants(attendanceJpa)
         );
     }
 
