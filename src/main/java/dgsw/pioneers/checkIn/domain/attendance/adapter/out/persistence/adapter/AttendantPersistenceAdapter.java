@@ -30,7 +30,6 @@ public class AttendantPersistenceAdapter implements CreateAttendantPort, DeleteA
 
         List<Attendant> attendants = attendance.getAttendants();
         Attendant newAttendant = attendants.get(attendants.size() - 1);
-        System.out.println(newAttendant.getAttendantId().getValue());
 
         attendanceJpa.addAttendant(
                 AttendantJpaEntity.builder()
