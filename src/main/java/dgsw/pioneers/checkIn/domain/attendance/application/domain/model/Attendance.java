@@ -10,6 +10,7 @@ import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,9 +81,16 @@ public class Attendance {
 
     public void addAttendant(Member.MemberId memberId) {
 
-        this.attendants.forEach(attendant -> {
-            if (attendant.getAttendantId().equals(memberId)) throw new AttendanceDuplicatedException();
-        });
+        Optional.ofNullable(this.attendants).ifPresentOrElse(
+                att -> {
+                    this.attendants.forEach(attendant -> {
+                        if (attendant.getAttendantId().equals(memberId)) throw new AttendanceDuplicatedException();
+                    });
+                },
+                () -> {
+                    this.attendants = new ArrayList<>();
+                }
+        );
 
         this.attendants.add(Attendant.generate(memberId));
         this.attendStudent++;

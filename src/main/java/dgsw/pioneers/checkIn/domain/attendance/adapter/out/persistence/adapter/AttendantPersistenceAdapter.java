@@ -30,6 +30,7 @@ public class AttendantPersistenceAdapter implements CreateAttendantPort, DeleteA
 
         List<Attendant> attendants = attendance.getAttendants();
         Attendant newAttendant = attendants.get(attendants.size() - 1);
+        System.out.println(newAttendant.getAttendantId().getValue());
 
         attendanceJpa.addAttendant(
                 AttendantJpaEntity.builder()
@@ -46,7 +47,7 @@ public class AttendantPersistenceAdapter implements CreateAttendantPort, DeleteA
 
         /**
          * 출석자를 삭제하기 위하여 AttendantJpaEntity를 불러오는 과정에서
-         * AttendantJpaEntity의 attendanceJpaEntity는 Lazy Loding 이지만 어쩔 수 없이 초기화된다. (AttendantJpaEntity가 VO이기 때문 - 식별자 X)
+         * AttendantJpaEntity의 attendanceJpaEntity는 Lazy Loding 이지만 해당 엔터티가 트랜잭션 내에서 영속 상태(Persistence Context)에 존재한다.
          * 이 경우엔 POJO 에서 동기화 오류가 생길 수 있기 때문에, JPA는 삭제 쿼리를 날리지 않는다.
          * 그래서 이를 해결하기 위해 select 쿼리가 한번더 나가지만 EntityManager를 초기화 해주었다.
          */
