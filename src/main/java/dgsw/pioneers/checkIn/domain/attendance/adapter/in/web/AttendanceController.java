@@ -87,7 +87,7 @@ public class AttendanceController {
     }
 
     @DeleteMapping("/{lectureId}/cancellation")
-    @AuthCheck(roles = MemberRole.TEACHER)
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
     @Operation(summary = "cancel attendance", description = "출석 취소 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response cancelAttendance(
             @PathVariable("lectureId") long lectureId,
@@ -98,7 +98,7 @@ public class AttendanceController {
     }
 
     @PostMapping("/confirmation/{lectureId}")
-    @AuthCheck(roles = MemberRole.TEACHER)
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
     @Operation(summary = "confirm attendance", description = "출석 확인 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response confirmAttendance(
             @PathVariable("lectureId") long lectureId,
@@ -109,7 +109,7 @@ public class AttendanceController {
     }
 
     @PostMapping("/collective/{lectureId}")
-    @AuthCheck(roles = MemberRole.TEACHER)
+    @AuthCheck(roles = {MemberRole.TEACHER, MemberRole.ADMIN})
     @Operation(summary = "collective attendance", description = "일괄 출석 처리", security = @SecurityRequirement(name = "Authorization"))
     public Response collectiveAttendance(
             @PathVariable("lectureId") long lectureId
