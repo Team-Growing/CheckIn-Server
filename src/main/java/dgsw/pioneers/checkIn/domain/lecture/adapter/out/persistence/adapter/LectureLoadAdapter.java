@@ -60,6 +60,13 @@ public class LectureLoadAdapter implements LoadLecturePort {
     }
 
     @Override
+    public List<Lecture> loadAllLectureByTargetGrade(int targetGrade) {
+
+        return lectureRepository.findAllByAcceptableStudent_TargetGrade(targetGrade).stream()
+                .map(lectureMapper::mapToDomainEntity).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Lecture> loadAllLectureByStatusAndTargetGrade(LectureStatus lectureStatus, int targetGrade) {
 
         return lectureRepository.findAllByLectureStatusAndAcceptableStudent_TargetGrade(lectureStatus, targetGrade).stream()

@@ -2,7 +2,6 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureStatusUpdateReq;
-import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.res.LectureAllListRes;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture.LectureId;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
@@ -95,10 +94,10 @@ public class LectureController {
     @GetMapping("/all")
     @AuthCheck(roles = MemberRole.ADMIN)
     @Operation(summary = "load all lectures", description = "모든 강좌 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    public ResponseData<LectureAllListRes> loadAllLecture(
+    public ResponseData<List<Lecture>> loadAllLecture(
             @RequestParam("grade") @Min(1) @Max(2) int targetGrade
     ) {
-        LectureAllListRes res = lectureLoadUseCase.loadAllLecture(targetGrade);
+        List<Lecture> res = lectureLoadUseCase.loadAllLecture(targetGrade);
         return ResponseData.of(HttpStatus.OK, "모든 강좌 불러오기 성공", res);
     }
 
