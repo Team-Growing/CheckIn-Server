@@ -35,16 +35,16 @@ public class LectureLoadService implements LectureLoadUseCase {
 
     @Override
     public List<Lecture> loadAllLecture(int targetGrade) {
-        return loadLecturePort.loadAllLectureByTargetGrade(targetGrade);
+
+        List<Lecture> lectures = loadLecturePort.loadAllLectureByTargetGrade(targetGrade);
+        lectures.forEach(this::updateTeacherInfo);
+
+        return lectures;
     }
 
     @Override
     public List<Lecture> loadAllCoursePeriodLecture() {
-
-        List<Lecture> lectures = loadLecturePort.loadAllLectureByStatus(LectureStatus.COURSE_PERIOD);
-        lectures.forEach(this::updateTeacherInfo);
-
-        return lectures;
+        return loadLecturePort.loadAllLectureByStatus(LectureStatus.COURSE_PERIOD);
     }
 
     @Override
