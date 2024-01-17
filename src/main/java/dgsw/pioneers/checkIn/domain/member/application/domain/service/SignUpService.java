@@ -27,8 +27,6 @@ public class SignUpService implements SignUpUseCase {
     public void signUpTeacher(Member member) {
 
         checkExistMember(member.getMemberId());
-
-        if (!member.checkTeacherRole()) throw new ParameterNotFoundException();
         member.encodePw(passwordEncoder.encode(member.getPw()));
 
         createMemberPort.createMember(member);
@@ -39,8 +37,6 @@ public class SignUpService implements SignUpUseCase {
     public void signUpStudent(Member member) {
 
         checkExistMember(member.getMemberId());
-
-        if (!member.checkStudentRole()) throw new ParameterNotFoundException();
         member.encodePw(passwordEncoder.encode(member.getPw()));
 
         member.modifyInfoYear(ZoneDateTimeUtil.nowToLocalDate().getYear());

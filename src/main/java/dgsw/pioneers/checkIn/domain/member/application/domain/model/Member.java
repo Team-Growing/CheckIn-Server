@@ -102,12 +102,4 @@ public class Member {
                 .number(this.studentInfo.getNumber())
                 .build();
     }
-
-    public boolean checkStudentRole() {
-        return this.memberRole.equals(MemberRole.STUDENT);
-    }
-
-    public boolean checkTeacherRole() {
-        return this.memberRole.equals(MemberRole.TEACHER);
-    }
 }
