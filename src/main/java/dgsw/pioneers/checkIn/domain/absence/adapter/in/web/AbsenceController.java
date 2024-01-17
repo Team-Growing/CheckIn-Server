@@ -1,10 +1,12 @@
 package dgsw.pioneers.checkIn.domain.absence.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.absence.adapter.in.web.dto.req.AbsenceGenerateReq;
+import dgsw.pioneers.checkIn.domain.absence.adapter.in.web.dto.res.AbsenceWithMyInfoRes;
 import dgsw.pioneers.checkIn.domain.absence.application.domain.model.Absence;
 import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceLoadUseCase;
 import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.absence.application.port.in.AbsenceUseCase;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res.MemberInfoRes;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.Member;
 import dgsw.pioneers.checkIn.domain.member.application.domain.model.enums.MemberRole;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
@@ -37,11 +39,14 @@ public class AbsenceController {
     @GetMapping("/my")
     @AuthCheck(roles = MemberRole.STUDENT)
     @Operation(summary = "load my absence", description = "나의 결강 불러오기", security = @SecurityRequirement(name = "Authorization"))
-    public ResponseData<List<Absence>> loadMyAbsence(
+    public ResponseData<AbsenceWithMyInfoRes> loadMyAbsence(
             @RequestAttribute Member member
     ) {
         List<Absence> absences = absenceLoadUseCase.loadMyAbsence(member.getMemberId());
-        return ResponseData.of(HttpStatus.OK, "나의 결강 불러오기 성공", absences);
+        AbsenceWithMyInfoRes absenceWithMyInfoRes = AbsenceWithMyInfoRes.builder()
+                .info(MemberInfoRes.convertToDTO(member))
+                .absences(absences).build();
+        return ResponseData.of(HttpStatus.OK, "나의 결강 불러오기 성공", absenceWithMyInfoRes);
     }
 
     @GetMapping

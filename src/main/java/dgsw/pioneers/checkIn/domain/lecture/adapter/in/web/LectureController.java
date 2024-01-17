@@ -2,6 +2,7 @@ package dgsw.pioneers.checkIn.domain.lecture.adapter.in.web;
 
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureGenerateReq;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.LectureStatusUpdateReq;
+import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.res.LectureWithMyInfoRes;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.Lecture.LectureId;
 import dgsw.pioneers.checkIn.domain.lecture.application.domain.model.enums.LectureStatus;
@@ -10,6 +11,7 @@ import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureLoadUseCa
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.LectureStatusUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.WeekPlanUpdateUseCase;
 import dgsw.pioneers.checkIn.domain.lecture.application.port.in.MemberLectureLoadUseCase;
+import dgsw.pioneers.checkIn.domain.member.adapter.in.web.dto.res.MemberInfoRes;
 import dgsw.pioneers.checkIn.global.annotation.AuthCheck;
 import dgsw.pioneers.checkIn.global.response.Response;
 import dgsw.pioneers.checkIn.domain.lecture.adapter.in.web.dto.req.WeekPlanUpdateReq;
@@ -67,7 +69,9 @@ public class LectureController {
 
     @GetMapping("/{lectureId}")
     @Operation(summary = "load lecture", description = "강좌 불러오기")
-    public ResponseData<Lecture> loadLecture(@PathVariable("lectureId") long id) {
+    public ResponseData<Lecture> loadLecture(
+            @PathVariable("lectureId") long id
+    ) {
         Lecture lecture = lectureLoadUseCase.loadLecture(new Lecture.LectureId(id));
         return ResponseData.of(HttpStatus.OK, "강좌 불러오기 성공", lecture);
     }
@@ -117,15 +121,22 @@ public class LectureController {
     @AuthCheck(roles = {MemberRole.STUDENT, MemberRole.TEACHER})
     @Operation(summary = "load member lectures", description = "내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my")
-    public ResponseData<List<Lecture>> getMemberLecture(@RequestAttribute Member member) {
+    public ResponseData<LectureWithMyInfoRes> getMemberLecture(
+            @RequestAttribute Member member
+    ) {
         List<Lecture> lectures = memberLectureLoadUseCase.loadLectureByMember(member);
-        return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectures);
+        LectureWithMyInfoRes lectureWithMyInfoRes = LectureWithMyInfoRes.builder()
+                .info(MemberInfoRes.convertToDTO(member))
+                .lectures(lectures).build();
+        return ResponseData.of(HttpStatus.OK, "내 강좌 정보 불러오기 성공", lectureWithMyInfoRes);
     }
 
     @AuthCheck(roles = {MemberRole.STUDENT, MemberRole.TEACHER})
     @Operation(summary = "load today member lectures", description = "오늘 내 강좌 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my/today")
-    public ResponseData<List<Lecture>> getTodayMemberLecture(@RequestAttribute Member member) {
+    public ResponseData<List<Lecture>> getTodayMemberLecture(
+            @RequestAttribute Member member
+    ) {
         List<Lecture> lectures = memberLectureLoadUseCase.loadTodayLectureByMember(member);
         return ResponseData.of(HttpStatus.OK, "오늘 내 강좌 정보 불러오기 성공", lectures);
     }
