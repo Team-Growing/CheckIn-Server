@@ -27,8 +27,9 @@ public class SignInController {
 
     @PostMapping
     @Operation(summary = "sign in", description = "로그인")
-    public ResponseData<Token> signUpTeacher(@RequestBody @Valid SignInReq signInReq) {
-
+    public ResponseData<Token> signUpTeacher(
+            @RequestBody @Valid SignInReq signInReq
+    ) {
         Token token = signInUseCase.signIn(signInReq);
         return ResponseData.of(HttpStatus.OK, "로그인 성공", token);
     }

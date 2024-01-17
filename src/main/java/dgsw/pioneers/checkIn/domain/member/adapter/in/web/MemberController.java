@@ -35,7 +35,9 @@ public class MemberController {
     @AuthCheck
     @Operation(summary = "load memberInfo", description = "내 정보 불러오기", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/my")
-    public ResponseData<MemberInfoRes> getMemberInfo(@RequestAttribute Member member) {
+    public ResponseData<MemberInfoRes> getMemberInfo(
+            @RequestAttribute Member member
+    ) {
         MemberInfoRes memberInfoRes = MemberInfoRes.convertToDTO(member);
         return ResponseData.of(HttpStatus.OK, "내 정보 불러오기 성공", memberInfoRes);
     }
@@ -57,7 +59,7 @@ public class MemberController {
     public Response updateTeacherInfo(
             @RequestAttribute Member member,
             @RequestBody @Valid UpdateTeacherInfoReq updateTeacherInfoReq
-            ) {
+    ) {
         memberInfoUpdateUseCase.updateTeacherInfo(member, updateTeacherInfoReq);
         return Response.of(HttpStatus.OK, "선생님 정보 수정 성공");
     }

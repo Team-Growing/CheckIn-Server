@@ -27,16 +27,18 @@ public class SignUpController {
 
     @PostMapping("/teacher")
     @Operation(summary = "sign up to teacher", description = "선생님 회원가입")
-    public Response signUpTeacher(@RequestBody @Valid SignUpTeacherReq signUpTeacherReq) {
-
+    public Response signUpTeacher(
+            @RequestBody @Valid SignUpTeacherReq signUpTeacherReq
+    ) {
         signUpUseCase.signUpTeacher(signUpTeacherReq.mapToDomainEntity());
         return Response.of(HttpStatus.OK, "선생님 회원가입 성공");
     }
 
     @PostMapping("/student")
     @Operation(summary = "sign up to student", description = "학생 회원가입")
-    public Response signUpStudent(@RequestBody @Valid SignUpStudentReq signUpStudentReq) {
-
+    public Response signUpStudent(
+            @RequestBody @Valid SignUpStudentReq signUpStudentReq
+    ) {
         signUpUseCase.signUpStudent(signUpStudentReq.mapToDomainEntity());
         return Response.of(HttpStatus.OK, "학생 회원가입 성공");
     }
